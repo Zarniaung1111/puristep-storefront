@@ -20,6 +20,7 @@ import {
   Upload,
   X,
   ChevronRight,
+  ChevronDown,
   Sparkles,
   Clock,
   Users,
@@ -175,7 +176,7 @@ interface Product {
   comingSoon?: boolean;
 }
 
-interface ChatGPTPlan {
+interface AIPlan {
   id: string;
   name: string;
   price: string;
@@ -186,46 +187,225 @@ interface ChatGPTPlan {
   highlight?: boolean;
 }
 
-const chatGptPlans: ChatGPTPlan[] = [
+interface AIApp {
+  id: string;
+  name: string;
+  tagline: string;
+  icon: React.ReactNode;
+  iconBg: string;
+  accentBorder: string;
+  accentGlow: string;
+  neon: string;
+  startingFrom: string;
+  plans: AIPlan[];
+}
+
+const aiApps: AIApp[] = [
   {
-    id: "chatgpt-team",
-    name: "Business Team Invite",
-    price: "19,000 KS",
-    period: "Monthly",
-    features: [
-      "Admin managed workspace",
-      "Shared team collaboration",
-      "Priority access to GPT-5",
-      "Privacy-first (no training on data)",
+    id: "chatgpt",
+    name: "ChatGPT Plus",
+    tagline: "OpenAI's flagship AI assistant",
+    icon: <SiOpenai className="w-6 h-6 text-white" />,
+    iconBg: "from-emerald-600 to-green-700",
+    accentBorder: "border-emerald-500/25 hover:border-emerald-400/50",
+    accentGlow: "shadow-emerald-500/10",
+    neon: "text-emerald-400",
+    startingFrom: "From 19,000 KS",
+    plans: [
+      {
+        id: "chatgpt-team",
+        name: "Business Team Invite",
+        price: "19,000 KS",
+        period: "Monthly",
+        features: [
+          "Admin managed workspace",
+          "Shared team collaboration",
+          "Priority access to GPT-5",
+          "Privacy-first (no training on data)",
+        ],
+        badge: "Best Seller",
+        badgeStyle: "bg-amber-500/20 text-amber-300 border-amber-500/40",
+        highlight: true,
+      },
+      {
+        id: "chatgpt-individual",
+        name: "Individual",
+        price: "35,000 KS",
+        period: "Monthly",
+        features: [
+          "Full GPT-5 Thinking access",
+          "Advanced Voice Mode",
+          "1,000 Sora video credits / month",
+          "DALL-E 3 image generation",
+        ],
+      },
+      {
+        id: "chatgpt-annual",
+        name: "Annual",
+        price: "185,000 KS",
+        period: "Yearly",
+        features: [
+          "Best value — save over 200,000 KS",
+          "12 months uninterrupted Plus",
+          "Dedicated priority support",
+        ],
+        badge: "Best Value",
+        badgeStyle: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
+      },
     ],
-    badge: "Best Seller",
-    badgeStyle: "bg-amber-500/20 text-amber-300 border-amber-500/40",
-    highlight: true,
   },
   {
-    id: "chatgpt-individual",
-    name: "Individual",
-    price: "35,000 KS",
-    period: "Monthly",
-    features: [
-      "Full GPT-5 Thinking access",
-      "Advanced Voice Mode",
-      "1,000 Sora video credits / month",
-      "DALL-E 3 image generation",
+    id: "gemini",
+    name: "Gemini Advanced",
+    tagline: "Google's most capable AI model",
+    icon: <SiGooglegemini className="w-6 h-6 text-white" />,
+    iconBg: "from-blue-500 to-indigo-600",
+    accentBorder: "border-blue-500/25 hover:border-blue-400/50",
+    accentGlow: "shadow-blue-500/10",
+    neon: "text-blue-400",
+    startingFrom: "From 20,000 MMK",
+    plans: [
+      {
+        id: "gemini-advanced",
+        name: "Advanced",
+        price: "20,000 MMK",
+        period: "1 Month",
+        features: [
+          "Advanced reasoning & analysis",
+          "Deep Google app integration",
+          "Gemini 1.5 Pro model",
+          "1M token context window",
+          "Priority access",
+        ],
+        badge: "Google AI",
+        badgeStyle: "bg-blue-500/20 text-blue-300 border-blue-500/40",
+        highlight: true,
+      },
     ],
   },
   {
-    id: "chatgpt-annual",
-    name: "Annual",
-    price: "185,000 KS",
-    period: "Yearly",
-    features: [
-      "Best value — save over 200,000 KS",
-      "12 months uninterrupted Plus",
-      "Dedicated priority support",
+    id: "claude",
+    name: "Claude Pro",
+    tagline: "Anthropic's thoughtful AI assistant",
+    icon: <SiAnthropic className="w-6 h-6 text-white" />,
+    iconBg: "from-orange-500 to-amber-600",
+    accentBorder: "border-orange-500/25 hover:border-orange-400/50",
+    accentGlow: "shadow-orange-500/10",
+    neon: "text-orange-400",
+    startingFrom: "From 22,000 MMK",
+    plans: [
+      {
+        id: "claude-pro",
+        name: "Pro",
+        price: "22,000 MMK",
+        period: "1 Month",
+        features: [
+          "High-capacity message limits",
+          "Artifacts & code canvas",
+          "Claude 3.5 Sonnet model",
+          "Priority bandwidth access",
+          "Advanced document analysis",
+        ],
+        badge: "Anthropic",
+        badgeStyle: "bg-orange-500/20 text-orange-300 border-orange-500/40",
+        highlight: true,
+      },
     ],
-    badge: "Best Value",
-    badgeStyle: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
+  },
+  {
+    id: "canva",
+    name: "Canva Pro",
+    tagline: "AI-powered design for everyone",
+    icon: <SiCanva className="w-6 h-6 text-white" />,
+    iconBg: "from-teal-500 to-cyan-600",
+    accentBorder: "border-teal-500/25 hover:border-teal-400/50",
+    accentGlow: "shadow-teal-500/10",
+    neon: "text-teal-400",
+    startingFrom: "From 6,000 MMK",
+    plans: [
+      {
+        id: "canva-pro",
+        name: "Pro",
+        price: "6,000 MMK",
+        period: "1 Month",
+        features: [
+          "Brand Kit & custom fonts",
+          "Magic AI design tools",
+          "Background remover",
+          "100M+ premium assets",
+          "Unlimited cloud storage",
+        ],
+        badge: "Best Price",
+        badgeStyle: "bg-teal-500/20 text-teal-300 border-teal-500/40",
+        highlight: true,
+      },
+    ],
+  },
+  {
+    id: "kling",
+    name: "Kling AI Pro",
+    tagline: "Professional AI video generation",
+    icon: (
+      <div className="w-6 h-6 rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center">
+        <span className="text-white text-[9px] font-black tracking-tighter">KL</span>
+      </div>
+    ),
+    iconBg: "from-violet-600 to-fuchsia-700",
+    accentBorder: "border-violet-500/25 hover:border-violet-400/50",
+    accentGlow: "shadow-violet-500/10",
+    neon: "text-violet-400",
+    startingFrom: "From 15,000 MMK",
+    plans: [
+      {
+        id: "kling-pro",
+        name: "Pro",
+        price: "15,000 MMK",
+        period: "1 Month",
+        features: [
+          "High-quality video generation",
+          "Text-to-video & image-to-video",
+          "5s and 10s video clips",
+          "720p & 1080p output quality",
+          "Commercial use license",
+        ],
+        badge: "Video AI",
+        badgeStyle: "bg-violet-500/20 text-violet-300 border-violet-500/40",
+        highlight: true,
+      },
+    ],
+  },
+  {
+    id: "leonardo",
+    name: "Leonardo AI",
+    tagline: "Fine-tuned AI image generation",
+    icon: (
+      <div className="w-6 h-6 rounded-md bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
+        <span className="text-white text-[9px] font-black tracking-tighter">LN</span>
+      </div>
+    ),
+    iconBg: "from-yellow-500 to-orange-600",
+    accentBorder: "border-yellow-500/25 hover:border-yellow-400/50",
+    accentGlow: "shadow-yellow-500/10",
+    neon: "text-yellow-400",
+    startingFrom: "From 12,000 MMK",
+    plans: [
+      {
+        id: "leonardo-apprentice",
+        name: "Apprentice",
+        price: "12,000 MMK",
+        period: "1 Month",
+        features: [
+          "Fine-tuned image models",
+          "8,500 generation credits / day",
+          "Alchemy upscaler & enhancer",
+          "Custom AI model training",
+          "Commercial use license",
+        ],
+        badge: "Image AI",
+        badgeStyle: "bg-yellow-500/20 text-yellow-300 border-yellow-500/40",
+        highlight: true,
+      },
+    ],
   },
 ];
 
@@ -483,7 +663,7 @@ export default function Home() {
   const [previewImg, setPreviewImg] = useState<string | null>(null);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
-  const [selectedPlanName, setSelectedPlanName] = useState("");
+  const [expandedAIApp, setExpandedAIApp] = useState<string | null>("chatgpt");
   const productsRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -533,18 +713,18 @@ export default function Home() {
     reader.readAsDataURL(file);
   };
 
-  const handleChatGPTBuyNow = (plan: ChatGPTPlan) => {
+  const handleAIPlanBuyNow = (app: AIApp, plan: AIPlan) => {
     setSelectedProduct({
       id: plan.id,
       categoryId: "ai",
-      serviceName: "ChatGPT Plus",
+      serviceName: app.name,
       planName: plan.name,
       price: plan.price,
       duration: plan.period,
       features: plan.features,
-      cardColor: "from-emerald-900/40 to-green-950/60",
-      gradient: "from-emerald-500 to-green-600",
-      icon: <SiOpenai className="w-7 h-7 text-emerald-400" />,
+      cardColor: "from-fuchsia-900/40 to-violet-950/60",
+      gradient: `from-${app.iconBg.split(" ")[0].replace("from-", "")} to-${app.iconBg.split(" ")[1].replace("to-", "")}`,
+      icon: app.icon,
     });
     setOrderOpen(true);
     setOrderSuccess(false);
@@ -777,24 +957,13 @@ export default function Home() {
                     </button>
                   </div>
                   {cat.id === "ai" ? (
-                    <div className="space-y-6">
-                      <ChatGPTSubSection
-                        plans={chatGptPlans}
-                        onBuyNow={handleChatGPTBuyNow}
-                        onHelp={() => setHelpOpen(true)}
-                        compact
-                      />
-                      {items.length > 0 && (
-                        <>
-                          <p className="text-white/30 text-xs uppercase tracking-widest font-semibold pt-2">More AI Tools</p>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {items.map(product => (
-                              <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
-                            ))}
-                          </div>
-                        </>
-                      )}
-                    </div>
+                    <AIAccordion
+                      apps={aiApps}
+                      expandedId={expandedAIApp}
+                      onToggle={id => setExpandedAIApp(prev => prev === id ? null : id)}
+                      onBuyNow={handleAIPlanBuyNow}
+                      onHelp={() => setHelpOpen(true)}
+                    />
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       {items.map(product => (
@@ -816,29 +985,15 @@ export default function Home() {
             </div>
           )}
 
-          {/* AI category — dedicated structured view */}
+          {/* AI category — dedicated accordion view */}
           {activeCategory === "ai" && (
-            <div className="space-y-10">
-              <ChatGPTSubSection
-                plans={chatGptPlans}
-                onBuyNow={handleChatGPTBuyNow}
-                onHelp={() => setHelpOpen(true)}
-              />
-              {filteredProducts.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className="h-px flex-1 bg-white/8" />
-                    <p className="text-white/30 text-xs uppercase tracking-widest font-semibold">More AI Tools</p>
-                    <div className="h-px flex-1 bg-white/8" />
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filteredProducts.map(product => (
-                      <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            <AIAccordion
+              apps={aiApps}
+              expandedId={expandedAIApp}
+              onToggle={id => setExpandedAIApp(prev => prev === id ? null : id)}
+              onBuyNow={handleAIPlanBuyNow}
+              onHelp={() => setHelpOpen(true)}
+            />
           )}
         </div>
       </section>
@@ -1123,105 +1278,154 @@ export default function Home() {
   );
 }
 
-function ChatGPTSubSection({
-  plans,
+function AIAccordion({
+  apps,
+  expandedId,
+  onToggle,
   onBuyNow,
   onHelp,
-  compact = false,
 }: {
-  plans: ChatGPTPlan[];
-  onBuyNow: (plan: ChatGPTPlan) => void;
+  apps: AIApp[];
+  expandedId: string | null;
+  onToggle: (id: string) => void;
+  onBuyNow: (app: AIApp, plan: AIPlan) => void;
   onHelp: () => void;
-  compact?: boolean;
 }) {
   return (
-    <div>
-      {/* Sub-section header */}
-      <div className="flex items-center gap-3 mb-5">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-600 to-green-700 flex items-center justify-center text-white flex-shrink-0">
-          <SiOpenai className="w-5 h-5" />
-        </div>
-        <div>
-          <h3 className="font-bold text-white text-base leading-tight">ChatGPT Plus</h3>
-          <p className="text-white/35 text-xs">Official OpenAI subscription plans</p>
-        </div>
-        <div className="ml-auto">
-          <div className="h-px w-16 bg-gradient-to-r from-emerald-500/40 to-transparent" />
-        </div>
-      </div>
-
-      {/* 3 Plan cards */}
-      <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4 ${compact ? "" : ""}`}>
-        {plans.map((plan) => (
+    <div className="space-y-3">
+      {apps.map(app => {
+        const isOpen = expandedId === app.id;
+        return (
           <div
-            key={plan.id}
-            className={`relative rounded-2xl border flex flex-col gap-4 overflow-hidden transition-all duration-300 group
-              ${plan.highlight
-                ? "border-emerald-500/30 bg-gradient-to-br from-emerald-950/60 to-green-950/80 hover:border-emerald-400/50"
-                : "border-white/8 bg-gradient-to-br from-[#0d1a14] to-[#091009] hover:border-emerald-500/20"
-              } p-5`}
-            data-testid={`card-chatgpt-${plan.id}`}
+            key={app.id}
+            className={`rounded-2xl border transition-all duration-300 overflow-hidden
+              ${isOpen
+                ? `${app.accentBorder} bg-gradient-to-r from-white/[0.04] to-white/[0.02]`
+                : `border-white/8 bg-white/[0.02] ${app.accentBorder}`
+              }`}
+            data-testid={`accordion-${app.id}`}
           >
-            {/* Neon top line for highlighted card */}
-            {plan.highlight && (
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent" />
-            )}
-
-            {/* Header row: plan name + badge */}
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <p className="text-white/40 text-xs font-medium mb-0.5">ChatGPT Plus</p>
-                <h4 className="font-bold text-white text-sm leading-tight">{plan.name}</h4>
+            {/* Banner / Title Row — Level 2 */}
+            <button
+              onClick={() => onToggle(app.id)}
+              className="w-full flex items-center gap-4 px-5 py-4 group text-left"
+              data-testid={`accordion-toggle-${app.id}`}
+            >
+              {/* App icon */}
+              <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                {app.icon}
               </div>
-              {plan.badge && (
-                <Badge
-                  className={`text-xs px-2 py-0.5 shrink-0 border font-semibold ${plan.badgeStyle}`}
-                  data-testid={`badge-chatgpt-${plan.id}`}
-                >
-                  {plan.badge}
-                </Badge>
-              )}
-            </div>
 
-            {/* Price */}
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-black text-white">{plan.price}</span>
-              <span className="text-white/30 text-xs">/ {plan.period}</span>
-            </div>
+              {/* App name + tagline */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h3 className="font-bold text-white text-base leading-tight">{app.name}</h3>
+                  {app.plans.length > 1 && (
+                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-white/8 text-white/40">
+                      {app.plans.length} plans
+                    </span>
+                  )}
+                </div>
+                <p className="text-white/35 text-xs mt-0.5">{app.tagline}</p>
+              </div>
 
-            {/* Features */}
-            <ul className="space-y-2 flex-1">
-              {plan.features.map((f, i) => (
-                <li key={i} className="flex items-start gap-2 text-xs text-white/60">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>{f}</span>
-                </li>
-              ))}
-            </ul>
+              {/* Starting price + chevron */}
+              <div className="flex items-center gap-3 flex-shrink-0">
+                <span className={`text-xs font-semibold hidden sm:block ${app.neon}`}>{app.startingFrom}</span>
+                <div className={`w-7 h-7 rounded-full border border-white/10 bg-white/5 flex items-center justify-center transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`}>
+                  <ChevronDown className="w-4 h-4 text-white/50" />
+                </div>
+              </div>
+            </button>
 
-            {/* Action buttons */}
-            <div className="flex gap-2 pt-1">
-              <Button
-                onClick={() => onBuyNow(plan)}
-                className="flex-1 bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-500 hover:to-green-600 text-white border-0 font-semibold h-9 text-sm"
-                data-testid={`button-buy-chatgpt-${plan.id}`}
-              >
-                Buy Now
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={onHelp}
-                className="h-9 w-9 border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-white/50 hover:text-white flex-shrink-0"
-                title="Get help"
-                data-testid={`button-help-chatgpt-${plan.id}`}
-              >
-                <HelpCircle className="w-4 h-4" />
-              </Button>
+            {/* Expandable content — Level 3 pricing cards */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateRows: isOpen ? "1fr" : "0fr",
+                transition: "grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+            >
+              <div style={{ overflow: "hidden" }}>
+                <div className="px-4 pb-4">
+                  {/* Thin divider */}
+                  <div className="h-px bg-white/6 mb-4" />
+                  <div className={`grid gap-3 ${app.plans.length === 1 ? "grid-cols-1 max-w-sm" : app.plans.length === 2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1 sm:grid-cols-3"}`}>
+                    {app.plans.map(plan => (
+                      <div
+                        key={plan.id}
+                        className={`relative rounded-xl border flex flex-col gap-3 overflow-hidden p-4 transition-all duration-200
+                          ${plan.highlight
+                            ? `border-white/15 bg-white/[0.05]`
+                            : "border-white/6 bg-white/[0.02]"
+                          }`}
+                        data-testid={`card-ai-${plan.id}`}
+                      >
+                        {plan.highlight && (
+                          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                        )}
+
+                        {/* Plan name + badge */}
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <p className="text-white/35 text-[10px] font-medium uppercase tracking-wide mb-0.5">{app.name}</p>
+                            <h4 className="font-bold text-white text-sm leading-tight">{plan.name}</h4>
+                          </div>
+                          {plan.badge && (
+                            <Badge
+                              className={`text-[10px] px-1.5 py-0.5 shrink-0 border font-semibold ${plan.badgeStyle}`}
+                              data-testid={`badge-ai-${plan.id}`}
+                            >
+                              {plan.badge}
+                            </Badge>
+                          )}
+                        </div>
+
+                        {/* Price */}
+                        <div className="flex items-baseline gap-1">
+                          <span className="text-xl font-black text-white">{plan.price}</span>
+                          <span className="text-white/30 text-xs">/ {plan.period}</span>
+                        </div>
+
+                        {/* Features */}
+                        <ul className="space-y-1.5 flex-1">
+                          {plan.features.map((f, i) => (
+                            <li key={i} className="flex items-start gap-2 text-xs text-white/55">
+                              <CheckCircle2 className={`w-3 h-3 shrink-0 mt-0.5 ${app.neon}`} />
+                              <span>{f}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        {/* Buttons */}
+                        <div className="flex gap-2 pt-1">
+                          <Button
+                            onClick={() => onBuyNow(app, plan)}
+                            className={`flex-1 bg-gradient-to-r ${app.iconBg} hover:opacity-90 text-white border-0 font-semibold h-8 text-xs`}
+                            data-testid={`button-buy-${plan.id}`}
+                          >
+                            Buy Now
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={onHelp}
+                            className="h-8 w-8 border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-white/40 hover:text-white flex-shrink-0"
+                            title="Get help"
+                            data-testid={`button-help-${plan.id}`}
+                          >
+                            <HelpCircle className="w-3.5 h-3.5" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 }
