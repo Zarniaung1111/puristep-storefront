@@ -40,6 +40,8 @@ import {
   SiNordvpn,
   SiTelegram,
   SiOpenai,
+  SiGooglegemini,
+  SiAnthropic,
 } from "react-icons/si";
 
 const orderFormSchema = z.object({
@@ -138,31 +140,90 @@ interface Product {
 const products: Product[] = [
   // --- AI ---
   {
+    id: "chatgpt-plus",
+    categoryId: "ai",
+    serviceName: "ChatGPT",
+    planName: "Plus",
+    price: "25,000 MMK",
+    duration: "1 Month",
+    features: ["GPT-4o access", "DALL-E 3 image generation", "Advanced data analysis", "Priority access", "Plugins & tools"],
+    cardColor: "from-emerald-900/40 to-green-950/60",
+    gradient: "from-emerald-500 to-green-600",
+    icon: <SiOpenai className="w-7 h-7 text-emerald-400" />,
+    badge: "Popular",
+  },
+  {
+    id: "gemini-pro",
+    categoryId: "ai",
+    serviceName: "Gemini",
+    planName: "Advanced",
+    price: "20,000 MMK",
+    duration: "1 Month",
+    features: ["Advanced reasoning", "Google app integration", "Gemini 1.5 Pro model", "1M token context", "Priority access"],
+    cardColor: "from-blue-900/40 to-indigo-950/60",
+    gradient: "from-blue-500 to-indigo-600",
+    icon: <SiGooglegemini className="w-7 h-7 text-blue-400" />,
+    badge: "Google AI",
+  },
+  {
+    id: "claude-pro",
+    categoryId: "ai",
+    serviceName: "Claude",
+    planName: "Pro",
+    price: "22,000 MMK",
+    duration: "1 Month",
+    features: ["High-capacity usage", "Artifacts feature", "Claude 3.5 Sonnet", "Priority bandwidth", "Advanced analysis"],
+    cardColor: "from-orange-900/40 to-amber-950/60",
+    gradient: "from-orange-500 to-amber-600",
+    icon: <SiAnthropic className="w-7 h-7 text-orange-400" />,
+    badge: "Anthropic",
+  },
+  {
     id: "canva-pro",
     categoryId: "ai",
     serviceName: "Canva",
     planName: "Pro",
     price: "6,000 MMK",
     duration: "1 Month",
-    features: ["100M+ premium assets", "Brand Kit", "Background remover", "Unlimited storage", "Magic AI tools"],
+    features: ["Brand Kit", "Magic AI tools", "Background remover", "100M+ premium assets", "Unlimited storage"],
     cardColor: "from-teal-900/40 to-cyan-950/60",
     gradient: "from-teal-500 to-cyan-600",
     icon: <SiCanva className="w-7 h-7 text-teal-400" />,
-    badge: "AI Powered",
+    badge: "Best Price",
   },
   {
-    id: "chatgpt-plus",
+    id: "kling-ai",
     categoryId: "ai",
-    serviceName: "ChatGPT",
-    planName: "Plus",
-    price: "Coming Soon",
+    serviceName: "Kling AI",
+    planName: "Pro",
+    price: "15,000 MMK",
     duration: "1 Month",
-    features: ["GPT-4o access", "Image generation", "Advanced data analysis", "Priority access", "Plugins support"],
-    cardColor: "from-emerald-900/40 to-green-950/60",
-    gradient: "from-emerald-500 to-green-600",
-    icon: <SiOpenai className="w-7 h-7 text-emerald-400" />,
-    badge: "Soon",
-    comingSoon: true,
+    features: ["High-quality video generation", "Text-to-video", "5s & 10s video clips", "720p & 1080p output", "Commercial use"],
+    cardColor: "from-violet-900/40 to-purple-950/60",
+    gradient: "from-violet-500 to-purple-600",
+    icon: (
+      <div className="w-7 h-7 rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center">
+        <span className="text-white text-[10px] font-black tracking-tighter">KL</span>
+      </div>
+    ),
+    badge: "Video AI",
+  },
+  {
+    id: "leonardo-ai",
+    categoryId: "ai",
+    serviceName: "Leonardo AI",
+    planName: "Apprentice",
+    price: "12,000 MMK",
+    duration: "1 Month",
+    features: ["Fine-tuned image models", "Daily credits (8,500)", "Alchemy upscaler", "Custom AI training", "Commercial license"],
+    cardColor: "from-yellow-900/40 to-orange-950/60",
+    gradient: "from-yellow-500 to-orange-600",
+    icon: (
+      <div className="w-7 h-7 rounded-md bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
+        <span className="text-white text-[10px] font-black tracking-tighter">LN</span>
+      </div>
+    ),
+    badge: "Image AI",
   },
 
   // --- CapCut ---
