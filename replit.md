@@ -21,11 +21,12 @@ Sells digital subscriptions including Netflix, YouTube Premium, and Canva Pro. C
 
 ## Key Features
 
-1. **Product Cards**: Netflix (Monthly/Private), YouTube Premium (Family/Individual), Canva Pro
-2. **Order Form**: Opens in a dialog on "Buy Now" — collects Telegram/Messenger username and payment screenshot (base64 stored in DB)
-3. **Payment Support**: KBZPay and WavePay
-4. **Order Storage**: All orders saved to PostgreSQL with status tracking (pending/confirmed/cancelled)
-5. **Admin Dashboard**: View orders, update status, see payment screenshots
+1. **Category Filter Bar**: Sticky nav bar with 5 categories — AI Tools, CapCut, Music & Video, Telegram, VPN
+2. **Product Cards**: Live products (Canva Pro, Netflix x2, YouTube Premium x2) + Coming Soon placeholders (ChatGPT, CapCut, Spotify, Apple Music, Telegram Premium, NordVPN, ExpressVPN)
+3. **Order Form**: Opens in a dialog on "Buy Now" — collects Telegram/Messenger username and payment screenshot (base64 stored in DB)
+4. **Payment Support**: KBZPay and WavePay
+5. **Order Storage**: All orders saved to PostgreSQL with status tracking (pending/confirmed/cancelled)
+6. **Admin Dashboard**: View orders, update status, see payment screenshots
 
 ## Database Schema
 
