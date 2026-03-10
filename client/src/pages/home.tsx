@@ -30,6 +30,9 @@ import {
   Lock,
   Play,
   Tag,
+  MessageCircle,
+  HelpCircle,
+  ExternalLink,
 } from "lucide-react";
 import {
   SiNetflix,
@@ -172,21 +175,62 @@ interface Product {
   comingSoon?: boolean;
 }
 
-const products: Product[] = [
-  // --- AI ---
+interface ChatGPTPlan {
+  id: string;
+  name: string;
+  price: string;
+  period: string;
+  features: string[];
+  badge?: string;
+  badgeStyle?: string;
+  highlight?: boolean;
+}
+
+const chatGptPlans: ChatGPTPlan[] = [
   {
-    id: "chatgpt-plus",
-    categoryId: "ai",
-    serviceName: "ChatGPT",
-    planName: "Plus",
-    price: "25,000 MMK",
-    duration: "1 Month",
-    features: ["GPT-4o access", "DALL-E 3 image generation", "Advanced data analysis", "Priority access", "Plugins & tools"],
-    cardColor: "from-emerald-900/40 to-green-950/60",
-    gradient: "from-emerald-500 to-green-600",
-    icon: <SiOpenai className="w-7 h-7 text-emerald-400" />,
-    badge: "Popular",
+    id: "chatgpt-team",
+    name: "Business Team Invite",
+    price: "19,000 KS",
+    period: "Monthly",
+    features: [
+      "Admin managed workspace",
+      "Shared team collaboration",
+      "Priority access to GPT-5",
+      "Privacy-first (no training on data)",
+    ],
+    badge: "Best Seller",
+    badgeStyle: "bg-amber-500/20 text-amber-300 border-amber-500/40",
+    highlight: true,
   },
+  {
+    id: "chatgpt-individual",
+    name: "Individual",
+    price: "35,000 KS",
+    period: "Monthly",
+    features: [
+      "Full GPT-5 Thinking access",
+      "Advanced Voice Mode",
+      "1,000 Sora video credits / month",
+      "DALL-E 3 image generation",
+    ],
+  },
+  {
+    id: "chatgpt-annual",
+    name: "Annual",
+    price: "185,000 KS",
+    period: "Yearly",
+    features: [
+      "Best value — save over 200,000 KS",
+      "12 months uninterrupted Plus",
+      "Dedicated priority support",
+    ],
+    badge: "Best Value",
+    badgeStyle: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
+  },
+];
+
+const products: Product[] = [
+  // --- AI (non-ChatGPT) ---
   {
     id: "gemini-pro",
     categoryId: "ai",
@@ -438,6 +482,8 @@ export default function Home() {
   const [orderOpen, setOrderOpen] = useState(false);
   const [previewImg, setPreviewImg] = useState<string | null>(null);
   const [orderSuccess, setOrderSuccess] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [selectedPlanName, setSelectedPlanName] = useState("");
   const productsRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -485,6 +531,25 @@ export default function Home() {
       form.setValue("paymentScreenshot", base64);
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleChatGPTBuyNow = (plan: ChatGPTPlan) => {
+    setSelectedProduct({
+      id: plan.id,
+      categoryId: "ai",
+      serviceName: "ChatGPT Plus",
+      planName: plan.name,
+      price: plan.price,
+      duration: plan.period,
+      features: plan.features,
+      cardColor: "from-emerald-900/40 to-green-950/60",
+      gradient: "from-emerald-500 to-green-600",
+      icon: <SiOpenai className="w-7 h-7 text-emerald-400" />,
+    });
+    setOrderOpen(true);
+    setOrderSuccess(false);
+    form.reset();
+    setPreviewImg(null);
   };
 
   const onSubmit = (data: OrderFormValues) => mutation.mutate(data);
@@ -711,22 +776,68 @@ export default function Home() {
                       See all <ChevronRight className="w-3 h-3" />
                     </button>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {items.map(product => (
-                      <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
-                    ))}
-                  </div>
+                  {cat.id === "ai" ? (
+                    <div className="space-y-6">
+                      <ChatGPTSubSection
+                        plans={chatGptPlans}
+                        onBuyNow={handleChatGPTBuyNow}
+                        onHelp={() => setHelpOpen(true)}
+                        compact
+                      />
+                      {items.length > 0 && (
+                        <>
+                          <p className="text-white/30 text-xs uppercase tracking-widest font-semibold pt-2">More AI Tools</p>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {items.map(product => (
+                              <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {items.map(product => (
+                        <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           )}
 
           {/* Single category filtered view */}
-          {activeCategory !== "all" && (
+          {activeCategory !== "all" && activeCategory !== "ai" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredProducts.map(product => (
                 <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
               ))}
+            </div>
+          )}
+
+          {/* AI category — dedicated structured view */}
+          {activeCategory === "ai" && (
+            <div className="space-y-10">
+              <ChatGPTSubSection
+                plans={chatGptPlans}
+                onBuyNow={handleChatGPTBuyNow}
+                onHelp={() => setHelpOpen(true)}
+              />
+              {filteredProducts.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="h-px flex-1 bg-white/8" />
+                    <p className="text-white/30 text-xs uppercase tracking-widest font-semibold">More AI Tools</p>
+                    <div className="h-px flex-1 bg-white/8" />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {filteredProducts.map(product => (
+                      <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -956,6 +1067,161 @@ export default function Home() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Help Dialog */}
+      <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
+        <DialogContent className="bg-[#0e0e1a] border border-white/10 text-white max-w-sm w-[calc(100vw-2rem)] rounded-2xl">
+          <DialogHeader>
+            <div className="flex items-center gap-3 mb-1">
+              <div className="w-9 h-9 rounded-xl bg-emerald-950/60 border border-emerald-500/20 flex items-center justify-center">
+                <HelpCircle className="w-5 h-5 text-emerald-400" />
+              </div>
+              <div>
+                <DialogTitle className="text-base font-semibold text-white">Need Help?</DialogTitle>
+                <DialogDescription className="text-white/40 text-xs">Contact us via your preferred platform</DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          <div className="space-y-3 pt-1">
+            <a
+              href="https://t.me/digitalpacks_vol2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-4 rounded-xl bg-blue-950/30 border border-blue-500/20 hover:bg-blue-950/50 hover:border-blue-500/40 transition-all group"
+              data-testid="link-help-telegram"
+            >
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center flex-shrink-0">
+                <SiTelegram className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-white text-sm">Telegram</p>
+                <p className="text-blue-400 text-xs">@digitalpacks_vol2</p>
+              </div>
+              <ExternalLink className="w-4 h-4 text-white/30 group-hover:text-blue-400 transition-colors flex-shrink-0" />
+            </a>
+            <a
+              href="https://m.me/digitalpacks.vol2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-4 rounded-xl bg-violet-950/30 border border-violet-500/20 hover:bg-violet-950/50 hover:border-violet-500/40 transition-all group"
+              data-testid="link-help-messenger"
+            >
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center flex-shrink-0">
+                <MessageCircle className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-white text-sm">Messenger</p>
+                <p className="text-violet-400 text-xs">@digitalpacks.vol2</p>
+              </div>
+              <ExternalLink className="w-4 h-4 text-white/30 group-hover:text-violet-400 transition-colors flex-shrink-0" />
+            </a>
+            <p className="text-white/20 text-xs text-center pt-1">We typically respond within a few minutes</p>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
+function ChatGPTSubSection({
+  plans,
+  onBuyNow,
+  onHelp,
+  compact = false,
+}: {
+  plans: ChatGPTPlan[];
+  onBuyNow: (plan: ChatGPTPlan) => void;
+  onHelp: () => void;
+  compact?: boolean;
+}) {
+  return (
+    <div>
+      {/* Sub-section header */}
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-600 to-green-700 flex items-center justify-center text-white flex-shrink-0">
+          <SiOpenai className="w-5 h-5" />
+        </div>
+        <div>
+          <h3 className="font-bold text-white text-base leading-tight">ChatGPT Plus</h3>
+          <p className="text-white/35 text-xs">Official OpenAI subscription plans</p>
+        </div>
+        <div className="ml-auto">
+          <div className="h-px w-16 bg-gradient-to-r from-emerald-500/40 to-transparent" />
+        </div>
+      </div>
+
+      {/* 3 Plan cards */}
+      <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4 ${compact ? "" : ""}`}>
+        {plans.map((plan) => (
+          <div
+            key={plan.id}
+            className={`relative rounded-2xl border flex flex-col gap-4 overflow-hidden transition-all duration-300 group
+              ${plan.highlight
+                ? "border-emerald-500/30 bg-gradient-to-br from-emerald-950/60 to-green-950/80 hover:border-emerald-400/50"
+                : "border-white/8 bg-gradient-to-br from-[#0d1a14] to-[#091009] hover:border-emerald-500/20"
+              } p-5`}
+            data-testid={`card-chatgpt-${plan.id}`}
+          >
+            {/* Neon top line for highlighted card */}
+            {plan.highlight && (
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent" />
+            )}
+
+            {/* Header row: plan name + badge */}
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <p className="text-white/40 text-xs font-medium mb-0.5">ChatGPT Plus</p>
+                <h4 className="font-bold text-white text-sm leading-tight">{plan.name}</h4>
+              </div>
+              {plan.badge && (
+                <Badge
+                  className={`text-xs px-2 py-0.5 shrink-0 border font-semibold ${plan.badgeStyle}`}
+                  data-testid={`badge-chatgpt-${plan.id}`}
+                >
+                  {plan.badge}
+                </Badge>
+              )}
+            </div>
+
+            {/* Price */}
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-2xl font-black text-white">{plan.price}</span>
+              <span className="text-white/30 text-xs">/ {plan.period}</span>
+            </div>
+
+            {/* Features */}
+            <ul className="space-y-2 flex-1">
+              {plan.features.map((f, i) => (
+                <li key={i} className="flex items-start gap-2 text-xs text-white/60">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Action buttons */}
+            <div className="flex gap-2 pt-1">
+              <Button
+                onClick={() => onBuyNow(plan)}
+                className="flex-1 bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-500 hover:to-green-600 text-white border-0 font-semibold h-9 text-sm"
+                data-testid={`button-buy-chatgpt-${plan.id}`}
+              >
+                Buy Now
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={onHelp}
+                className="h-9 w-9 border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-white/50 hover:text-white flex-shrink-0"
+                title="Get help"
+                data-testid={`button-help-chatgpt-${plan.id}`}
+              >
+                <HelpCircle className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
