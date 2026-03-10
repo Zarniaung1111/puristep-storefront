@@ -59,10 +59,15 @@ interface Category {
   id: CategoryId;
   label: string;
   icon: React.ReactNode;
+  bigIcon: React.ReactNode;
   color: string;
   neon: string;
   glow: string;
+  glowBg: string;
+  borderHover: string;
   description: string;
+  startingFrom: string | null;
+  productCount: number;
 }
 
 const categories: Category[] = [
@@ -70,55 +75,85 @@ const categories: Category[] = [
     id: "all",
     label: "All",
     icon: <Tag className="w-4 h-4" />,
+    bigIcon: <Tag className="w-8 h-8" />,
     color: "from-violet-600 to-purple-700",
     neon: "text-violet-400",
     glow: "shadow-violet-500/25",
+    glowBg: "bg-violet-500/10",
+    borderHover: "hover:border-violet-500/40",
     description: "All available digital subscriptions",
+    startingFrom: "2,500 MMK",
+    productCount: 0,
   },
   {
     id: "ai",
     label: "AI Tools",
     icon: <Brain className="w-4 h-4" />,
-    color: "from-violet-600 to-fuchsia-700",
+    bigIcon: <Brain className="w-8 h-8" />,
+    color: "from-fuchsia-600 to-violet-700",
     neon: "text-fuchsia-400",
-    glow: "shadow-fuchsia-500/25",
+    glow: "shadow-fuchsia-500/30",
+    glowBg: "bg-fuchsia-500/10",
+    borderHover: "hover:border-fuchsia-500/40",
     description: "AI-powered creative & productivity tools",
+    startingFrom: "6,000 MMK",
+    productCount: 6,
   },
   {
     id: "capcut",
     label: "CapCut",
     icon: <Scissors className="w-4 h-4" />,
-    color: "from-orange-600 to-amber-600",
+    bigIcon: <Scissors className="w-8 h-8" />,
+    color: "from-orange-500 to-amber-600",
     neon: "text-amber-400",
-    glow: "shadow-amber-500/25",
+    glow: "shadow-amber-500/30",
+    glowBg: "bg-amber-500/10",
+    borderHover: "hover:border-amber-500/40",
     description: "Professional video editing & creation",
+    startingFrom: null,
+    productCount: 2,
   },
   {
     id: "music",
     label: "Music & Video",
     icon: <Music2 className="w-4 h-4" />,
+    bigIcon: <Music2 className="w-8 h-8" />,
     color: "from-pink-600 to-rose-700",
     neon: "text-pink-400",
-    glow: "shadow-pink-500/25",
+    glow: "shadow-pink-500/30",
+    glowBg: "bg-pink-500/10",
+    borderHover: "hover:border-pink-500/40",
     description: "Streaming music, video & entertainment",
+    startingFrom: "2,500 MMK",
+    productCount: 6,
   },
   {
     id: "telegram",
     label: "Telegram",
     icon: <Send className="w-4 h-4" />,
-    color: "from-blue-600 to-cyan-600",
+    bigIcon: <Send className="w-8 h-8" />,
+    color: "from-blue-500 to-cyan-600",
     neon: "text-cyan-400",
-    glow: "shadow-cyan-500/25",
+    glow: "shadow-cyan-500/30",
+    glowBg: "bg-cyan-500/10",
+    borderHover: "hover:border-cyan-500/40",
     description: "Telegram Premium subscriptions",
+    startingFrom: null,
+    productCount: 2,
   },
   {
     id: "vpn",
     label: "VPN",
     icon: <Shield className="w-4 h-4" />,
-    color: "from-emerald-600 to-teal-600",
+    bigIcon: <Shield className="w-8 h-8" />,
+    color: "from-emerald-500 to-teal-600",
     neon: "text-emerald-400",
-    glow: "shadow-emerald-500/25",
+    glow: "shadow-emerald-500/30",
+    glowBg: "bg-emerald-500/10",
+    borderHover: "hover:border-emerald-500/40",
     description: "Secure browsing & online privacy",
+    startingFrom: null,
+    productCount: 2,
   },
 ];
 
@@ -546,6 +581,64 @@ export default function Home() {
                 <span className="text-violet-400">{stat.icon}</span>
                 {stat.label}
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Category Overview — Main Menu */}
+      <section className="py-10 px-4 sm:px-6 border-t border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <p className="text-white/30 text-xs uppercase tracking-widest font-semibold mb-1">Browse by Category</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">What are you looking for?</h2>
+          </div>
+
+          {/* 5-card grid: 3 top + 2 centered bottom */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" data-testid="category-overview-grid">
+            {categories.slice(1).map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => handleCategoryClick(cat.id)}
+                data-testid={`category-card-${cat.id}`}
+                className={`group relative flex flex-col items-center text-center gap-4 p-6 rounded-2xl border border-white/8 bg-white/[0.03] ${cat.borderHover} hover:bg-white/[0.06] transition-all duration-300 cursor-pointer overflow-hidden`}
+              >
+                {/* Glow blob behind icon */}
+                <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${cat.color}`} />
+
+                {/* Icon circle */}
+                <div className={`relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br ${cat.color} flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform duration-300`}
+                  style={{ boxShadow: `0 8px 32px -4px var(--tw-shadow-color)` }}
+                >
+                  <span className="w-8 h-8 flex items-center justify-center">{cat.bigIcon}</span>
+                </div>
+
+                {/* Label */}
+                <div className="relative z-10">
+                  <p className="font-bold text-white text-sm leading-tight mb-1">{cat.label}</p>
+                  <p className="text-white/40 text-xs leading-snug hidden sm:block">{cat.description}</p>
+                </div>
+
+                {/* Starting price */}
+                <div className="relative z-10 mt-auto w-full">
+                  {cat.startingFrom ? (
+                    <div className={`rounded-xl py-2 px-3 ${cat.glowBg} border border-white/5`}>
+                      <p className="text-white/40 text-[10px] uppercase tracking-wider">Starting from</p>
+                      <p className={`font-bold text-sm ${cat.neon}`}>{cat.startingFrom}</p>
+                    </div>
+                  ) : (
+                    <div className="rounded-xl py-2 px-3 bg-white/[0.04] border border-white/5">
+                      <p className="text-white/20 text-[10px] uppercase tracking-wider">Pricing</p>
+                      <p className="font-bold text-sm text-white/30">Coming Soon</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Arrow on hover */}
+                <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <ChevronRight className={`w-4 h-4 ${cat.neon}`} />
+                </div>
+              </button>
             ))}
           </div>
         </div>
