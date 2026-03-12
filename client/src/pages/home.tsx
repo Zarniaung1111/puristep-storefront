@@ -705,7 +705,7 @@ export default function Home() {
 
   const mutation = useMutation({
     mutationFn: (data: OrderFormValues) =>
-      apiRequest("POST", "/api/orders", {
+      apiRequest("POST", "/api/checkout", {
         productName: selectedProduct?.serviceName,
         planName: selectedProduct?.planName,
         price: selectedProduct?.price,
@@ -1387,7 +1387,7 @@ export default function Home() {
                       className="w-full bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-500 hover:to-purple-600 text-white border-0 h-11 font-semibold mt-2"
                       data-testid="button-submit-order"
                     >
-                      {mutation.isPending ? "Submitting..." : "Submit Order"}
+                      {mutation.isPending ? "Sending..." : "Submit Order"}
                     </Button>
                   </form>
                 </Form>
