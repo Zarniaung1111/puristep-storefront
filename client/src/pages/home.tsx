@@ -764,79 +764,171 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#080810] text-white">
+    <div className="min-h-screen bg-[#05050f] text-white">
 
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#080810]/80 backdrop-blur-xl border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#05050f]/85 backdrop-blur-xl border-b border-white/[0.06]" style={{ boxShadow: "0 1px 0 0 rgba(139,92,246,0.08), 0 4px 24px 0 rgba(0,0,0,0.4)" }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-purple-700 flex items-center justify-center">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-base tracking-tight">
-              Digital Packs <span className="text-violet-400">Vol 2</span>
+              Digital Packs <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Vol 2</span>
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <a href="/admin" className="text-sm text-white/40 hover:text-white/70 transition-colors hidden sm:block">Admin</a>
+            <a href="/admin" className="text-sm text-white/30 hover:text-white/60 transition-colors hidden sm:block">Admin</a>
             <Button
               size="sm"
-              variant="outline"
-              className="border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs"
+              className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-white border-0 text-xs font-semibold shadow-md shadow-teal-500/20 transition-all duration-200 hover:scale-[1.03]"
               onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth" })}
               data-testid="button-view-products"
             >
-              Browse Plans
+              Browse Packs
             </Button>
           </div>
         </div>
       </nav>
 
       {/* Hero */}
-      <section className="relative pt-28 pb-16 px-4 sm:px-6 overflow-hidden">
+      <section className="relative pt-32 pb-20 px-4 sm:px-6 overflow-hidden">
+        {/* Ambient glows */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-violet-700/20 rounded-full blur-3xl" />
-          <div className="absolute top-20 -left-20 w-64 h-64 bg-purple-800/15 rounded-full blur-3xl" />
+          <div className="absolute -top-60 -right-60 w-[700px] h-[700px] bg-violet-700/12 rounded-full blur-[140px]" />
+          <div className="absolute top-10 -left-40 w-[500px] h-[500px] bg-cyan-700/10 rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-fuchsia-800/8 rounded-full blur-[100px]" />
         </div>
 
         <div className="relative max-w-4xl mx-auto text-center">
-          <Badge
-            className="mb-5 bg-violet-950/60 text-violet-300 border-violet-500/30 px-4 py-1.5 text-xs font-medium"
-            data-testid="badge-hero"
-          >
-            <Star className="w-3 h-3 mr-1.5 fill-violet-400 text-violet-400" />
-            Trusted by 500+ customers in Myanmar
-          </Badge>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-5 leading-tight">
-            Premium Digital
-            <span className="block bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
-              Subscriptions
+          {/* Trust pill */}
+          <div className="animate-fade-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal-500/25 bg-teal-950/30 text-teal-400 text-xs font-semibold mb-8 backdrop-blur-sm" data-testid="badge-hero">
+            <Star className="w-3 h-3 fill-teal-400 flex-shrink-0" />
+            Trusted by 500+ creators in Myanmar
+          </div>
+
+          {/* Headline */}
+          <h1 className="animate-fade-in-up stagger-1 text-4xl sm:text-5xl md:text-[3.75rem] font-extrabold tracking-tight mb-6 leading-[1.08]">
+            Unlock the World's Best
+            <span className="block bg-gradient-to-r from-teal-400 via-cyan-300 to-violet-400 bg-clip-text text-transparent mt-1 pb-1">
+              Creative & AI Tools
             </span>
           </h1>
-          <p className="text-white/50 text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-            AI tools, music streaming, VPN, Telegram Premium & more — at unbeatable prices. Pay with KBZPay or WavePay.
+
+          {/* Subheadline */}
+          <p className="animate-fade-in-up stagger-2 text-white/50 text-lg max-w-xl mx-auto mb-10 leading-relaxed">
+            Instant delivery, 24/7 local support, and premium subscriptions in Myanmar.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+
+          {/* CTAs */}
+          <div className="animate-fade-in-up stagger-3 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-500 hover:to-purple-600 text-white border-0 px-8 h-12 text-base font-semibold shadow-lg shadow-violet-900/40"
+              className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-white border-0 px-9 h-13 text-base font-semibold shadow-lg shadow-teal-500/25 transition-all duration-300 hover:scale-[1.03] hover:shadow-teal-500/40"
               onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth" })}
               data-testid="button-hero-browse"
             >
-              Browse Plans <ChevronRight className="w-4 h-4 ml-1" />
+              Browse Packs <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white/12 bg-white/[0.04] backdrop-blur-sm hover:bg-white/[0.09] hover:border-white/25 text-white px-9 h-13 text-base font-semibold transition-all duration-300 hover:scale-[1.03]"
+              onClick={() => {
+                const paymentSection = document.getElementById("payment-section");
+                paymentSection?.scrollIntoView({ behavior: "smooth" });
+              }}
+              data-testid="button-hero-howto"
+            >
+              How to Buy (KBZPay/Wave)
             </Button>
           </div>
 
-          <div className="flex items-center justify-center gap-8 mt-12 flex-wrap">
+          {/* Stats bar */}
+          <div className="animate-fade-in-up stagger-4 flex items-center justify-center gap-3 sm:gap-8 mt-14 flex-wrap">
             {[
-              { icon: <Users className="w-4 h-4" />, label: "500+ Customers" },
-              { icon: <Clock className="w-4 h-4" />, label: "Instant Delivery" },
-              { icon: <Shield className="w-4 h-4" />, label: "100% Guaranteed" },
-              { icon: <Headphones className="w-4 h-4" />, label: "24/7 Support" },
+              { icon: <Users className="w-4 h-4" />, label: "500+ Active Subs", color: "text-teal-400" },
+              { icon: <Zap className="w-4 h-4" />, label: "Instant Access", color: "text-violet-400" },
+              { icon: <Shield className="w-4 h-4" />, label: "Local Payments", color: "text-cyan-400" },
+              { icon: <Headphones className="w-4 h-4" />, label: "24/7 Support", color: "text-fuchsia-400" },
             ].map((stat, i) => (
-              <div key={i} className="flex items-center gap-2 text-white/40 text-sm">
-                <span className="text-violet-400">{stat.icon}</span>
+              <div key={i} className="flex items-center gap-2 text-white/45 text-sm">
+                <span className={stat.color}>{stat.icon}</span>
                 {stat.label}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trusted by Creators / Testimonials */}
+      <section className="py-14 px-4 sm:px-6 border-t border-white/[0.05]">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-4 animate-fade-in-up">
+            <p className="text-white/25 text-xs uppercase tracking-widest font-semibold mb-2">What our users say</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">Trusted by Creators</h2>
+          </div>
+
+          {/* Stats strip */}
+          <div className="animate-fade-in-up stagger-1 flex items-center justify-center gap-3 text-sm text-white/40 my-6 flex-wrap">
+            <span className="font-semibold text-teal-400">500+ Active Subs</span>
+            <span className="text-white/15">|</span>
+            <span className="font-semibold text-cyan-400">Instant Access</span>
+            <span className="text-white/15">|</span>
+            <span className="font-semibold text-violet-400">Local Payments</span>
+          </div>
+
+          {/* Testimonial cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+            {[
+              {
+                name: "Aung Ko Ko",
+                handle: "@aungkoko.mm",
+                avatar: "AK",
+                avatarColor: "from-teal-500 to-cyan-600",
+                border: "hover:border-teal-500/30",
+                glow: "hover:shadow-teal-500/10",
+                text: "KBZPay payment was confirmed in under 2 minutes. My ChatGPT Plus was active immediately. Best service I've used!",
+              },
+              {
+                name: "Thida Myint",
+                handle: "@thida.creates",
+                avatar: "TM",
+                avatarColor: "from-violet-500 to-fuchsia-600",
+                border: "hover:border-violet-500/30",
+                glow: "hover:shadow-violet-500/10",
+                text: "Canva Pro at 20,000 KS for 2 years is unreal. The team responded on Telegram instantly whenever I needed help.",
+              },
+              {
+                name: "Min Thu",
+                handle: "@minthu.dev",
+                avatar: "MT",
+                avatarColor: "from-fuchsia-500 to-pink-600",
+                border: "hover:border-fuchsia-500/30",
+                glow: "hover:shadow-fuchsia-500/10",
+                text: "Used WavePay to buy Gemini Pro. Got access in minutes. The local support is what makes Digital Packs Vol 2 stand out.",
+              },
+            ].map((t, i) => (
+              <div
+                key={i}
+                className={`glass-card rounded-2xl p-5 border border-white/7 ${t.border} ${t.glow} hover:shadow-lg transition-all duration-300 hover:scale-[1.02] animate-fade-in-up stagger-${i + 2}`}
+                data-testid={`testimonial-card-${i}`}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.avatarColor} flex items-center justify-center flex-shrink-0`}>
+                    <span className="text-white text-xs font-bold">{t.avatar}</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-white text-sm">{t.name}</p>
+                    <p className="text-white/35 text-xs">{t.handle}</p>
+                  </div>
+                  <div className="ml-auto flex gap-0.5">
+                    {[...Array(5)].map((_, s) => (
+                      <Star key={s} className="w-3 h-3 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-white/55 text-sm leading-relaxed">"{t.text}"</p>
               </div>
             ))}
           </div>
@@ -851,36 +943,35 @@ export default function Home() {
             <h2 className="text-2xl sm:text-3xl font-bold text-white">What are you looking for?</h2>
           </div>
 
-          {/* 5-card grid: 3 top + 2 centered bottom */}
+          {/* 5-card grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" data-testid="category-overview-grid">
-            {categories.slice(1).map((cat) => (
+            {categories.slice(1).map((cat, i) => (
               <button
                 key={cat.id}
                 onClick={() => handleCategoryClick(cat.id)}
                 data-testid={`category-card-${cat.id}`}
-                className={`group relative flex flex-col items-center text-center gap-4 p-6 rounded-2xl border border-white/8 bg-white/[0.03] ${cat.borderHover} hover:bg-white/[0.06] transition-all duration-300 cursor-pointer overflow-hidden`}
+                className={`group relative flex flex-col items-center text-center gap-4 p-6 rounded-2xl border border-white/[0.07] glass-card ${cat.borderHover} hover:bg-white/[0.07] hover:scale-[1.03] transition-all duration-300 cursor-pointer overflow-hidden animate-fade-in-up stagger-${i + 1}`}
+                style={{ boxShadow: "0 4px 24px 0 rgba(0,0,0,0.3)" }}
               >
                 {/* Glow blob behind icon */}
-                <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${cat.color}`} />
+                <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 bg-gradient-to-br ${cat.color}`} />
 
                 {/* Icon circle */}
-                <div className={`relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br ${cat.color} flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform duration-300`}
-                  style={{ boxShadow: `0 8px 32px -4px var(--tw-shadow-color)` }}
-                >
+                <div className={`relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br ${cat.color} flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300`}>
                   <span className="w-8 h-8 flex items-center justify-center">{cat.bigIcon}</span>
                 </div>
 
                 {/* Label */}
                 <div className="relative z-10">
                   <p className="font-bold text-white text-sm leading-tight mb-1">{cat.label}</p>
-                  <p className="text-white/40 text-xs leading-snug hidden sm:block">{cat.description}</p>
+                  <p className="text-white/35 text-xs leading-snug hidden sm:block">{cat.description}</p>
                 </div>
 
                 {/* Starting price */}
                 <div className="relative z-10 mt-auto w-full">
                   {cat.startingFrom ? (
-                    <div className={`rounded-xl py-2 px-3 ${cat.glowBg} border border-white/5`}>
-                      <p className="text-white/40 text-[10px] uppercase tracking-wider">Starting from</p>
+                    <div className={`rounded-xl py-2 px-3 ${cat.glowBg} border border-white/5 backdrop-blur-sm`}>
+                      <p className="text-white/35 text-[10px] uppercase tracking-wider">Starting from</p>
                       <p className={`font-bold text-sm ${cat.neon}`}>{cat.startingFrom}</p>
                     </div>
                   ) : (
@@ -1011,7 +1102,7 @@ export default function Home() {
       </section>
 
       {/* Payment Details */}
-      <section className="py-16 px-4 sm:px-6 bg-white/[0.02] border-y border-white/5">
+      <section id="payment-section" className="py-16 px-4 sm:px-6 bg-white/[0.02] border-y border-white/[0.06]">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-2xl font-bold mb-2">Payment Details</h2>
           <p className="text-white/40 text-sm mb-8">Transfer to one of these accounts, then submit your order</p>
@@ -1020,7 +1111,7 @@ export default function Home() {
               { name: "KBZPay", bgClass: "bg-red-950/30 border-red-800/30", dotColor: "bg-red-500", number: "09-XXX-XXX-XXX" },
               { name: "WavePay", bgClass: "bg-blue-950/30 border-blue-800/30", dotColor: "bg-blue-500", number: "09-XXX-XXX-XXX" },
             ].map((p, i) => (
-              <div key={i} className={`${p.bgClass} border rounded-2xl p-6 text-left`} data-testid={`payment-${p.name.toLowerCase()}`}>
+              <div key={i} className={`${p.bgClass} border rounded-2xl p-6 text-left backdrop-blur-md hover:scale-[1.02] transition-all duration-300 hover:shadow-lg`} data-testid={`payment-${p.name.toLowerCase()}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <div className={`w-8 h-8 rounded-full ${p.dotColor} flex items-center justify-center`}>
                     <span className="text-white text-xs font-bold">{p.name[0]}</span>
@@ -1047,18 +1138,19 @@ export default function Home() {
       <section className="py-16 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
+            <p className="text-white/25 text-xs uppercase tracking-widest font-semibold mb-2">Simple process</p>
             <h2 className="text-2xl font-bold mb-2">How to Order</h2>
             <p className="text-white/40 text-sm">Get your subscription in 3 simple steps</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
-              { step: "01", icon: <Play className="w-5 h-5" />, title: "Choose a Plan", desc: "Browse our plans and click Buy Now on your preferred subscription." },
-              { step: "02", icon: <Zap className="w-5 h-5" />, title: "Make Payment", desc: "Pay via KBZPay or WavePay and take a screenshot of your transaction." },
-              { step: "03", icon: <CheckCircle2 className="w-5 h-5" />, title: "Submit & Receive", desc: "Fill the form with your Telegram/Messenger and upload your payment screenshot." },
+              { step: "01", icon: <Play className="w-5 h-5" />, title: "Choose a Plan", desc: "Browse our plans and click Buy Now on your preferred subscription.", color: "bg-teal-950/60 border-teal-500/25 text-teal-400" },
+              { step: "02", icon: <Zap className="w-5 h-5" />, title: "Make Payment", desc: "Pay via KBZPay or WavePay and take a screenshot of your transaction.", color: "bg-violet-950/60 border-violet-500/25 text-violet-400" },
+              { step: "03", icon: <CheckCircle2 className="w-5 h-5" />, title: "Submit & Receive", desc: "Fill the form with your Telegram/Messenger and upload your payment screenshot.", color: "bg-fuchsia-950/60 border-fuchsia-500/25 text-fuchsia-400" },
             ].map((s, i) => (
-              <div key={i} className="relative bg-white/[0.03] border border-white/8 rounded-2xl p-6">
-                <div className="text-5xl font-black text-white/5 absolute top-4 right-4 leading-none">{s.step}</div>
-                <div className="w-10 h-10 rounded-xl bg-violet-950/60 border border-violet-500/20 flex items-center justify-center text-violet-400 mb-4">
+              <div key={i} className={`relative glass-card rounded-2xl p-6 hover:bg-white/[0.06] hover:scale-[1.02] transition-all duration-300 border border-white/[0.07] animate-fade-in-up stagger-${i + 1}`}>
+                <div className="text-5xl font-black text-white/[0.04] absolute top-4 right-4 leading-none select-none">{s.step}</div>
+                <div className={`w-10 h-10 rounded-xl border flex items-center justify-center mb-4 ${s.color}`}>
                   {s.icon}
                 </div>
                 <h3 className="font-semibold text-white mb-2">{s.title}</h3>
@@ -1070,14 +1162,14 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 py-8 px-4 text-center">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-violet-600 to-purple-700 flex items-center justify-center">
-            <Sparkles className="w-3 h-3 text-white" />
+      <footer className="border-t border-white/[0.06] py-8 px-4 text-center bg-white/[0.01]">
+        <div className="flex items-center justify-center gap-2.5 mb-2">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-violet-500/25">
+            <Sparkles className="w-3.5 h-3.5 text-white" />
           </div>
-          <span className="font-bold text-sm">Digital Packs Vol 2</span>
+          <span className="font-bold text-sm bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Digital Packs Vol 2</span>
         </div>
-        <p className="text-white/20 text-xs">© 2025 Digital Packs Vol 2. All rights reserved.</p>
+        <p className="text-white/20 text-xs">© 2025 Digital Packs Vol 2. Myanmar's Premium Digital Subscription Reseller.</p>
       </footer>
 
       {/* Order Dialog */}
@@ -1310,11 +1402,12 @@ function AIAccordion({
         return (
           <div
             key={app.id}
-            className={`rounded-2xl border transition-all duration-300 overflow-hidden
+            className={`rounded-2xl border backdrop-blur-md transition-all duration-300 overflow-hidden
               ${isOpen
-                ? `${app.accentBorder} bg-gradient-to-r from-white/[0.04] to-white/[0.02]`
-                : `border-white/8 bg-white/[0.02] ${app.accentBorder}`
+                ? `${app.accentBorder} bg-gradient-to-br from-white/[0.05] to-white/[0.02]`
+                : `border-white/[0.07] bg-white/[0.025] ${app.accentBorder} hover:bg-white/[0.05]`
               }`}
+            style={{ boxShadow: isOpen ? "0 8px 32px 0 rgba(0,0,0,0.3)" : "0 4px 16px 0 rgba(0,0,0,0.2)" }}
             data-testid={`accordion-${app.id}`}
           >
             {/* Banner / Title Row — Level 2 */}
@@ -1366,10 +1459,10 @@ function AIAccordion({
                     {app.plans.map(plan => (
                       <div
                         key={plan.id}
-                        className={`relative rounded-xl border flex flex-col gap-3 overflow-hidden p-4 transition-all duration-200
+                        className={`relative rounded-xl border flex flex-col gap-3 overflow-hidden p-4 transition-all duration-200 backdrop-blur-sm hover:scale-[1.02]
                           ${plan.highlight
-                            ? `border-white/15 bg-white/[0.05]`
-                            : "border-white/6 bg-white/[0.02]"
+                            ? `border-white/[0.14] bg-white/[0.06] hover:border-white/[0.22] hover:shadow-lg`
+                            : "border-white/[0.06] bg-white/[0.03] hover:border-white/[0.14]"
                           }`}
                         data-testid={`card-ai-${plan.id}`}
                       >
@@ -1445,11 +1538,16 @@ function AIAccordion({
 function ProductCard({ product, onBuyNow }: { product: Product; onBuyNow: (p: Product) => void }) {
   return (
     <div
-      className={`relative rounded-2xl border ${product.comingSoon ? "border-white/5 opacity-75" : "border-white/8 hover:border-white/18"} bg-gradient-to-br ${product.cardColor} p-5 flex flex-col gap-4 transition-all duration-300 group`}
+      className={`relative rounded-2xl border backdrop-blur-md flex flex-col gap-4 transition-all duration-300 group p-5
+        ${product.comingSoon
+          ? "border-white/5 opacity-65 bg-white/[0.02]"
+          : "border-white/[0.08] bg-gradient-to-br " + product.cardColor + " hover:border-white/[0.18] hover:scale-[1.02] hover:shadow-xl"
+        }`}
+      style={!product.comingSoon ? { boxShadow: "0 4px 24px 0 rgba(0,0,0,0.25)" } : undefined}
       data-testid={`card-product-${product.id}`}
     >
       {product.comingSoon && (
-        <div className="absolute inset-0 rounded-2xl bg-[#080810]/30 pointer-events-none" />
+        <div className="absolute inset-0 rounded-2xl bg-[#080810]/20 pointer-events-none" />
       )}
 
       <div className="flex items-start justify-between">

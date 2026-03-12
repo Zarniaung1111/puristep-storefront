@@ -1,0 +1,20 @@
+Set the main background to a very deep, rich dark color (like bg-gray-950 or bg-[#0a0a0a]).
+​Apply a Glassmorphism effect to all cards, dropdowns, and the top navigation bar. Use backdrop-blur-md, semi-transparent dark backgrounds (e.g., bg-white/5), and subtle 1px borders with neon purple or teal glowing effects.
+​Make the top navigation bar 'sticky' so it floats over the content as the user scrolls.
+​2. The 'Puristep' Hero Section:
+​At the very top, build a stunning Hero Banner with a bold, glowing headline: 'Unlock the World's Best Creative & AI Tools'.
+​Subheadline: 'Instant delivery, 24/7 local support, and premium subscriptions in Myanmar.'
+​Add two Call-to-Action buttons: A primary neon teal button saying 'Browse Packs' and a secondary outline button saying 'How to Buy (KBZPay/Wave)'.
+​3. Social Proof & Trust Section:
+​Directly below the Hero, add a 'Trusted by Creators' section.
+​Include a stat bar: '500+ Active Subs | Instant Access | Local Payments'.
+​Add 3 minimalist testimonial cards with glowing borders from happy users praising the 'fast KBZPay verification and instant ChatGPT access'.
+​4. The Product Accordion UI (Crucial):
+​Maintain the 5 main category filters at the top: AI Tools, CapCut, Music, Telegram, VPN.
+​When 'AI Tools' is selected, display large, premium App Title Cards (ChatGPT, Gemini, Claude, Canva, Kling AI, Leonardo AI).
+​Interactive Accordion: When a user clicks an App Title Card, it must smoothly slide open (accordion style) to reveal the specific pricing cards inside (e.g., Team Invite, Monthly, Annual).
+​Each specific pricing card must have its price in MMK, a list of features, a 'Buy Now' button (linking to the payment form), and a 'Help' button.
+​5. Animations (Framer Motion / Tailwind):
+​Make the site feel expensive. Add a smooth 'fade-in and slide-up' animation to the categories as the user scrolls down.
+​Add hover states to all buttons and cards so they scale up slightly (scale-[1.02]) and their neon glow intensifies when interacted with.
+​Ensure the accordion open/close animations for the pricing cards are buttery smooth."
