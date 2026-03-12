@@ -119,7 +119,7 @@ const categories: Category[] = [
   },
   {
     id: "music",
-    label: "Music & Video",
+    label: "Music & Streaming",
     icon: <Music2 className="w-4 h-4" />,
     bigIcon: <Music2 className="w-8 h-8" />,
     color: "from-pink-600 to-rose-700",
@@ -422,6 +422,37 @@ const aiApps: AIApp[] = [
   },
 ];
 
+const musicApps: AIApp[] = [
+  {
+    id: "netflix",
+    name: "Netflix",
+    tagline: "4K streaming, private profile, MM region",
+    icon: <SiNetflix className="w-6 h-6 text-red-500" />,
+    iconBg: "from-red-600 to-red-800",
+    accentBorder: "border-red-500/25 hover:border-red-400/50",
+    accentGlow: "shadow-red-500/10",
+    neon: "text-red-400",
+    startingFrom: "From 22,000 KS",
+    plans: [
+      {
+        id: "netflix-premium-4k",
+        name: "Netflix Premium 4K + HDR",
+        price: "22,000 KS",
+        period: "Monthly",
+        features: [
+          "Own profile (100% private)",
+          "4K Ultra HD + HDR quality",
+          "1 device supported",
+          "Direct Myanmar (MM) Region access (No VPN required)",
+        ],
+        badge: "4K",
+        badgeStyle: "bg-red-500/20 text-red-300 border-red-500/40",
+        highlight: true,
+      },
+    ],
+  },
+];
+
 const products: Product[] = [
   // --- AI (non-ChatGPT) ---
   {
@@ -534,32 +565,7 @@ const products: Product[] = [
     comingSoon: true,
   },
 
-  // --- Music & Video ---
-  {
-    id: "netflix-monthly",
-    categoryId: "music",
-    serviceName: "Netflix",
-    planName: "Monthly Account",
-    price: "5,000 MMK",
-    duration: "1 Month",
-    features: ["4K Ultra HD", "Up to 4 screens", "All devices", "Download content", "No ads"],
-    cardColor: "from-red-900/40 to-red-950/60",
-    gradient: "from-red-600 to-red-800",
-    icon: <SiNetflix className="w-7 h-7 text-red-500" />,
-    badge: "Best Value",
-  },
-  {
-    id: "netflix-private",
-    categoryId: "music",
-    serviceName: "Netflix",
-    planName: "Private Account",
-    price: "12,000 MMK",
-    duration: "3 Months",
-    features: ["Dedicated profile", "4K Ultra HD", "All devices", "Download content", "Priority support"],
-    cardColor: "from-red-900/40 to-red-950/60",
-    gradient: "from-red-600 to-red-800",
-    icon: <SiNetflix className="w-7 h-7 text-red-500" />,
-  },
+  // --- Music & Streaming (non-Netflix; Netflix is in the accordion) ---
   {
     id: "youtube-family",
     categoryId: "music",
@@ -683,6 +689,7 @@ export default function Home() {
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
   const [expandedAIApp, setExpandedAIApp] = useState<string | null>("chatgpt");
+  const [expandedMusicApp, setExpandedMusicApp] = useState<string | null>(null);
   const productsRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -742,6 +749,25 @@ export default function Home() {
       duration: plan.period,
       features: plan.features,
       cardColor: "from-fuchsia-900/40 to-violet-950/60",
+      gradient: `from-${app.iconBg.split(" ")[0].replace("from-", "")} to-${app.iconBg.split(" ")[1].replace("to-", "")}`,
+      icon: app.icon,
+    });
+    setOrderOpen(true);
+    setOrderSuccess(false);
+    form.reset();
+    setPreviewImg(null);
+  };
+
+  const handleMusicPlanBuyNow = (app: AIApp, plan: AIPlan) => {
+    setSelectedProduct({
+      id: plan.id,
+      categoryId: "music",
+      serviceName: app.name,
+      planName: plan.name,
+      price: plan.price,
+      duration: plan.period,
+      features: plan.features,
+      cardColor: "from-red-900/40 to-rose-950/60",
       gradient: `from-${app.iconBg.split(" ")[0].replace("from-", "")} to-${app.iconBg.split(" ")[1].replace("to-", "")}`,
       icon: app.icon,
     });
@@ -1074,6 +1100,23 @@ export default function Home() {
                       onBuyNow={handleAIPlanBuyNow}
                       onHelp={() => setHelpOpen(true)}
                     />
+                  ) : cat.id === "music" ? (
+                    <div className="space-y-6">
+                      <AIAccordion
+                        apps={musicApps}
+                        expandedId={expandedMusicApp}
+                        onToggle={id => setExpandedMusicApp(prev => prev === id ? null : id)}
+                        onBuyNow={handleMusicPlanBuyNow}
+                        onHelp={() => setHelpOpen(true)}
+                      />
+                      {items.length > 0 && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                          {items.map(product => (
+                            <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       {items.map(product => (
@@ -1086,12 +1129,32 @@ export default function Home() {
             </div>
           )}
 
-          {/* Single category filtered view */}
-          {activeCategory !== "all" && activeCategory !== "ai" && (
+          {/* Single category filtered view — plain product cards */}
+          {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredProducts.map(product => (
                 <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
               ))}
+            </div>
+          )}
+
+          {/* Music & Streaming — accordion + remaining product cards */}
+          {activeCategory === "music" && (
+            <div className="space-y-6">
+              <AIAccordion
+                apps={musicApps}
+                expandedId={expandedMusicApp}
+                onToggle={id => setExpandedMusicApp(prev => prev === id ? null : id)}
+                onBuyNow={handleMusicPlanBuyNow}
+                onHelp={() => setHelpOpen(true)}
+              />
+              {filteredProducts.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {filteredProducts.map(product => (
+                    <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
