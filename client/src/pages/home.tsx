@@ -774,7 +774,7 @@ export default function Home() {
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-base tracking-tight">
-              Digital Packs <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Vol 2</span>
+              Puri<span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Step</span>
             </span>
           </div>
           <div className="flex items-center gap-3">
@@ -906,7 +906,7 @@ export default function Home() {
                 avatarColor: "from-fuchsia-500 to-pink-600",
                 border: "hover:border-fuchsia-500/30",
                 glow: "hover:shadow-fuchsia-500/10",
-                text: "Used WavePay to buy Gemini Pro. Got access in minutes. The local support is what makes Digital Packs Vol 2 stand out.",
+                text: "Used WavePay to buy Gemini Pro. Got access in minutes. The local support is what makes PuriStep stand out.",
               },
             ].map((t, i) => (
               <div
@@ -1125,7 +1125,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="text-white/30 text-xs">Account Name</p>
-                    <p className="text-white font-medium">Digital Packs Vol 2</p>
+                    <p className="text-white font-medium">PuriStep</p>
                   </div>
                 </div>
               </div>
@@ -1167,9 +1167,9 @@ export default function Home() {
           <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-violet-500/25">
             <Sparkles className="w-3.5 h-3.5 text-white" />
           </div>
-          <span className="font-bold text-sm bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Digital Packs Vol 2</span>
+          <span className="font-bold text-sm">Puri<span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Step</span></span>
         </div>
-        <p className="text-white/20 text-xs">© 2025 Digital Packs Vol 2. Myanmar's Premium Digital Subscription Reseller.</p>
+        <p className="text-white/20 text-xs">© 2025 PuriStep. Myanmar's Premium Digital Subscription Reseller.</p>
       </footer>
 
       {/* Order Dialog */}

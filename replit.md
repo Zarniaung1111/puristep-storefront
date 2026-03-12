@@ -1,4 +1,4 @@
-# Digital Packs Vol 2
+# PuriStep
 
 A professional, mobile-friendly landing page for a digital subscription reseller business operating in Myanmar.
 
