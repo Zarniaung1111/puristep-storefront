@@ -13,8 +13,10 @@ async function sendTelegramNotification(body: Record<string, string>) {
     return;
   }
 
+  const orderId = body.orderId || "N/A";
+
   const caption = [
-    "🛒 <b>New Order — PuriStep</b>",
+    `🚨 <b>NEW ORDER: ${orderId}</b>`,
     "",
     `📦 <b>Product:</b> ${body.productName || "—"} ${body.planName || ""}`.trim(),
     `💰 <b>Price:</b> ${body.price || "—"}`,

@@ -34,6 +34,7 @@ import {
   MessageCircle,
   HelpCircle,
   ExternalLink,
+  Copy,
 } from "lucide-react";
 import {
   SiNetflix,
@@ -681,6 +682,21 @@ const products: Product[] = [
   },
 ];
 
+function generateOrderId(): string {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let id = "PS-";
+  for (let i = 0; i < 6; i++) id += chars[Math.floor(Math.random() * chars.length)];
+  return id;
+}
+
+const PAYMENT_INFO: Record<string, { label: string; value: string; name: string; color: string }> = {
+  KBZPay:  { label: "Phone", value: "09892246556", name: "AungNaingOo", color: "border-purple-500/50 text-purple-400" },
+  UABPay:  { label: "Phone", value: "09892246556", name: "AungNaingOo", color: "border-purple-500/50 text-purple-400" },
+  WavePay: { label: "Phone", value: "09963707270", name: "Zarni Aung",  color: "border-teal-500/50 text-teal-400"   },
+  AYAPay:  { label: "Phone", value: "09963707270", name: "Zarni Aung",  color: "border-teal-500/50 text-teal-400"   },
+  Binance: { label: "UID",   value: "979804957",   name: "Zarni Aung",  color: "border-amber-500/50 text-amber-400" },
+};
+
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState<CategoryId>("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -690,6 +706,7 @@ export default function Home() {
   const [helpOpen, setHelpOpen] = useState(false);
   const [expandedAIApp, setExpandedAIApp] = useState<string | null>("chatgpt");
   const [expandedMusicApp, setExpandedMusicApp] = useState<string | null>(null);
+  const [orderId, setOrderId] = useState<string>("");
   const productsRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -706,6 +723,7 @@ export default function Home() {
   const mutation = useMutation({
     mutationFn: (data: OrderFormValues) =>
       apiRequest("POST", "/api/checkout", {
+        orderId,
         productName: selectedProduct?.serviceName,
         planName: selectedProduct?.planName,
         price: selectedProduct?.price,
@@ -717,6 +735,7 @@ export default function Home() {
 
   const handleBuyNow = (product: Product) => {
     setSelectedProduct(product);
+    setOrderId(generateOrderId());
     setOrderOpen(true);
     setOrderSuccess(false);
     form.reset();
@@ -752,6 +771,7 @@ export default function Home() {
       gradient: `from-${app.iconBg.split(" ")[0].replace("from-", "")} to-${app.iconBg.split(" ")[1].replace("to-", "")}`,
       icon: app.icon,
     });
+    setOrderId(generateOrderId());
     setOrderOpen(true);
     setOrderSuccess(false);
     form.reset();
@@ -771,6 +791,7 @@ export default function Home() {
       gradient: `from-${app.iconBg.split(" ")[0].replace("from-", "")} to-${app.iconBg.split(" ")[1].replace("to-", "")}`,
       icon: app.icon,
     });
+    setOrderId(generateOrderId());
     setOrderOpen(true);
     setOrderSuccess(false);
     form.reset();
@@ -778,6 +799,12 @@ export default function Home() {
   };
 
   const onSubmit = (data: OrderFormValues) => mutation.mutate(data);
+
+  const watchedPaymentMethod = form.watch("paymentMethod");
+  const activePaymentInfo = PAYMENT_INFO[watchedPaymentMethod] ?? null;
+  const [paymentBorderCls, paymentTextCls] = activePaymentInfo
+    ? activePaymentInfo.color.split(" ")
+    : ["border-white/10", "text-white"];
 
   const activeCat = categories.find(c => c.id === activeCategory)!;
   const filteredProducts = activeCategory === "all"
@@ -1247,7 +1274,7 @@ export default function Home() {
         open={orderOpen}
         onOpenChange={(open) => {
           setOrderOpen(open);
-          if (!open) { setOrderSuccess(false); form.reset(); setPreviewImg(null); }
+          if (!open) { setOrderSuccess(false); form.reset(); setPreviewImg(null); setOrderId(""); }
         }}
       >
         <DialogContent className="bg-[#0e0e1a] border border-white/10 text-white max-w-md w-[calc(100vw-2rem)] rounded-2xl p-0 overflow-hidden">
@@ -1257,11 +1284,26 @@ export default function Home() {
                 <CheckCircle2 className="w-8 h-8 text-green-400" />
               </div>
               <h3 className="text-xl font-bold mb-2">Order Submitted!</h3>
-              <p className="text-white/40 text-sm mb-6">
+              <p className="text-white/40 text-sm mb-4">
                 We've received your order for{" "}
                 <span className="text-white font-medium">{selectedProduct?.serviceName} {selectedProduct?.planName}</span>.
-                We'll contact you via {form.getValues("contactPlatform")} shortly.
               </p>
+
+              {/* Order ID highlighted box */}
+              <div className="my-4 p-4 rounded-xl border border-teal-500/50 bg-teal-950/20 backdrop-blur-sm">
+                <p className="text-white/40 text-xs uppercase tracking-widest mb-1.5">Your Order ID</p>
+                <p
+                  className="text-teal-400 font-black text-2xl tracking-[0.2em] font-mono"
+                  data-testid="text-order-id"
+                >
+                  {orderId}
+                </p>
+              </div>
+
+              <p className="text-amber-400/80 text-xs leading-relaxed mb-6">
+                Please copy this Order ID and send it to our Admin to receive your product instantly.
+              </p>
+
               <Button
                 className="bg-violet-700 hover:bg-violet-600 w-full"
                 onClick={() => setOrderOpen(false)}
@@ -1348,12 +1390,45 @@ export default function Home() {
                             <SelectContent className="bg-[#13131f] border-white/10 text-white">
                               <SelectItem value="KBZPay">KBZPay</SelectItem>
                               <SelectItem value="WavePay">WavePay</SelectItem>
+                              <SelectItem value="AYAPay">AYAPay</SelectItem>
+                              <SelectItem value="UABPay">UABPay</SelectItem>
+                              <SelectItem value="Binance">Binance</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage className="text-red-400 text-xs" />
                         </FormItem>
                       )}
                     />
+
+                    {/* Dynamic payment info box */}
+                    {activePaymentInfo && (
+                      <div className={`rounded-xl border ${paymentBorderCls} bg-white/[0.03] backdrop-blur-sm p-4`}>
+                        <p className="text-white/40 text-xs uppercase tracking-widest mb-3">Send payment to</p>
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <span className="text-white/40 text-xs flex-shrink-0">{activePaymentInfo.label}:</span>
+                              <span className={`font-mono font-bold text-sm ${paymentTextCls} truncate`} data-testid="text-payment-value">{activePaymentInfo.value}</span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                navigator.clipboard.writeText(activePaymentInfo.value);
+                                toast({ title: "Copied!", description: `${activePaymentInfo.label} copied to clipboard` });
+                              }}
+                              className="flex-shrink-0 p-1.5 rounded-lg hover:bg-white/10 text-white/40 hover:text-white/80 transition-colors"
+                              data-testid="button-copy-payment"
+                            >
+                              <Copy className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-white/40 text-xs">Name:</span>
+                            <span className="text-white/70 text-sm font-medium">{activePaymentInfo.name}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     <div className="space-y-2">
                       <label className="text-white/60 text-xs uppercase tracking-wide block">Payment Screenshot</label>
