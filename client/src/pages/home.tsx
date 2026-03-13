@@ -47,6 +47,7 @@ import {
   LogIn,
   LogOut,
   Package,
+  Clapperboard,
 } from "lucide-react";
 import {
   SiNetflix,
@@ -71,7 +72,7 @@ const orderFormSchema = z.object({
 
 type OrderFormValues = z.infer<typeof orderFormSchema>;
 
-type CategoryId = "all" | "ai" | "capcut" | "music" | "telegram" | "vpn";
+type CategoryId = "all" | "ai" | "editing" | "music" | "telegram" | "vpn";
 
 interface Category {
   id: CategoryId;
@@ -118,10 +119,10 @@ const categories: Category[] = [
     productCount: 6,
   },
   {
-    id: "capcut",
-    label: "CapCut",
-    icon: <Scissors className="w-4 h-4" />,
-    bigIcon: <Scissors className="w-8 h-8" />,
+    id: "editing",
+    label: "Editing Software",
+    icon: <Clapperboard className="w-4 h-4" />,
+    bigIcon: <Clapperboard className="w-8 h-8" />,
     color: "from-orange-500 to-amber-600",
     neon: "text-amber-400",
     glow: "shadow-amber-500/30",
@@ -516,6 +517,55 @@ const musicApps: AIApp[] = [
   },
 ];
 
+const editingApps: AIApp[] = [
+  {
+    id: "capcut",
+    name: "CapCut",
+    tagline: "Professional video editing & creation",
+    icon: <Scissors className="w-6 h-6 text-white" />,
+    iconBg: "from-amber-500 to-orange-600",
+    accentBorder: "border-amber-500/25 hover:border-amber-400/50",
+    accentGlow: "shadow-amber-500/10",
+    neon: "text-amber-400",
+    startingFrom: "Coming Soon",
+    plans: [
+      {
+        id: "capcut-pro-monthly",
+        name: "Pro Monthly",
+        price: "Coming Soon",
+        period: "Monthly",
+        features: [
+          "Remove watermark",
+          "Premium templates",
+          "AI features",
+          "All devices",
+          "Cloud storage 100GB",
+        ],
+        badge: "Soon",
+        badgeStyle: "bg-white/8 text-white/35 border-white/10",
+        buttonLabel: "Coming Soon",
+      },
+      {
+        id: "capcut-pro-annual",
+        name: "Pro Annual",
+        price: "Coming Soon",
+        period: "Yearly",
+        features: [
+          "All Pro Monthly perks",
+          "Best value",
+          "Remove watermark",
+          "AI background",
+          "Priority render",
+        ],
+        badge: "Best Value",
+        badgeStyle: "bg-amber-500/20 text-amber-300 border-amber-500/40",
+        highlight: true,
+        buttonLabel: "Coming Soon",
+      },
+    ],
+  },
+];
+
 const products: Product[] = [
   // --- AI (non-ChatGPT) ---
   {
@@ -598,35 +648,7 @@ const products: Product[] = [
     badge: "Image AI",
   },
 
-  // --- CapCut ---
-  {
-    id: "capcut-pro-monthly",
-    categoryId: "capcut",
-    serviceName: "CapCut",
-    planName: "Pro Monthly",
-    price: "Coming Soon",
-    duration: "1 Month",
-    features: ["Remove watermark", "Premium templates", "AI features", "All devices", "Cloud storage 100GB"],
-    cardColor: "from-amber-900/40 to-orange-950/60",
-    gradient: "from-amber-500 to-orange-600",
-    icon: <Scissors className="w-7 h-7 text-amber-400" />,
-    badge: "Soon",
-    comingSoon: true,
-  },
-  {
-    id: "capcut-pro-annual",
-    categoryId: "capcut",
-    serviceName: "CapCut",
-    planName: "Pro Annual",
-    price: "Coming Soon",
-    duration: "1 Year",
-    features: ["All Pro Monthly perks", "Best value", "Remove watermark", "AI background", "Priority render"],
-    cardColor: "from-amber-900/40 to-orange-950/60",
-    gradient: "from-orange-500 to-red-600",
-    icon: <Scissors className="w-7 h-7 text-orange-400" />,
-    badge: "Best Value",
-    comingSoon: true,
-  },
+  // --- CapCut (now under Editing Software accordion — no product cards needed here) ---
 
   // --- Music & Streaming (non-Netflix; Netflix is in the accordion) ---
   {
@@ -768,6 +790,7 @@ export default function Home() {
   const [helpOpen, setHelpOpen] = useState(false);
   const [expandedAIApp, setExpandedAIApp] = useState<string | null>("chatgpt");
   const [expandedMusicApp, setExpandedMusicApp] = useState<string | null>(null);
+  const [expandedEditingApp, setExpandedEditingApp] = useState<string | null>("capcut");
   const [orderId, setOrderId] = useState<string>("");
 
   const { user, loading: authLoading, supabase, signInWithGoogle, signOut } = useAuth();
@@ -905,6 +928,27 @@ export default function Home() {
     setPreviewImg(null);
   };
 
+  const handleEditingPlanBuyNow = (app: AIApp, plan: AIPlan) => {
+    if (!user) { setSignInOpen(true); return; }
+    setSelectedProduct({
+      id: plan.id,
+      categoryId: "editing",
+      serviceName: app.name,
+      planName: plan.name,
+      price: plan.price,
+      duration: plan.period,
+      features: plan.features,
+      cardColor: "from-amber-900/40 to-orange-950/60",
+      gradient: `from-${app.iconBg.split(" ")[0].replace("from-", "")} to-${app.iconBg.split(" ")[1].replace("to-", "")}`,
+      icon: app.icon,
+    });
+    setOrderId(generateOrderId());
+    setOrderOpen(true);
+    setOrderSuccess(false);
+    form.reset();
+    setPreviewImg(null);
+  };
+
   const onSubmit = (data: OrderFormValues) => mutation.mutate(data);
 
   const watchedPaymentMethod = form.watch("paymentMethod");
@@ -922,7 +966,7 @@ export default function Home() {
     ? categories.slice(1).map(cat => ({
         cat,
         items: products.filter(p => p.categoryId === cat.id),
-      })).filter(g => g.items.length > 0)
+      })).filter(g => g.items.length > 0 || ["ai", "editing", "music"].includes(g.cat.id))
     : null;
 
   const handleCategoryClick = (catId: CategoryId) => {
@@ -1288,6 +1332,14 @@ export default function Home() {
                       onBuyNow={handleAIPlanBuyNow}
                       onHelp={() => setHelpOpen(true)}
                     />
+                  ) : cat.id === "editing" ? (
+                    <AIAccordion
+                      apps={editingApps}
+                      expandedId={expandedEditingApp}
+                      onToggle={id => setExpandedEditingApp(prev => prev === id ? null : id)}
+                      onBuyNow={handleEditingPlanBuyNow}
+                      onHelp={() => setHelpOpen(true)}
+                    />
                   ) : cat.id === "music" ? (
                     <div className="space-y-6">
                       <AIAccordion
@@ -1318,12 +1370,23 @@ export default function Home() {
           )}
 
           {/* Single category filtered view — plain product cards */}
-          {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && (
+          {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && activeCategory !== "editing" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredProducts.map(product => (
                 <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
               ))}
             </div>
+          )}
+
+          {/* Editing Software — dedicated accordion view */}
+          {activeCategory === "editing" && (
+            <AIAccordion
+              apps={editingApps}
+              expandedId={expandedEditingApp}
+              onToggle={id => setExpandedEditingApp(prev => prev === id ? null : id)}
+              onBuyNow={handleEditingPlanBuyNow}
+              onHelp={() => setHelpOpen(true)}
+            />
           )}
 
           {/* Music & Streaming — accordion + remaining product cards */}

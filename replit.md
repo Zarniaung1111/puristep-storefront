@@ -29,10 +29,11 @@ Sells AI tools (ChatGPT, Gemini, Claude, Canva, Kling AI, Leonardo AI), CapCut, 
 5. **5 Payment Methods**: KBZPay, WavePay, AYAPay, UABPay, Binance with correct receiver details per method
 6. **Telegram Notifications**: Bot sends order notification via `sendPhoto` (with screenshot) or `sendMessage`
 7. **My Orders**: Logged-in users can view their order history fetched live from Supabase
-8. **Category Filter**: AI Tools, CapCut, Music & Streaming, Telegram Premium, VPN
-9. **AI Accordion**: Expandable per-app plan selector for ChatGPT, Gemini, Claude, Canva, Kling AI
-10. **Music Accordion**: Netflix, YouTube, Spotify, Apple Music plans
-11. **Admin Dashboard**: View orders, update status, see payment screenshots
+8. **Category Filter**: AI Tools, Editing Software, Music & Streaming, Telegram Premium, VPN
+9. **AI Accordion**: Expandable per-app plan selector for ChatGPT, Gemini, Claude, Canva, Kling AI, Perplexity Pro, Leonardo AI
+10. **Editing Software Accordion**: CapCut (Pro Monthly, Pro Annual) nested inside the Editing Software category
+11. **Music Accordion**: Netflix, YouTube, Spotify, Apple Music plans
+12. **Admin Dashboard**: View orders, update status, see payment screenshots
 
 ## Database Schema
 
@@ -78,4 +79,4 @@ Sells AI tools (ChatGPT, Gemini, Claude, Canva, Kling AI, Leonardo AI), CapCut, 
 - Primary accent: violet/purple + cyan/teal neon
 - Glassmorphism cards with `backdrop-blur` and neon border glows
 - CSS animations: `fadeInUp`, `glowPulse`
-- Category neon colors: fuchsia=AI, amber=CapCut, pink=Music, cyan=Telegram, emerald=VPN
+- Category neon colors: fuchsia=AI, amber=Editing Software, pink=Music, cyan=Telegram, emerald=VPN
