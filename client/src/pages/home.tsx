@@ -47,7 +47,6 @@ import {
   LogIn,
   LogOut,
   Package,
-  Mail,
 } from "lucide-react";
 import {
   SiNetflix,
@@ -60,6 +59,7 @@ import {
   SiOpenai,
   SiGooglegemini,
   SiAnthropic,
+  SiGoogle,
 } from "react-icons/si";
 
 const orderFormSchema = z.object({
@@ -721,12 +721,9 @@ export default function Home() {
   const [expandedMusicApp, setExpandedMusicApp] = useState<string | null>(null);
   const [orderId, setOrderId] = useState<string>("");
 
-  const { user, loading: authLoading, supabase, signInWithEmail, signOut } = useAuth();
+  const { user, loading: authLoading, supabase, signInWithGoogle, signOut } = useAuth();
   const [signInOpen, setSignInOpen] = useState(false);
-  const [signInEmail, setSignInEmail] = useState("");
-  const [signInSent, setSignInSent] = useState(false);
   const [signInLoading, setSignInLoading] = useState(false);
-  const [signInError, setSignInError] = useState<string | null>(null);
   const [ordersOpen, setOrdersOpen] = useState(false);
   const [orderHistory, setOrderHistory] = useState<Array<{
     id: string;
@@ -739,6 +736,10 @@ export default function Home() {
 
   const productsRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (user && signInOpen) setSignInOpen(false);
+  }, [user, signInOpen]);
 
   useEffect(() => {
     if (!ordersOpen || !user || !supabase) return;
@@ -1584,82 +1585,51 @@ export default function Home() {
       </Dialog>
 
       {/* Sign In Modal */}
-      <Dialog open={signInOpen} onOpenChange={(open) => { setSignInOpen(open); if (!open) { setSignInSent(false); setSignInEmail(""); setSignInError(null); } }}>
+      <Dialog open={signInOpen} onOpenChange={setSignInOpen}>
         <DialogContent className="bg-[#0e0e1a] border border-white/10 text-white max-w-sm w-[calc(100vw-2rem)] rounded-2xl p-0 overflow-hidden">
-          {signInSent ? (
-            <div className="p-8 text-center">
-              <div className="w-16 h-16 rounded-full bg-violet-950/60 border border-violet-500/30 flex items-center justify-center mx-auto mb-4">
-                <Mail className="w-8 h-8 text-violet-400" />
+          <div className="p-6 pb-5 border-b border-white/5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-violet-950/60 border border-violet-500/20 flex items-center justify-center flex-shrink-0">
+                <LogIn className="w-5 h-5 text-violet-400" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Check your email!</h3>
-              <p className="text-white/50 text-sm mb-6 leading-relaxed">
-                We've sent a secure login link to{" "}
-                <span className="text-violet-400 font-medium">{signInEmail}</span>.
-                Click the link in your inbox to sign in instantly.
-              </p>
-              <Button
-                className="w-full bg-white/5 border border-white/10 hover:bg-white/10 text-white/70"
-                variant="outline"
-                onClick={() => setSignInOpen(false)}
-              >
-                Got it
-              </Button>
+              <div>
+                <DialogTitle className="text-base font-semibold text-white">Sign In to PuriStep</DialogTitle>
+                <DialogDescription className="text-white/40 text-xs">Sign in to place orders and track your history</DialogDescription>
+              </div>
             </div>
-          ) : (
-            <>
-              <div className="p-6 pb-4 border-b border-white/5">
-                <div className="flex items-center gap-3 mb-1">
-                  <div className="w-10 h-10 rounded-xl bg-violet-950/60 border border-violet-500/20 flex items-center justify-center flex-shrink-0">
-                    <LogIn className="w-5 h-5 text-violet-400" />
-                  </div>
-                  <div>
-                    <DialogTitle className="text-base font-semibold text-white">Sign In to PuriStep</DialogTitle>
-                    <DialogDescription className="text-white/40 text-xs">We'll email you a magic link — no password needed</DialogDescription>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6 space-y-4">
-                <div className="space-y-1.5">
-                  <label className="text-white/60 text-xs uppercase tracking-wide">Email Address</label>
-                  <Input
-                    type="email"
-                    placeholder="you@example.com"
-                    value={signInEmail}
-                    onChange={(e) => setSignInEmail(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && !signInLoading && signInEmail && (async () => {
-                      setSignInLoading(true);
-                      setSignInError(null);
-                      const { error } = await signInWithEmail(signInEmail);
-                      setSignInLoading(false);
-                      if (error) { setSignInError(error); } else { setSignInSent(true); }
-                    })()}
-                    className="bg-white/5 border-white/10 text-white placeholder:text-white/20 focus-visible:ring-violet-500"
-                    data-testid="input-sign-in-email"
-                  />
-                </div>
-                {signInError && (
-                  <p className="text-red-400 text-xs">{signInError}</p>
-                )}
-                <Button
-                  className="w-full bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-500 hover:to-purple-600 text-white border-0 h-11 font-semibold"
-                  disabled={signInLoading || !signInEmail}
-                  onClick={async () => {
-                    setSignInLoading(true);
-                    setSignInError(null);
-                    const { error } = await signInWithEmail(signInEmail);
-                    setSignInLoading(false);
-                    if (error) { setSignInError(error); } else { setSignInSent(true); }
-                  }}
-                  data-testid="button-send-magic-link"
-                >
-                  {signInLoading ? "Sending..." : "Send Magic Link"}
-                </Button>
-                <p className="text-white/25 text-xs text-center">
-                  By signing in, you agree to our terms of service.
-                </p>
-              </div>
-            </>
-          )}
+          </div>
+
+          <div className="p-6 space-y-4">
+            {/* Neon divider accent */}
+            <div className="flex items-center gap-3 py-1">
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
+              <span className="text-white/25 text-xs">Secure login via</span>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
+            </div>
+
+            <Button
+              className="w-full h-12 bg-white hover:bg-white/90 active:bg-white/80 text-gray-900 font-semibold text-sm border-0 rounded-xl flex items-center justify-center gap-3 shadow-lg shadow-black/20 transition-all duration-200 hover:scale-[1.02]"
+              disabled={signInLoading}
+              onClick={async () => {
+                setSignInLoading(true);
+                await signInWithGoogle();
+                setSignInLoading(false);
+              }}
+              data-testid="button-sign-in-google"
+            >
+              {signInLoading ? (
+                <div className="w-5 h-5 border-2 border-gray-300 border-t-gray-700 rounded-full animate-spin" />
+              ) : (
+                <SiGoogle className="w-5 h-5 text-gray-700" />
+              )}
+              {signInLoading ? "Redirecting..." : "Continue with Google"}
+            </Button>
+
+            <p className="text-white/20 text-xs text-center leading-relaxed">
+              By signing in, you agree to our terms of service.
+              Your data is secured by Google & Supabase.
+            </p>
+          </div>
         </DialogContent>
       </Dialog>
 

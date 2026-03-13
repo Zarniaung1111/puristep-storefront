@@ -6,7 +6,7 @@ export interface AuthState {
   user: User | null;
   loading: boolean;
   supabase: SupabaseClient | null;
-  signInWithEmail: (email: string) => Promise<{ error: string | null }>;
+  signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -42,13 +42,14 @@ export function useAuth(): AuthState {
     };
   }, []);
 
-  const signInWithEmail = async (email: string): Promise<{ error: string | null }> => {
+  const signInWithGoogle = async () => {
     const sb = await getSupabaseClient();
-    const { error } = await sb.auth.signInWithOtp({
-      email,
-      options: { shouldCreateUser: true },
+    await sb.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin,
+      },
     });
-    return { error: error?.message ?? null };
   };
 
   const signOut = async () => {
@@ -56,5 +57,5 @@ export function useAuth(): AuthState {
     await sb.auth.signOut();
   };
 
-  return { user, loading, supabase, signInWithEmail, signOut };
+  return { user, loading, supabase, signInWithGoogle, signOut };
 }
