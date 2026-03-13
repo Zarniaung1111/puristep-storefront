@@ -199,6 +199,7 @@ interface AIPlan {
   badge?: string;
   badgeStyle?: string;
   highlight?: boolean;
+  buttonLabel?: string;
 }
 
 interface AIApp {
@@ -398,6 +399,54 @@ const aiApps: AIApp[] = [
         badge: "Video AI",
         badgeStyle: "bg-violet-500/20 text-violet-300 border-violet-500/40",
         highlight: true,
+      },
+    ],
+  },
+  {
+    id: "perplexity",
+    name: "Perplexity Pro",
+    tagline: "AI-powered search & research assistant",
+    icon: (
+      <div className="w-6 h-6 rounded-md bg-gradient-to-br from-cyan-400 to-teal-600 flex items-center justify-center">
+        <span className="text-white text-[9px] font-black tracking-tighter">PX</span>
+      </div>
+    ),
+    iconBg: "from-cyan-500 to-teal-600",
+    accentBorder: "border-cyan-500/25 hover:border-cyan-400/50",
+    accentGlow: "shadow-cyan-500/15",
+    neon: "text-cyan-400",
+    startingFrom: "From 24,000 KS",
+    plans: [
+      {
+        id: "perplexity-monthly",
+        name: "Monthly",
+        price: "24,000 KS",
+        period: "Monthly",
+        features: [
+          "Unlimited Pro Searches",
+          "Premium AI Models (GPT-4o, Claude 3.5 Sonnet)",
+          "Unlimited File Uploads",
+          "AI Image Generation",
+          "Ad-Free Experience",
+        ],
+        buttonLabel: "Select Plan",
+      },
+      {
+        id: "perplexity-yearly",
+        name: "Annual",
+        price: "68,000 KS",
+        period: "Yearly",
+        features: [
+          "Save over 75% compared to monthly",
+          "Everything in the Monthly plan",
+          "Always Up-to-Date Models",
+          "Uninterrupted Workflow",
+          "Priority Support",
+        ],
+        badge: "🏆 Best Value",
+        badgeStyle: "bg-amber-500/20 text-amber-300 border-amber-500/40",
+        highlight: true,
+        buttonLabel: "Select Yearly Plan",
       },
     ],
   },
@@ -1820,13 +1869,13 @@ function AIAccordion({
                         key={plan.id}
                         className={`relative rounded-xl border flex flex-col gap-3 overflow-hidden p-4 transition-all duration-200 backdrop-blur-sm hover:scale-[1.02]
                           ${plan.highlight
-                            ? `border-white/[0.14] bg-white/[0.06] hover:border-white/[0.22] hover:shadow-lg`
+                            ? `border-white/[0.18] bg-white/[0.06] hover:border-white/[0.28] hover:shadow-xl ${app.accentGlow}`
                             : "border-white/[0.06] bg-white/[0.03] hover:border-white/[0.14]"
                           }`}
                         data-testid={`card-ai-${plan.id}`}
                       >
                         {plan.highlight && (
-                          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
                         )}
 
                         {/* Plan name + badge */}
@@ -1868,7 +1917,7 @@ function AIAccordion({
                             className={`flex-1 bg-gradient-to-r ${app.iconBg} hover:opacity-90 text-white border-0 font-semibold h-8 text-xs`}
                             data-testid={`button-buy-${plan.id}`}
                           >
-                            Buy Now
+                            {plan.buttonLabel ?? "Buy Now"}
                           </Button>
                           <Button
                             variant="outline"
