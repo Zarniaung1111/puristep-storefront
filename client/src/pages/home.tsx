@@ -1,16 +1,25 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   CheckCircle2,
   Shield,
@@ -35,6 +44,10 @@ import {
   HelpCircle,
   ExternalLink,
   Copy,
+  LogIn,
+  LogOut,
+  Package,
+  Mail,
 } from "lucide-react";
 import {
   SiNetflix,
@@ -707,8 +720,39 @@ export default function Home() {
   const [expandedAIApp, setExpandedAIApp] = useState<string | null>("chatgpt");
   const [expandedMusicApp, setExpandedMusicApp] = useState<string | null>(null);
   const [orderId, setOrderId] = useState<string>("");
+
+  const { user, loading: authLoading, supabase, signInWithEmail, signOut } = useAuth();
+  const [signInOpen, setSignInOpen] = useState(false);
+  const [signInEmail, setSignInEmail] = useState("");
+  const [signInSent, setSignInSent] = useState(false);
+  const [signInLoading, setSignInLoading] = useState(false);
+  const [signInError, setSignInError] = useState<string | null>(null);
+  const [ordersOpen, setOrdersOpen] = useState(false);
+  const [orderHistory, setOrderHistory] = useState<Array<{
+    id: string;
+    order_id: string;
+    product_name: string;
+    price: string;
+    created_at: string;
+  }>>([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
+
   const productsRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (!ordersOpen || !user || !supabase) return;
+    setOrdersLoading(true);
+    supabase
+      .from("orders")
+      .select("id, order_id, product_name, price, created_at")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })
+      .then(({ data, error }) => {
+        if (!error && data) setOrderHistory(data as typeof orderHistory);
+        setOrdersLoading(false);
+      });
+  }, [ordersOpen, user, supabase]);
 
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
@@ -729,11 +773,22 @@ export default function Home() {
         price: selectedProduct?.price,
         ...data,
       }),
-    onSuccess: () => setOrderSuccess(true),
+    onSuccess: async () => {
+      setOrderSuccess(true);
+      if (user && supabase) {
+        await supabase.from("orders").insert({
+          order_id: orderId,
+          product_name: selectedProduct?.serviceName ?? "",
+          price: selectedProduct?.price ?? "",
+          user_id: user.id,
+        });
+      }
+    },
     onError: () => toast({ title: "Error", description: "Failed to submit order. Please try again.", variant: "destructive" }),
   });
 
   const handleBuyNow = (product: Product) => {
+    if (!user) { setSignInOpen(true); return; }
     setSelectedProduct(product);
     setOrderId(generateOrderId());
     setOrderOpen(true);
@@ -759,6 +814,7 @@ export default function Home() {
   };
 
   const handleAIPlanBuyNow = (app: AIApp, plan: AIPlan) => {
+    if (!user) { setSignInOpen(true); return; }
     setSelectedProduct({
       id: plan.id,
       categoryId: "ai",
@@ -779,6 +835,7 @@ export default function Home() {
   };
 
   const handleMusicPlanBuyNow = (app: AIApp, plan: AIPlan) => {
+    if (!user) { setSignInOpen(true); return; }
     setSelectedProduct({
       id: plan.id,
       categoryId: "music",
@@ -837,16 +894,70 @@ export default function Home() {
               Puri<span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Step</span>
             </span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <a href="/admin" className="text-sm text-white/30 hover:text-white/60 transition-colors hidden sm:block">Admin</a>
             <Button
               size="sm"
-              className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-white border-0 text-xs font-semibold shadow-md shadow-teal-500/20 transition-all duration-200 hover:scale-[1.03]"
+              className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-white border-0 text-xs font-semibold shadow-md shadow-teal-500/20 transition-all duration-200 hover:scale-[1.03] hidden sm:flex"
               onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth" })}
               data-testid="button-view-products"
             >
               Browse Packs
             </Button>
+
+            {!authLoading && !user && (
+              <Button
+                size="sm"
+                variant="outline"
+                className="border-violet-500/40 bg-violet-950/30 hover:bg-violet-900/40 text-violet-300 hover:text-white text-xs font-semibold transition-all gap-1.5"
+                onClick={() => setSignInOpen(true)}
+                data-testid="button-sign-in"
+              >
+                <LogIn className="w-3.5 h-3.5" />
+                Sign In
+              </Button>
+            )}
+
+            {!authLoading && user && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
+                    data-testid="button-user-menu"
+                  >
+                    <Avatar className="w-6 h-6">
+                      <AvatarFallback className="bg-gradient-to-br from-violet-500 to-cyan-600 text-white text-[10px] font-bold">
+                        {user.email?.[0]?.toUpperCase() ?? "U"}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-white/70 text-xs hidden sm:block max-w-[100px] truncate">{user.email}</span>
+                    <ChevronDown className="w-3 h-3 text-white/40" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="w-48 bg-[#0e0e1a] border border-white/10 text-white rounded-xl shadow-xl shadow-black/40"
+                >
+                  <DropdownMenuItem
+                    className="gap-2 text-white/70 hover:text-white focus:text-white cursor-pointer"
+                    onClick={() => setOrdersOpen(true)}
+                    data-testid="button-my-orders"
+                  >
+                    <Package className="w-4 h-4 text-violet-400" />
+                    My Orders
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-white/10" />
+                  <DropdownMenuItem
+                    className="gap-2 text-red-400 hover:text-red-300 focus:text-red-300 cursor-pointer"
+                    onClick={() => signOut()}
+                    data-testid="button-sign-out"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         </div>
       </nav>
@@ -1469,6 +1580,139 @@ export default function Home() {
               </div>
             </>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Sign In Modal */}
+      <Dialog open={signInOpen} onOpenChange={(open) => { setSignInOpen(open); if (!open) { setSignInSent(false); setSignInEmail(""); setSignInError(null); } }}>
+        <DialogContent className="bg-[#0e0e1a] border border-white/10 text-white max-w-sm w-[calc(100vw-2rem)] rounded-2xl p-0 overflow-hidden">
+          {signInSent ? (
+            <div className="p-8 text-center">
+              <div className="w-16 h-16 rounded-full bg-violet-950/60 border border-violet-500/30 flex items-center justify-center mx-auto mb-4">
+                <Mail className="w-8 h-8 text-violet-400" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Check your email!</h3>
+              <p className="text-white/50 text-sm mb-6 leading-relaxed">
+                We've sent a secure login link to{" "}
+                <span className="text-violet-400 font-medium">{signInEmail}</span>.
+                Click the link in your inbox to sign in instantly.
+              </p>
+              <Button
+                className="w-full bg-white/5 border border-white/10 hover:bg-white/10 text-white/70"
+                variant="outline"
+                onClick={() => setSignInOpen(false)}
+              >
+                Got it
+              </Button>
+            </div>
+          ) : (
+            <>
+              <div className="p-6 pb-4 border-b border-white/5">
+                <div className="flex items-center gap-3 mb-1">
+                  <div className="w-10 h-10 rounded-xl bg-violet-950/60 border border-violet-500/20 flex items-center justify-center flex-shrink-0">
+                    <LogIn className="w-5 h-5 text-violet-400" />
+                  </div>
+                  <div>
+                    <DialogTitle className="text-base font-semibold text-white">Sign In to PuriStep</DialogTitle>
+                    <DialogDescription className="text-white/40 text-xs">We'll email you a magic link — no password needed</DialogDescription>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6 space-y-4">
+                <div className="space-y-1.5">
+                  <label className="text-white/60 text-xs uppercase tracking-wide">Email Address</label>
+                  <Input
+                    type="email"
+                    placeholder="you@example.com"
+                    value={signInEmail}
+                    onChange={(e) => setSignInEmail(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && !signInLoading && signInEmail && (async () => {
+                      setSignInLoading(true);
+                      setSignInError(null);
+                      const { error } = await signInWithEmail(signInEmail);
+                      setSignInLoading(false);
+                      if (error) { setSignInError(error); } else { setSignInSent(true); }
+                    })()}
+                    className="bg-white/5 border-white/10 text-white placeholder:text-white/20 focus-visible:ring-violet-500"
+                    data-testid="input-sign-in-email"
+                  />
+                </div>
+                {signInError && (
+                  <p className="text-red-400 text-xs">{signInError}</p>
+                )}
+                <Button
+                  className="w-full bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-500 hover:to-purple-600 text-white border-0 h-11 font-semibold"
+                  disabled={signInLoading || !signInEmail}
+                  onClick={async () => {
+                    setSignInLoading(true);
+                    setSignInError(null);
+                    const { error } = await signInWithEmail(signInEmail);
+                    setSignInLoading(false);
+                    if (error) { setSignInError(error); } else { setSignInSent(true); }
+                  }}
+                  data-testid="button-send-magic-link"
+                >
+                  {signInLoading ? "Sending..." : "Send Magic Link"}
+                </Button>
+                <p className="text-white/25 text-xs text-center">
+                  By signing in, you agree to our terms of service.
+                </p>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* My Orders Modal */}
+      <Dialog open={ordersOpen} onOpenChange={setOrdersOpen}>
+        <DialogContent className="bg-[#0e0e1a] border border-white/10 text-white max-w-md w-[calc(100vw-2rem)] rounded-2xl p-0 overflow-hidden">
+          <div className="p-6 pb-4 border-b border-white/5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-violet-950/60 border border-violet-500/20 flex items-center justify-center flex-shrink-0">
+                <Package className="w-5 h-5 text-violet-400" />
+              </div>
+              <div>
+                <DialogTitle className="text-base font-semibold text-white">My Orders</DialogTitle>
+                <DialogDescription className="text-white/40 text-xs">Your PuriStep order history</DialogDescription>
+              </div>
+            </div>
+          </div>
+          <div className="p-6 max-h-[60vh] overflow-y-auto">
+            {ordersLoading ? (
+              <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="h-16 rounded-xl bg-white/[0.04] animate-pulse" />
+                ))}
+              </div>
+            ) : orderHistory.length === 0 ? (
+              <div className="text-center py-10">
+                <Package className="w-10 h-10 text-white/20 mx-auto mb-3" />
+                <p className="text-white/40 text-sm">No orders yet</p>
+                <p className="text-white/25 text-xs mt-1">Your orders will appear here after checkout</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {orderHistory.map((order) => (
+                  <div
+                    key={order.id}
+                    className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4 hover:bg-white/[0.05] transition-colors"
+                    data-testid={`order-card-${order.id}`}
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <span className="text-white font-medium text-sm">{order.product_name}</span>
+                      <span className="text-violet-400 font-bold text-sm flex-shrink-0">{order.price}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-teal-400 font-mono text-xs">{order.order_id}</span>
+                      <span className="text-white/30 text-xs">
+                        {new Date(order.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </DialogContent>
       </Dialog>
 
