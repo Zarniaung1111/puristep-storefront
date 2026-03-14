@@ -502,6 +502,48 @@ const musicApps: AIApp[] = [
       },
     ],
   },
+  {
+    id: "youtube-premium",
+    name: "YouTube Premium",
+    tagline: "Ad-free videos, YouTube Music, background play",
+    icon: <SiYoutube className="w-6 h-6 text-rose-500" />,
+    iconBg: "from-rose-500 to-red-700",
+    accentBorder: "border-rose-500/25 hover:border-rose-400/50",
+    accentGlow: "shadow-rose-500/10",
+    neon: "text-rose-400",
+    startingFrom: "From 22,000 MMK",
+    plans: [
+      {
+        id: "youtube-premium-monthly",
+        name: "Monthly",
+        price: "22,000 MMK",
+        period: "Monthly",
+        features: [
+          "100% Ad-free videos",
+          "YouTube Music Premium included",
+          "Background play (screen off)",
+          "Download for offline viewing",
+        ],
+        buttonLabel: "Buy Now",
+      },
+      {
+        id: "youtube-premium-annual",
+        name: "1 Year",
+        price: "140,000 MMK",
+        period: "1 Year",
+        features: [
+          "Save 124,000 MMK compared to monthly",
+          "Uninterrupted ad-free viewing for 12 months",
+          "YouTube Music Premium included",
+          "Background play & Offline downloads",
+        ],
+        badge: "🏆 BEST VALUE",
+        badgeStyle: "bg-rose-500/20 text-rose-300 border-rose-500/40",
+        highlight: true,
+        buttonLabel: "Buy Now",
+      },
+    ],
+  },
 ];
 
 const editingApps: AIApp[] = [
@@ -695,32 +737,7 @@ const products: Product[] = [
 
   // --- CapCut (now under Editing Software accordion — no product cards needed here) ---
 
-  // --- Music & Streaming (non-Netflix; Netflix is in the accordion) ---
-  {
-    id: "youtube-family",
-    categoryId: "music",
-    serviceName: "YouTube Premium",
-    planName: "Family Plan",
-    price: "4,500 MMK",
-    duration: "1 Month",
-    features: ["Ad-free YouTube", "YouTube Music", "Up to 6 members", "Background play", "Offline downloads"],
-    cardColor: "from-rose-900/40 to-red-950/60",
-    gradient: "from-rose-500 to-red-700",
-    icon: <SiYoutube className="w-7 h-7 text-rose-500" />,
-    badge: "Family",
-  },
-  {
-    id: "youtube-individual",
-    categoryId: "music",
-    serviceName: "YouTube Premium",
-    planName: "Individual",
-    price: "2,500 MMK",
-    duration: "1 Month",
-    features: ["Ad-free YouTube", "YouTube Music", "Background play", "Offline downloads", "Premium content"],
-    cardColor: "from-rose-900/40 to-red-950/60",
-    gradient: "from-rose-500 to-red-700",
-    icon: <SiYoutube className="w-7 h-7 text-rose-500" />,
-  },
+  // --- Music & Streaming product cards (YouTube Premium is now in the accordion) ---
   {
     id: "spotify-premium",
     categoryId: "music",
