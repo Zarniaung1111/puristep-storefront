@@ -739,14 +739,13 @@ const products: Product[] = [
     categoryId: "music",
     serviceName: "Spotify",
     planName: "Premium",
-    price: "Coming Soon",
-    duration: "1 Month",
+    price: "From 8,000 MMK",
+    duration: "Monthly",
     features: ["Ad-free music", "Offline downloads", "High quality audio", "Unlimited skips", "All devices"],
     cardColor: "from-green-900/40 to-emerald-950/60",
     gradient: "from-green-500 to-emerald-600",
     icon: <SiSpotify className="w-7 h-7 text-green-400" />,
-    badge: "Soon",
-    comingSoon: true,
+    badge: "Individual & Family",
   },
   {
     id: "apple-music",
@@ -849,6 +848,7 @@ export default function Home() {
   const [expandedAIApp, setExpandedAIApp] = useState<string | null>("chatgpt");
   const [expandedMusicApp, setExpandedMusicApp] = useState<string | null>(null);
   const [expandedEditingApp, setExpandedEditingApp] = useState<string | null>("capcut");
+  const [spotifyModalOpen, setSpotifyModalOpen] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
 
   const { user, loading: authLoading, supabase, signInWithGoogle, signOut } = useAuth();
@@ -920,7 +920,32 @@ export default function Home() {
 
   const handleBuyNow = (product: Product) => {
     if (!user) { setSignInOpen(true); return; }
+    if (product.id === "spotify-premium") {
+      setSpotifyModalOpen(true);
+      return;
+    }
     setSelectedProduct(product);
+    setOrderId(generateOrderId());
+    setOrderOpen(true);
+    setOrderSuccess(false);
+    form.reset();
+    setPreviewImg(null);
+  };
+
+  const handleSpotifyPlanSelect = (planId: string, planName: string, price: string, period: string) => {
+    setSpotifyModalOpen(false);
+    setSelectedProduct({
+      id: planId,
+      categoryId: "music",
+      serviceName: "Spotify",
+      planName,
+      price,
+      duration: period,
+      features: ["Ad-free music listening", "Download to listen offline", "Play songs in any order", "High audio quality (320kbps)", "All devices"],
+      cardColor: "from-green-900/40 to-emerald-950/60",
+      gradient: "from-green-500 to-emerald-600",
+      icon: <SiSpotify className="w-7 h-7 text-green-400" />,
+    });
     setOrderId(generateOrderId());
     setOrderOpen(true);
     setOrderSuccess(false);
@@ -1907,6 +1932,13 @@ export default function Home() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Spotify Plan Modal */}
+      <SpotifyModal
+        open={spotifyModalOpen}
+        onClose={() => setSpotifyModalOpen(false)}
+        onSelectPlan={handleSpotifyPlanSelect}
+      />
     </div>
   );
 }
@@ -2130,6 +2162,170 @@ function ProductCard({ product, onBuyNow }: { product: Product; onBuyNow: (p: Pr
           Buy Now
         </Button>
       )}
+    </div>
+  );
+}
+
+function SpotifyModal({
+  open,
+  onClose,
+  onSelectPlan,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onSelectPlan: (planId: string, planName: string, price: string, period: string) => void;
+}) {
+  const [tab, setTab] = useState<"individual" | "family">("individual");
+
+  const individualPlans = [
+    { id: "spotify-individual-1m",  name: "Monthly",   price: "14,000 MMK", period: "monthly"  },
+    { id: "spotify-individual-2m",  name: "2 Months",  price: "26,000 MMK", period: "2 months" },
+    { id: "spotify-individual-3m",  name: "3 Months",  price: "34,000 MMK", period: "3 months", badge: "Best Value", highlight: true },
+  ];
+
+  const familyPlans = [
+    { id: "spotify-family-1m",  name: "Monthly",    price: "8,000 MMK",  period: "monthly"   },
+    { id: "spotify-family-2m",  name: "2 Months",   price: "14,000 MMK", period: "2 months"  },
+    { id: "spotify-family-3m",  name: "3 Months",   price: "26,000 MMK", period: "3 months"  },
+    { id: "spotify-family-6m",  name: "6 Months",   price: "47,000 MMK", period: "6 months"  },
+    { id: "spotify-family-12m", name: "12 Months",  price: "74,000 MMK", period: "12 months", badge: "Best Value", highlight: true },
+  ];
+
+  const individualFeatures = [
+    "Ad-free music listening",
+    "Download to listen offline",
+    "Play songs in any order",
+    "High audio quality (320kbps)",
+    "Listen with friends in real-time",
+  ];
+
+  const familyFeatures = [
+    "Ad-free music listening",
+    "Download to listen offline",
+    "Play songs in any order",
+    "High audio quality (320kbps)",
+    "Private account in a premium plan",
+  ];
+
+  const activePlans = tab === "individual" ? individualPlans : familyPlans;
+  const activeFeatures = tab === "individual" ? individualFeatures : familyFeatures;
+
+  return (
+    <div
+      className={`fixed inset-0 z-[60] flex items-end sm:items-center justify-center transition-all duration-300
+        ${open ? "backdrop-blur-sm bg-black/70 pointer-events-auto" : "bg-transparent pointer-events-none"}`}
+      onClick={onClose}
+      data-testid="spotify-modal-backdrop"
+    >
+      <div
+        className={`w-full sm:max-w-2xl sm:mx-4 bg-[#0e0e1a] border border-white/10 rounded-t-3xl sm:rounded-2xl max-h-[85vh] overflow-y-auto transition-all duration-300
+          ${open ? "translate-y-0 sm:scale-100 sm:opacity-100" : "translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"}`}
+        onClick={e => e.stopPropagation()}
+        data-testid="spotify-modal"
+      >
+        {/* Drag handle — mobile only */}
+        <div className="flex justify-center pt-3 pb-1 sm:hidden">
+          <div className="w-10 h-1 rounded-full bg-white/20" />
+        </div>
+
+        {/* Sticky header */}
+        <div className="sticky top-0 z-10 bg-[#0e0e1a]/95 backdrop-blur-sm border-b border-white/[0.07] px-5 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-green-500/15 border border-green-500/25 flex items-center justify-center">
+              <SiSpotify className="w-4 h-4 text-green-400" />
+            </div>
+            <h2 className="font-bold text-white text-base">Spotify Premium</h2>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.12] flex items-center justify-center transition-colors"
+            data-testid="button-spotify-close"
+          >
+            <X className="w-4 h-4 text-white/60" />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="p-5 space-y-5">
+
+          {/* Individual / Family toggle */}
+          <div className="flex bg-white/[0.04] rounded-xl p-1 border border-white/[0.07]">
+            {(["individual", "family"] as const).map(t => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200
+                  ${tab === t
+                    ? "bg-green-500/15 text-green-300 border border-green-500/25 shadow-sm"
+                    : "text-white/35 hover:text-white/65"
+                  }`}
+                data-testid={`tab-spotify-${t}`}
+              >
+                {t === "individual" ? "Individual" : "Family"}
+              </button>
+            ))}
+          </div>
+
+          {/* Plan cards */}
+          <div className={`grid gap-3 ${activePlans.length <= 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"}`}>
+            {activePlans.map(plan => (
+              <div
+                key={plan.id}
+                className={`relative rounded-xl border flex flex-col gap-3 overflow-hidden p-4 transition-all duration-200 backdrop-blur-sm hover:scale-[1.02]
+                  ${(plan as { highlight?: boolean }).highlight
+                    ? "border-white/[0.18] bg-white/[0.06] hover:border-white/[0.28] hover:shadow-xl shadow-green-500/15"
+                    : "border-white/[0.06] bg-white/[0.03] hover:border-white/[0.14]"
+                  }`}
+                data-testid={`card-spotify-${plan.id}`}
+              >
+                {(plan as { highlight?: boolean }).highlight && (
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-green-400/40 to-transparent" />
+                )}
+
+                {/* Name + badge */}
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <p className="text-white/35 text-[10px] font-medium uppercase tracking-wide mb-0.5">
+                      Spotify {tab === "individual" ? "Individual" : "Family"}
+                    </p>
+                    <h4 className="font-bold text-white text-sm leading-tight">{plan.name}</h4>
+                  </div>
+                  {(plan as { badge?: string }).badge && (
+                    <Badge className="text-[10px] px-1.5 py-0.5 shrink-0 border font-semibold bg-green-500/20 text-green-300 border-green-500/40">
+                      {(plan as { badge?: string }).badge}
+                    </Badge>
+                  )}
+                </div>
+
+                {/* Price */}
+                <div className="flex items-baseline gap-1">
+                  <span className="text-xl font-black text-white">{plan.price}</span>
+                  <span className="text-white/30 text-xs">/ {plan.period}</span>
+                </div>
+
+                {/* Features */}
+                <ul className="space-y-1.5 flex-1">
+                  {activeFeatures.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-white/55">
+                      <CheckCircle2 className="w-3 h-3 shrink-0 mt-0.5 text-green-400" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA */}
+                <Button
+                  onClick={() => onSelectPlan(plan.id, plan.name, plan.price, plan.period)}
+                  className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:opacity-90 text-white border-0 font-semibold h-8 text-xs"
+                  data-testid={`button-spotify-select-${plan.id}`}
+                >
+                  Select Plan
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
