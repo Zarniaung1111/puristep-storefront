@@ -576,6 +576,52 @@ const editingApps: AIApp[] = [
       },
     ],
   },
+  {
+    id: "adobe-cc",
+    name: "Adobe Creative Cloud",
+    tagline: "Professional creative suite for creators",
+    icon: (
+      <div className="w-6 h-6 rounded-md bg-gradient-to-br from-red-500 to-rose-700 flex items-center justify-center">
+        <span className="text-white text-[9px] font-black tracking-tighter">Cc</span>
+      </div>
+    ),
+    iconBg: "from-red-500 to-rose-700",
+    accentBorder: "border-red-500/25 hover:border-red-400/50",
+    accentGlow: "shadow-red-500/10",
+    neon: "text-red-400",
+    startingFrom: "From 25,000 KS",
+    plans: [
+      {
+        id: "adobe-cc-monthly",
+        name: "Monthly",
+        price: "25,000 KS",
+        period: "Monthly",
+        features: [
+          "Access to 20+ apps (Premiere, Photoshop)",
+          "1,000 Generative AI Credits per month",
+          "100GB Cloud Storage",
+          "Premium Adobe Fonts",
+        ],
+        buttonLabel: "Select Plan",
+      },
+      {
+        id: "adobe-cc-4month",
+        name: "4 Months",
+        price: "63,000 KS",
+        period: "4 Months",
+        features: [
+          "Save 37,000 MMK compared to monthly",
+          "4,000 Generative AI Credits total",
+          "Uninterrupted access to all apps",
+          "Locked-in rate for 120 days",
+        ],
+        badge: "🏆 Best Value",
+        badgeStyle: "bg-red-500/20 text-red-300 border-red-500/40",
+        highlight: true,
+        buttonLabel: "Select 4-Month Plan",
+      },
+    ],
+  },
 ];
 
 const products: Product[] = [
