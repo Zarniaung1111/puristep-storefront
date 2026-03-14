@@ -544,6 +544,18 @@ const musicApps: AIApp[] = [
       },
     ],
   },
+  {
+    id: "spotify-premium",
+    name: "Spotify Premium",
+    tagline: "Ad-free music, offline downloads, all devices",
+    icon: <SiSpotify className="w-6 h-6 text-green-400" />,
+    iconBg: "from-green-500 to-emerald-700",
+    accentBorder: "border-green-500/25 hover:border-green-400/50",
+    accentGlow: "shadow-green-500/10",
+    neon: "text-green-400",
+    startingFrom: "Individual & Family",
+    plans: [],
+  },
 ];
 
 const editingApps: AIApp[] = [
@@ -737,20 +749,7 @@ const products: Product[] = [
 
   // --- CapCut (now under Editing Software accordion — no product cards needed here) ---
 
-  // --- Music & Streaming product cards (YouTube Premium is now in the accordion) ---
-  {
-    id: "spotify-premium",
-    categoryId: "music",
-    serviceName: "Spotify",
-    planName: "Premium",
-    price: "From 8,000 MMK",
-    duration: "Monthly",
-    features: ["Ad-free music", "Offline downloads", "High quality audio", "Unlimited skips", "All devices"],
-    cardColor: "from-green-900/40 to-emerald-950/60",
-    gradient: "from-green-500 to-emerald-600",
-    icon: <SiSpotify className="w-7 h-7 text-green-400" />,
-    badge: "Individual & Family",
-  },
+  // --- Music & Streaming product cards (YouTube Premium & Spotify are now in the accordion) ---
   {
     id: "apple-music",
     categoryId: "music",
@@ -1336,7 +1335,10 @@ export default function Home() {
                       <AIAccordion
                         apps={musicApps}
                         expandedId={expandedMusicApp}
-                        onToggle={id => setExpandedMusicApp(prev => prev === id ? null : id)}
+                        onToggle={id => {
+                          if (id === "spotify-premium") { setSpotifyModalOpen(true); }
+                          else { setExpandedMusicApp(prev => prev === id ? null : id); }
+                        }}
                         onBuyNow={handleMusicPlanBuyNow}
                         onHelp={() => setHelpOpen(true)}
                       />
@@ -1386,7 +1388,10 @@ export default function Home() {
               <AIAccordion
                 apps={musicApps}
                 expandedId={expandedMusicApp}
-                onToggle={id => setExpandedMusicApp(prev => prev === id ? null : id)}
+                onToggle={id => {
+                  if (id === "spotify-premium") { setSpotifyModalOpen(true); }
+                  else { setExpandedMusicApp(prev => prev === id ? null : id); }
+                }}
                 onBuyNow={handleMusicPlanBuyNow}
                 onHelp={() => setHelpOpen(true)}
               />
