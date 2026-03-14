@@ -20,7 +20,6 @@ import {
   Upload,
   X,
   ChevronRight,
-  ChevronDown,
   Sparkles,
   Clock,
   Users,
@@ -511,12 +510,12 @@ const musicApps: AIApp[] = [
     accentBorder: "border-rose-500/25 hover:border-rose-400/50",
     accentGlow: "shadow-rose-500/10",
     neon: "text-rose-400",
-    startingFrom: "From 22,000 MMK",
+    startingFrom: "From 22,000 KS",
     plans: [
       {
         id: "youtube-premium-monthly",
         name: "Monthly",
-        price: "22,000 MMK",
+        price: "22,000 KS",
         period: "Monthly",
         features: [
           "100% Ad-free videos",
@@ -529,10 +528,10 @@ const musicApps: AIApp[] = [
       {
         id: "youtube-premium-annual",
         name: "1 Year",
-        price: "140,000 MMK",
+        price: "140,000 KS",
         period: "1 Year",
         features: [
-          "Save 124,000 MMK compared to monthly",
+          "Save 124,000 KS compared to monthly",
           "Uninterrupted ad-free viewing for 12 months",
           "YouTube Music Premium included",
           "Background play & Offline downloads",
@@ -848,10 +847,9 @@ export default function Home() {
   const [previewImg, setPreviewImg] = useState<string | null>(null);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
-  const [expandedAIApp, setExpandedAIApp] = useState<string | null>("chatgpt");
-  const [expandedMusicApp, setExpandedMusicApp] = useState<string | null>(null);
-  const [expandedEditingApp, setExpandedEditingApp] = useState<string | null>("capcut");
-  const [spotifyModalOpen, setSpotifyModalOpen] = useState(false);
+  const [productModalApp, setProductModalApp] = useState<AIApp | null>(null);
+  const [productModalCategoryId, setProductModalCategoryId] = useState<string>("ai");
+  const [productModalOpen, setProductModalOpen] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
 
   const productsRef = useRef<HTMLDivElement>(null);
@@ -883,10 +881,6 @@ export default function Home() {
   });
 
   const handleBuyNow = (product: Product) => {
-    if (product.id === "spotify-premium") {
-      setSpotifyModalOpen(true);
-      return;
-    }
     setSelectedProduct(product);
     setOrderId(generateOrderId());
     setOrderOpen(true);
@@ -895,19 +889,30 @@ export default function Home() {
     setPreviewImg(null);
   };
 
-  const handleSpotifyPlanSelect = (planId: string, planName: string, price: string, period: string) => {
-    setSpotifyModalOpen(false);
+  const openProductModal = (app: AIApp, categoryId: string) => {
+    setProductModalApp(app);
+    setProductModalCategoryId(categoryId);
+    setProductModalOpen(true);
+  };
+
+  const handleAppPlanBuyNow = (app: AIApp, plan: AIPlan) => {
+    setProductModalOpen(false);
+    const cardColorMap: Record<string, string> = {
+      ai: "from-fuchsia-900/40 to-violet-950/60",
+      editing: "from-amber-900/40 to-orange-950/60",
+      music: "from-red-900/40 to-rose-950/60",
+    };
     setSelectedProduct({
-      id: planId,
-      categoryId: "music",
-      serviceName: "Spotify",
-      planName,
-      price,
-      duration: period,
-      features: ["Ad-free music listening", "Download to listen offline", "Play songs in any order", "High audio quality (320kbps)", "All devices"],
-      cardColor: "from-green-900/40 to-emerald-950/60",
-      gradient: "from-green-500 to-emerald-600",
-      icon: <SiSpotify className="w-7 h-7 text-green-400" />,
+      id: plan.id,
+      categoryId: productModalCategoryId,
+      serviceName: app.name,
+      planName: plan.name,
+      price: plan.price,
+      duration: plan.period,
+      features: plan.features,
+      cardColor: cardColorMap[productModalCategoryId] ?? "from-violet-900/40 to-violet-950/60",
+      gradient: app.iconBg,
+      icon: app.icon,
     });
     setOrderId(generateOrderId());
     setOrderOpen(true);
@@ -930,66 +935,6 @@ export default function Home() {
       form.setValue("paymentScreenshot", base64);
     };
     reader.readAsDataURL(file);
-  };
-
-  const handleAIPlanBuyNow = (app: AIApp, plan: AIPlan) => {
-    setSelectedProduct({
-      id: plan.id,
-      categoryId: "ai",
-      serviceName: app.name,
-      planName: plan.name,
-      price: plan.price,
-      duration: plan.period,
-      features: plan.features,
-      cardColor: "from-fuchsia-900/40 to-violet-950/60",
-      gradient: `from-${app.iconBg.split(" ")[0].replace("from-", "")} to-${app.iconBg.split(" ")[1].replace("to-", "")}`,
-      icon: app.icon,
-    });
-    setOrderId(generateOrderId());
-    setOrderOpen(true);
-    setOrderSuccess(false);
-    form.reset();
-    setPreviewImg(null);
-  };
-
-  const handleMusicPlanBuyNow = (app: AIApp, plan: AIPlan) => {
-    setSelectedProduct({
-      id: plan.id,
-      categoryId: "music",
-      serviceName: app.name,
-      planName: plan.name,
-      price: plan.price,
-      duration: plan.period,
-      features: plan.features,
-      cardColor: "from-red-900/40 to-rose-950/60",
-      gradient: `from-${app.iconBg.split(" ")[0].replace("from-", "")} to-${app.iconBg.split(" ")[1].replace("to-", "")}`,
-      icon: app.icon,
-    });
-    setOrderId(generateOrderId());
-    setOrderOpen(true);
-    setOrderSuccess(false);
-    form.reset();
-    setPreviewImg(null);
-  };
-
-  const handleEditingPlanBuyNow = (app: AIApp, plan: AIPlan) => {
-    setSelectedProduct({
-      id: plan.id,
-      categoryId: "editing",
-      serviceName: app.name,
-      planName: plan.name,
-      price: plan.price,
-      duration: plan.period,
-      features: plan.features,
-      cardColor: "from-amber-900/40 to-orange-950/60",
-      gradient: `from-${app.iconBg.split(" ")[0].replace("from-", "")} to-${app.iconBg.split(" ")[1].replace("to-", "")}`,
-      icon: app.icon,
-    });
-    setOrderId(generateOrderId());
-    setOrderOpen(true);
-    setOrderSuccess(false);
-    form.reset();
-    setPreviewImg(null);
   };
 
   const onSubmit = (data: OrderFormValues) => mutation.mutate(data);
@@ -1317,30 +1262,18 @@ export default function Home() {
                   {cat.id === "ai" ? (
                     <AIAccordion
                       apps={aiApps}
-                      expandedId={expandedAIApp}
-                      onToggle={id => setExpandedAIApp(prev => prev === id ? null : id)}
-                      onBuyNow={handleAIPlanBuyNow}
-                      onHelp={() => setHelpOpen(true)}
+                      onSelect={app => openProductModal(app, "ai")}
                     />
                   ) : cat.id === "editing" ? (
                     <AIAccordion
                       apps={editingApps}
-                      expandedId={expandedEditingApp}
-                      onToggle={id => setExpandedEditingApp(prev => prev === id ? null : id)}
-                      onBuyNow={handleEditingPlanBuyNow}
-                      onHelp={() => setHelpOpen(true)}
+                      onSelect={app => openProductModal(app, "editing")}
                     />
                   ) : cat.id === "music" ? (
                     <div className="space-y-6">
                       <AIAccordion
                         apps={musicApps}
-                        expandedId={expandedMusicApp}
-                        onToggle={id => {
-                          if (id === "spotify-premium") { setSpotifyModalOpen(true); }
-                          else { setExpandedMusicApp(prev => prev === id ? null : id); }
-                        }}
-                        onBuyNow={handleMusicPlanBuyNow}
-                        onHelp={() => setHelpOpen(true)}
+                        onSelect={app => openProductModal(app, "music")}
                       />
                       {items.length > 0 && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1375,10 +1308,7 @@ export default function Home() {
           {activeCategory === "editing" && (
             <AIAccordion
               apps={editingApps}
-              expandedId={expandedEditingApp}
-              onToggle={id => setExpandedEditingApp(prev => prev === id ? null : id)}
-              onBuyNow={handleEditingPlanBuyNow}
-              onHelp={() => setHelpOpen(true)}
+              onSelect={app => openProductModal(app, "editing")}
             />
           )}
 
@@ -1387,13 +1317,7 @@ export default function Home() {
             <div className="space-y-6">
               <AIAccordion
                 apps={musicApps}
-                expandedId={expandedMusicApp}
-                onToggle={id => {
-                  if (id === "spotify-premium") { setSpotifyModalOpen(true); }
-                  else { setExpandedMusicApp(prev => prev === id ? null : id); }
-                }}
-                onBuyNow={handleMusicPlanBuyNow}
-                onHelp={() => setHelpOpen(true)}
+                onSelect={app => openProductModal(app, "music")}
               />
               {filteredProducts.length > 0 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1409,10 +1333,7 @@ export default function Home() {
           {activeCategory === "ai" && (
             <AIAccordion
               apps={aiApps}
-              expandedId={expandedAIApp}
-              onToggle={id => setExpandedAIApp(prev => prev === id ? null : id)}
-              onBuyNow={handleAIPlanBuyNow}
-              onHelp={() => setHelpOpen(true)}
+              onSelect={app => openProductModal(app, "ai")}
             />
           )}
         </div>
@@ -1744,11 +1665,13 @@ export default function Home() {
         </DialogContent>
       </Dialog>
 
-      {/* Spotify Plan Modal */}
-      <SpotifyModal
-        open={spotifyModalOpen}
-        onClose={() => setSpotifyModalOpen(false)}
-        onSelectPlan={handleSpotifyPlanSelect}
+      {/* Universal Product Modal */}
+      <ProductModal
+        app={productModalApp}
+        categoryId={productModalCategoryId}
+        open={productModalOpen}
+        onClose={() => setProductModalOpen(false)}
+        onBuyNow={handleAppPlanBuyNow}
       />
     </div>
   );
@@ -1756,153 +1679,44 @@ export default function Home() {
 
 function AIAccordion({
   apps,
-  expandedId,
-  onToggle,
-  onBuyNow,
-  onHelp,
+  onSelect,
 }: {
   apps: AIApp[];
-  expandedId: string | null;
-  onToggle: (id: string) => void;
-  onBuyNow: (app: AIApp, plan: AIPlan) => void;
-  onHelp: () => void;
+  onSelect: (app: AIApp) => void;
 }) {
   return (
     <div className="space-y-3">
-      {apps.map(app => {
-        const isOpen = expandedId === app.id;
-        return (
-          <div
-            key={app.id}
-            className={`rounded-2xl border backdrop-blur-md transition-all duration-300 overflow-hidden
-              ${isOpen
-                ? `${app.accentBorder} bg-gradient-to-br from-white/[0.05] to-white/[0.02]`
-                : `border-white/[0.07] bg-white/[0.025] ${app.accentBorder} hover:bg-white/[0.05]`
-              }`}
-            style={{ boxShadow: isOpen ? "0 8px 32px 0 rgba(0,0,0,0.3)" : "0 4px 16px 0 rgba(0,0,0,0.2)" }}
-            data-testid={`accordion-${app.id}`}
-          >
-            {/* Banner / Title Row — Level 2 */}
-            <button
-              onClick={() => onToggle(app.id)}
-              className="w-full flex items-center gap-4 px-5 py-4 group text-left"
-              data-testid={`accordion-toggle-${app.id}`}
-            >
-              {/* App icon */}
-              <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center flex-shrink-0 shadow-lg`}>
-                {app.icon}
+      {apps.map(app => (
+        <button
+          key={app.id}
+          onClick={() => onSelect(app)}
+          className={`w-full rounded-2xl border backdrop-blur-md transition-all duration-200 overflow-hidden
+            border-white/[0.07] bg-white/[0.025] hover:bg-white/[0.05] hover:border-white/[0.14] text-left`}
+          style={{ boxShadow: "0 4px 16px 0 rgba(0,0,0,0.2)" }}
+          data-testid={`accordion-${app.id}`}
+        >
+          <div className="flex items-center gap-4 px-5 py-4">
+            <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center flex-shrink-0 shadow-lg`}>
+              {app.icon}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-bold text-white text-base leading-tight">{app.name}</h3>
+                {app.plans.length > 1 && (
+                  <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-white/[0.08] text-white/40">
+                    {app.plans.length} plans
+                  </span>
+                )}
               </div>
-
-              {/* App name + tagline */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="font-bold text-white text-base leading-tight">{app.name}</h3>
-                  {app.plans.length > 1 && (
-                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-white/8 text-white/40">
-                      {app.plans.length} plans
-                    </span>
-                  )}
-                </div>
-                <p className="text-white/35 text-xs mt-0.5">{app.tagline}</p>
-              </div>
-
-              {/* Starting price + chevron */}
-              <div className="flex items-center gap-3 flex-shrink-0">
-                <span className={`text-xs font-semibold hidden sm:block ${app.neon}`}>{app.startingFrom}</span>
-                <div className={`w-7 h-7 rounded-full border border-white/10 bg-white/5 flex items-center justify-center transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`}>
-                  <ChevronDown className="w-4 h-4 text-white/50" />
-                </div>
-              </div>
-            </button>
-
-            {/* Expandable content — Level 3 pricing cards */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateRows: isOpen ? "1fr" : "0fr",
-                transition: "grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-              }}
-            >
-              <div style={{ overflow: "hidden" }}>
-                <div className="px-4 pb-4">
-                  {/* Thin divider */}
-                  <div className="h-px bg-white/6 mb-4" />
-                  <div className={`grid gap-3 ${app.plans.length === 1 ? "grid-cols-1 max-w-sm" : app.plans.length === 2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1 sm:grid-cols-3"}`}>
-                    {app.plans.map(plan => (
-                      <div
-                        key={plan.id}
-                        className={`relative rounded-xl border flex flex-col gap-3 overflow-hidden p-4 transition-all duration-200 backdrop-blur-sm hover:scale-[1.02]
-                          ${plan.highlight
-                            ? `border-white/[0.18] bg-white/[0.06] hover:border-white/[0.28] hover:shadow-xl ${app.accentGlow}`
-                            : "border-white/[0.06] bg-white/[0.03] hover:border-white/[0.14]"
-                          }`}
-                        data-testid={`card-ai-${plan.id}`}
-                      >
-                        {plan.highlight && (
-                          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-                        )}
-
-                        {/* Plan name + badge */}
-                        <div className="flex items-start justify-between gap-2">
-                          <div>
-                            <p className="text-white/35 text-[10px] font-medium uppercase tracking-wide mb-0.5">{app.name}</p>
-                            <h4 className="font-bold text-white text-sm leading-tight">{plan.name}</h4>
-                          </div>
-                          {plan.badge && (
-                            <Badge
-                              className={`text-[10px] px-1.5 py-0.5 shrink-0 border font-semibold ${plan.badgeStyle}`}
-                              data-testid={`badge-ai-${plan.id}`}
-                            >
-                              {plan.badge}
-                            </Badge>
-                          )}
-                        </div>
-
-                        {/* Price */}
-                        <div className="flex items-baseline gap-1">
-                          <span className="text-xl font-black text-white">{plan.price}</span>
-                          <span className="text-white/30 text-xs">/ {plan.period}</span>
-                        </div>
-
-                        {/* Features */}
-                        <ul className="space-y-1.5 flex-1">
-                          {plan.features.map((f, i) => (
-                            <li key={i} className="flex items-start gap-2 text-xs text-white/55">
-                              <CheckCircle2 className={`w-3 h-3 shrink-0 mt-0.5 ${app.neon}`} />
-                              <span>{f}</span>
-                            </li>
-                          ))}
-                        </ul>
-
-                        {/* Buttons */}
-                        <div className="flex gap-2 pt-1">
-                          <Button
-                            onClick={() => onBuyNow(app, plan)}
-                            className={`flex-1 bg-gradient-to-r ${app.iconBg} hover:opacity-90 text-white border-0 font-semibold h-8 text-xs`}
-                            data-testid={`button-buy-${plan.id}`}
-                          >
-                            {plan.buttonLabel ?? "Buy Now"}
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={onHelp}
-                            className="h-8 w-8 border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-white/40 hover:text-white flex-shrink-0"
-                            title="Get help"
-                            data-testid={`button-help-${plan.id}`}
-                          >
-                            <HelpCircle className="w-3.5 h-3.5" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <p className="text-white/35 text-xs mt-0.5">{app.tagline}</p>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <span className={`text-xs font-semibold hidden sm:block ${app.neon}`}>{app.startingFrom}</span>
+              <ChevronRight className="w-4 h-4 text-white/30" />
             </div>
           </div>
-        );
-      })}
+        </button>
+      ))}
     </div>
   );
 }
@@ -1977,62 +1791,59 @@ function ProductCard({ product, onBuyNow }: { product: Product; onBuyNow: (p: Pr
   );
 }
 
-function SpotifyModal({
+function ProductModal({
+  app,
+  categoryId,
   open,
   onClose,
-  onSelectPlan,
+  onBuyNow,
 }: {
+  app: AIApp | null;
+  categoryId: string;
   open: boolean;
   onClose: () => void;
-  onSelectPlan: (planId: string, planName: string, price: string, period: string) => void;
+  onBuyNow: (app: AIApp, plan: AIPlan) => void;
 }) {
-  const [tab, setTab] = useState<"individual" | "family">("individual");
+  const [spotifyTab, setSpotifyTab] = useState<"individual" | "family">("individual");
 
-  const individualPlans = [
-    { id: "spotify-individual-1m",  name: "Monthly",   price: "14,000 MMK", period: "monthly"  },
-    { id: "spotify-individual-2m",  name: "2 Months",  price: "26,000 MMK", period: "2 months" },
-    { id: "spotify-individual-3m",  name: "3 Months",  price: "34,000 MMK", period: "3 months", badge: "Best Value", highlight: true },
+  const isSpotify = app?.id === "spotify-premium";
+
+  const spotifyIndividualPlans: AIPlan[] = [
+    { id: "spotify-individual-1m", name: "Monthly",  price: "14,000 KS", period: "monthly",  features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Listen with friends in real-time"] },
+    { id: "spotify-individual-2m", name: "2 Months", price: "26,000 KS", period: "2 months", features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Listen with friends in real-time"] },
+    { id: "spotify-individual-3m", name: "3 Months", price: "34,000 KS", period: "3 months", features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Listen with friends in real-time"], badge: "Best Value", badgeStyle: "bg-green-500/20 text-green-300 border-green-500/40", highlight: true },
   ];
 
-  const familyPlans = [
-    { id: "spotify-family-1m",  name: "Monthly",    price: "8,000 MMK",  period: "monthly"   },
-    { id: "spotify-family-2m",  name: "2 Months",   price: "14,000 MMK", period: "2 months"  },
-    { id: "spotify-family-3m",  name: "3 Months",   price: "26,000 MMK", period: "3 months"  },
-    { id: "spotify-family-6m",  name: "6 Months",   price: "47,000 MMK", period: "6 months"  },
-    { id: "spotify-family-12m", name: "12 Months",  price: "74,000 MMK", period: "12 months", badge: "Best Value", highlight: true },
+  const spotifyFamilyPlans: AIPlan[] = [
+    { id: "spotify-family-1m",  name: "Monthly",   price: "8,000 KS",  period: "monthly",   features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Private account in a premium plan"] },
+    { id: "spotify-family-2m",  name: "2 Months",  price: "14,000 KS", period: "2 months",  features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Private account in a premium plan"] },
+    { id: "spotify-family-3m",  name: "3 Months",  price: "22,000 KS", period: "3 months",  features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Private account in a premium plan"] },
+    { id: "spotify-family-6m",  name: "6 Months",  price: "47,000 KS", period: "6 months",  features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Private account in a premium plan"] },
+    { id: "spotify-family-12m", name: "12 Months", price: "74,000 KS", period: "12 months", features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Private account in a premium plan"], badge: "Best Value", badgeStyle: "bg-green-500/20 text-green-300 border-green-500/40", highlight: true },
   ];
 
-  const individualFeatures = [
-    "Ad-free music listening",
-    "Download to listen offline",
-    "Play songs in any order",
-    "High audio quality (320kbps)",
-    "Listen with friends in real-time",
-  ];
+  const plans: AIPlan[] = isSpotify
+    ? (spotifyTab === "individual" ? spotifyIndividualPlans : spotifyFamilyPlans)
+    : (app?.plans ?? []);
 
-  const familyFeatures = [
-    "Ad-free music listening",
-    "Download to listen offline",
-    "Play songs in any order",
-    "High audio quality (320kbps)",
-    "Private account in a premium plan",
-  ];
-
-  const activePlans = tab === "individual" ? individualPlans : familyPlans;
-  const activeFeatures = tab === "individual" ? individualFeatures : familyFeatures;
+  const gridCols = plans.length <= 2
+    ? "grid-cols-1 sm:grid-cols-2"
+    : plans.length === 3
+      ? "grid-cols-1 sm:grid-cols-3"
+      : "grid-cols-1 sm:grid-cols-2";
 
   return (
     <div
       className={`fixed inset-0 z-[60] flex items-end sm:items-center justify-center transition-all duration-300
         ${open ? "backdrop-blur-sm bg-black/70 pointer-events-auto" : "bg-transparent pointer-events-none"}`}
       onClick={onClose}
-      data-testid="spotify-modal-backdrop"
+      data-testid="product-modal-backdrop"
     >
       <div
-        className={`w-full sm:max-w-2xl sm:mx-4 bg-[#0e0e1a] border border-white/10 rounded-t-3xl sm:rounded-2xl max-h-[85vh] overflow-y-auto transition-all duration-300
+        className={`w-full sm:max-w-2xl sm:mx-4 bg-[#0e0e1a] border border-white/10 rounded-t-3xl sm:rounded-2xl max-h-[88vh] overflow-y-auto transition-all duration-300
           ${open ? "translate-y-0 sm:scale-100 sm:opacity-100" : "translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"}`}
         onClick={e => e.stopPropagation()}
-        data-testid="spotify-modal"
+        data-testid="product-modal"
       >
         {/* Drag handle — mobile only */}
         <div className="flex justify-center pt-3 pb-1 sm:hidden">
@@ -2041,16 +1852,21 @@ function SpotifyModal({
 
         {/* Sticky header */}
         <div className="sticky top-0 z-10 bg-[#0e0e1a]/95 backdrop-blur-sm border-b border-white/[0.07] px-5 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-green-500/15 border border-green-500/25 flex items-center justify-center">
-              <SiSpotify className="w-4 h-4 text-green-400" />
+          {app && (
+            <div className="flex items-center gap-3">
+              <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center shadow-md`}>
+                {app.icon}
+              </div>
+              <div>
+                <h2 className="font-bold text-white text-base leading-tight">{app.name}</h2>
+                <p className="text-white/40 text-xs">{app.tagline}</p>
+              </div>
             </div>
-            <h2 className="font-bold text-white text-base">Spotify Premium</h2>
-          </div>
+          )}
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.12] flex items-center justify-center transition-colors"
-            data-testid="button-spotify-close"
+            className="w-8 h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.12] flex items-center justify-center transition-colors ml-auto flex-shrink-0"
+            data-testid="button-product-modal-close"
           >
             <X className="w-4 h-4 text-white/60" />
           </button>
@@ -2059,82 +1875,89 @@ function SpotifyModal({
         {/* Body */}
         <div className="p-5 space-y-5">
 
-          {/* Individual / Family toggle */}
-          <div className="flex bg-white/[0.04] rounded-xl p-1 border border-white/[0.07]">
-            {(["individual", "family"] as const).map(t => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200
-                  ${tab === t
-                    ? "bg-green-500/15 text-green-300 border border-green-500/25 shadow-sm"
-                    : "text-white/35 hover:text-white/65"
-                  }`}
-                data-testid={`tab-spotify-${t}`}
-              >
-                {t === "individual" ? "Individual" : "Family"}
-              </button>
-            ))}
-          </div>
+          {/* Spotify Individual / Family toggle */}
+          {isSpotify && (
+            <div className="flex bg-white/[0.04] rounded-xl p-1 border border-white/[0.07]">
+              {(["individual", "family"] as const).map(t => (
+                <button
+                  key={t}
+                  onClick={() => setSpotifyTab(t)}
+                  className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200
+                    ${spotifyTab === t
+                      ? "bg-green-500/15 text-green-300 border border-green-500/25 shadow-sm"
+                      : "text-white/35 hover:text-white/65"
+                    }`}
+                  data-testid={`tab-spotify-${t}`}
+                >
+                  {t === "individual" ? "Individual" : "Family"}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Plan cards */}
-          <div className={`grid gap-3 ${activePlans.length <= 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"}`}>
-            {activePlans.map(plan => (
-              <div
-                key={plan.id}
-                className={`relative rounded-xl border flex flex-col gap-3 overflow-hidden p-4 transition-all duration-200 backdrop-blur-sm hover:scale-[1.02]
-                  ${(plan as { highlight?: boolean }).highlight
-                    ? "border-white/[0.18] bg-white/[0.06] hover:border-white/[0.28] hover:shadow-xl shadow-green-500/15"
-                    : "border-white/[0.06] bg-white/[0.03] hover:border-white/[0.14]"
-                  }`}
-                data-testid={`card-spotify-${plan.id}`}
-              >
-                {(plan as { highlight?: boolean }).highlight && (
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-green-400/40 to-transparent" />
-                )}
-
-                {/* Name + badge */}
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <p className="text-white/35 text-[10px] font-medium uppercase tracking-wide mb-0.5">
-                      Spotify {tab === "individual" ? "Individual" : "Family"}
-                    </p>
-                    <h4 className="font-bold text-white text-sm leading-tight">{plan.name}</h4>
-                  </div>
-                  {(plan as { badge?: string }).badge && (
-                    <Badge className="text-[10px] px-1.5 py-0.5 shrink-0 border font-semibold bg-green-500/20 text-green-300 border-green-500/40">
-                      {(plan as { badge?: string }).badge}
-                    </Badge>
-                  )}
-                </div>
-
-                {/* Price */}
-                <div className="flex items-baseline gap-1">
-                  <span className="text-xl font-black text-white">{plan.price}</span>
-                  <span className="text-white/30 text-xs">/ {plan.period}</span>
-                </div>
-
-                {/* Features */}
-                <ul className="space-y-1.5 flex-1">
-                  {activeFeatures.map((f, i) => (
-                    <li key={i} className="flex items-start gap-2 text-xs text-white/55">
-                      <CheckCircle2 className="w-3 h-3 shrink-0 mt-0.5 text-green-400" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA */}
-                <Button
-                  onClick={() => onSelectPlan(plan.id, plan.name, plan.price, plan.period)}
-                  className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:opacity-90 text-white border-0 font-semibold h-8 text-xs"
-                  data-testid={`button-spotify-select-${plan.id}`}
+          {app && (
+            <div className={`grid gap-3 ${gridCols}`}>
+              {plans.map(plan => (
+                <div
+                  key={plan.id}
+                  className={`relative rounded-xl border flex flex-col gap-3 overflow-hidden p-4 transition-all duration-200 backdrop-blur-sm hover:scale-[1.02]
+                    ${plan.highlight
+                      ? `border-white/[0.18] bg-white/[0.06] hover:border-white/[0.28] hover:shadow-xl ${app.accentGlow}`
+                      : "border-white/[0.06] bg-white/[0.03] hover:border-white/[0.14]"
+                    }`}
+                  data-testid={`card-product-plan-${plan.id}`}
                 >
-                  Select Plan
-                </Button>
-              </div>
-            ))}
-          </div>
+                  {plan.highlight && (
+                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                  )}
+
+                  {/* Plan name + badge */}
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <p className="text-white/35 text-[10px] font-medium uppercase tracking-wide mb-0.5">
+                        {isSpotify ? `Spotify ${spotifyTab === "individual" ? "Individual" : "Family"}` : app.name}
+                      </p>
+                      <h4 className="font-bold text-white text-sm leading-tight">{plan.name}</h4>
+                    </div>
+                    {plan.badge && (
+                      <Badge
+                        className={`text-[10px] px-1.5 py-0.5 shrink-0 border font-semibold ${plan.badgeStyle}`}
+                        data-testid={`badge-plan-${plan.id}`}
+                      >
+                        {plan.badge}
+                      </Badge>
+                    )}
+                  </div>
+
+                  {/* Price */}
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-xl font-black text-white">{plan.price}</span>
+                    <span className="text-white/30 text-xs">/ {plan.period}</span>
+                  </div>
+
+                  {/* Features */}
+                  <ul className="space-y-1.5 flex-1">
+                    {plan.features.map((f, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-white/55">
+                        <CheckCircle2 className={`w-3 h-3 shrink-0 mt-0.5 ${app.neon}`} />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  <Button
+                    onClick={() => onBuyNow(app, plan)}
+                    className={`w-full bg-gradient-to-r ${app.iconBg} hover:opacity-90 text-white border-0 font-semibold h-8 text-xs`}
+                    data-testid={`button-buy-plan-${plan.id}`}
+                  >
+                    {plan.buttonLabel ?? "Buy Now"}
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
