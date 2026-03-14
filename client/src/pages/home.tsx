@@ -21,6 +21,7 @@ import {
   X,
   ChevronRight,
   Sparkles,
+  Search,
   Clock,
   Users,
   Brain,
@@ -842,6 +843,7 @@ const PAYMENT_INFO: Record<string, { label: string; value: string; name: string;
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState<CategoryId>("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [orderOpen, setOrderOpen] = useState(false);
   const [previewImg, setPreviewImg] = useState<string | null>(null);
@@ -946,15 +948,28 @@ export default function Home() {
     : ["border-white/10", "text-white"];
 
   const activeCat = categories.find(c => c.id === activeCategory)!;
-  const filteredProducts = activeCategory === "all"
+  const q = searchQuery.toLowerCase().trim();
+
+  const matchesApp = (app: AIApp) =>
+    !q || app.name.toLowerCase().includes(q) || app.tagline.toLowerCase().includes(q);
+  const matchesProduct = (p: Product) =>
+    !q || p.serviceName.toLowerCase().includes(q) || p.planName.toLowerCase().includes(q);
+
+  const filteredAIApps = aiApps.filter(matchesApp);
+  const filteredEditingApps = editingApps.filter(matchesApp);
+  const filteredMusicApps = musicApps.filter(matchesApp);
+
+  const filteredProducts = (activeCategory === "all"
     ? products
-    : products.filter(p => p.categoryId === activeCategory);
+    : products.filter(p => p.categoryId === activeCategory)
+  ).filter(matchesProduct);
 
   const groupedByCategory = activeCategory === "all"
     ? categories.slice(1).map(cat => ({
         cat,
-        items: products.filter(p => p.categoryId === cat.id),
-      })).filter(g => g.items.length > 0 || ["ai", "editing", "music"].includes(g.cat.id))
+        items: products.filter(p => p.categoryId === cat.id).filter(matchesProduct),
+        filteredApps: cat.id === "ai" ? filteredAIApps : cat.id === "editing" ? filteredEditingApps : cat.id === "music" ? filteredMusicApps : [],
+      })).filter(g => g.items.length > 0 || g.filteredApps.length > 0 || (!q && ["ai", "editing", "music"].includes(g.cat.id)))
     : null;
 
   const handleCategoryClick = (catId: CategoryId) => {
@@ -1194,7 +1209,33 @@ export default function Home() {
 
       {/* Category Filter Bar */}
       <section className="sticky top-16 z-40 bg-[#080810]/90 backdrop-blur-xl border-b border-white/5 py-3 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto space-y-3">
+
+          {/* Search Bar */}
+          <div
+            className="flex items-center gap-3 w-full max-w-2xl mx-auto bg-white/5 backdrop-blur-md border border-white/10 rounded-full py-3 px-5 transition-all duration-200 focus-within:border-white/30 focus-within:ring-1 focus-within:ring-white/10 focus-within:shadow-[0_0_18px_0_rgba(139,92,246,0.15)]"
+            data-testid="search-bar-container"
+          >
+            <Search className="w-4 h-4 text-white/30 flex-shrink-0" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Search for CapCut, Spotify, Adobe..."
+              className="flex-1 bg-transparent text-white text-sm placeholder:text-white/25 focus:outline-none min-w-0"
+              data-testid="input-search"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="flex-shrink-0 w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                data-testid="button-search-clear"
+              >
+                <X className="w-3 h-3 text-white/50" />
+              </button>
+            )}
+          </div>
+
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-0.5" data-testid="category-filter-bar">
             {categories.map(cat => (
               <button
@@ -1239,7 +1280,7 @@ export default function Home() {
           {/* All categories grouped view */}
           {activeCategory === "all" && groupedByCategory && (
             <div className="space-y-14">
-              {groupedByCategory.map(({ cat, items }) => (
+              {groupedByCategory.map(({ cat, items, filteredApps }) => (
                 <div key={cat.id}>
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
@@ -1261,18 +1302,18 @@ export default function Home() {
                   </div>
                   {cat.id === "ai" ? (
                     <AIAccordion
-                      apps={aiApps}
+                      apps={filteredApps}
                       onSelect={app => openProductModal(app, "ai")}
                     />
                   ) : cat.id === "editing" ? (
                     <AIAccordion
-                      apps={editingApps}
+                      apps={filteredApps}
                       onSelect={app => openProductModal(app, "editing")}
                     />
                   ) : cat.id === "music" ? (
                     <div className="space-y-6">
                       <AIAccordion
-                        apps={musicApps}
+                        apps={filteredApps}
                         onSelect={app => openProductModal(app, "music")}
                       />
                       {items.length > 0 && (
@@ -1307,7 +1348,7 @@ export default function Home() {
           {/* Editing Software — dedicated accordion view */}
           {activeCategory === "editing" && (
             <AIAccordion
-              apps={editingApps}
+              apps={filteredEditingApps}
               onSelect={app => openProductModal(app, "editing")}
             />
           )}
@@ -1316,7 +1357,7 @@ export default function Home() {
           {activeCategory === "music" && (
             <div className="space-y-6">
               <AIAccordion
-                apps={musicApps}
+                apps={filteredMusicApps}
                 onSelect={app => openProductModal(app, "music")}
               />
               {filteredProducts.length > 0 && (
@@ -1332,7 +1373,7 @@ export default function Home() {
           {/* AI category — dedicated accordion view */}
           {activeCategory === "ai" && (
             <AIAccordion
-              apps={aiApps}
+              apps={filteredAIApps}
               onSelect={app => openProductModal(app, "ai")}
             />
           )}
