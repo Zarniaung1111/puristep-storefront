@@ -144,8 +144,8 @@ const categories: Category[] = [
     glowBg: "bg-cyan-500/10",
     borderHover: "hover:border-cyan-500/40",
     description: "Telegram Premium subscriptions",
-    startingFrom: null,
-    productCount: 2,
+    startingFrom: "From 24,000 KS",
+    productCount: 4,
   },
   {
     id: "vpn",
@@ -665,6 +665,81 @@ const editingApps: AIApp[] = [
   },
 ];
 
+const telegramApps: AIApp[] = [
+  {
+    id: "telegram-premium",
+    name: "Telegram Premium",
+    tagline: "Increased limits, faster speeds",
+    icon: <SiTelegram className="w-6 h-6 text-blue-400" />,
+    iconBg: "from-blue-500 to-cyan-600",
+    accentBorder: "border-blue-500/25 hover:border-blue-400/50",
+    accentGlow: "shadow-blue-500/10",
+    neon: "text-cyan-400",
+    startingFrom: "From 24,000 KS",
+    plans: [
+      {
+        id: "telegram-1m",
+        name: "1 Month",
+        price: "24,000 KS",
+        period: "1 month",
+        features: [
+          "4GB file uploads",
+          "Faster download speeds",
+          "Voice-to-text conversion",
+          "Premium badge & stickers",
+          "Ad-free public channels",
+        ],
+        buttonLabel: "Select Plan",
+      },
+      {
+        id: "telegram-3m",
+        name: "3 Months",
+        price: "49,000 KS",
+        period: "3 months",
+        features: [
+          "4GB file uploads",
+          "Faster download speeds",
+          "Voice-to-text conversion",
+          "Premium badge & stickers",
+          "Ad-free public channels",
+        ],
+        buttonLabel: "Select Plan",
+      },
+      {
+        id: "telegram-6m",
+        name: "6 Months",
+        price: "79,000 KS",
+        period: "6 months",
+        features: [
+          "4GB file uploads",
+          "Faster download speeds",
+          "Voice-to-text conversion",
+          "Premium badge & stickers",
+          "Ad-free public channels",
+        ],
+        buttonLabel: "Select Plan",
+      },
+      {
+        id: "telegram-12m",
+        name: "1 Year",
+        price: "136,000 KS",
+        period: "1 year",
+        features: [
+          "4GB file uploads",
+          "Faster download speeds",
+          "Voice-to-text conversion",
+          "Premium badge & stickers",
+          "Ad-free public channels",
+        ],
+        badge: "🏆 Best Value",
+        badgeStyle: "bg-cyan-500/20 text-cyan-300 border-cyan-500/40",
+        highlight: true,
+        buttonLabel: "Select Plan",
+      },
+    ],
+  },
+];
+
 const products: Product[] = [
   // --- AI (non-ChatGPT) ---
   {
@@ -762,36 +837,6 @@ const products: Product[] = [
     gradient: "from-pink-500 to-rose-600",
     icon: <SiApplemusic className="w-7 h-7 text-pink-400" />,
     badge: "Soon",
-    comingSoon: true,
-  },
-
-  // --- Telegram ---
-  {
-    id: "telegram-monthly",
-    categoryId: "telegram",
-    serviceName: "Telegram",
-    planName: "Premium Monthly",
-    price: "Coming Soon",
-    duration: "1 Month",
-    features: ["No ads", "4GB file uploads", "Faster downloads", "Exclusive stickers", "Voice-to-text"],
-    cardColor: "from-blue-900/40 to-cyan-950/60",
-    gradient: "from-blue-500 to-cyan-600",
-    icon: <SiTelegram className="w-7 h-7 text-blue-400" />,
-    badge: "Soon",
-    comingSoon: true,
-  },
-  {
-    id: "telegram-annual",
-    categoryId: "telegram",
-    serviceName: "Telegram",
-    planName: "Premium Annual",
-    price: "Coming Soon",
-    duration: "1 Year",
-    features: ["All monthly perks", "Best price per month", "No ads forever", "Premium badges", "Priority support"],
-    cardColor: "from-blue-900/40 to-cyan-950/60",
-    gradient: "from-cyan-500 to-blue-600",
-    icon: <SiTelegram className="w-7 h-7 text-cyan-400" />,
-    badge: "Save More",
     comingSoon: true,
   },
 
@@ -903,6 +948,7 @@ export default function Home() {
       ai: "from-fuchsia-900/40 to-violet-950/60",
       editing: "from-amber-900/40 to-orange-950/60",
       music: "from-red-900/40 to-rose-950/60",
+      telegram: "from-blue-900/40 to-cyan-950/60",
     };
     setSelectedProduct({
       id: plan.id,
@@ -958,6 +1004,7 @@ export default function Home() {
   const filteredAIApps = aiApps.filter(matchesApp);
   const filteredEditingApps = editingApps.filter(matchesApp);
   const filteredMusicApps = musicApps.filter(matchesApp);
+  const filteredTelegramApps = telegramApps.filter(matchesApp);
 
   const filteredProducts = (activeCategory === "all"
     ? products
@@ -968,8 +1015,8 @@ export default function Home() {
     ? categories.slice(1).map(cat => ({
         cat,
         items: products.filter(p => p.categoryId === cat.id).filter(matchesProduct),
-        filteredApps: cat.id === "ai" ? filteredAIApps : cat.id === "editing" ? filteredEditingApps : cat.id === "music" ? filteredMusicApps : [],
-      })).filter(g => g.items.length > 0 || g.filteredApps.length > 0 || (!q && ["ai", "editing", "music"].includes(g.cat.id)))
+        filteredApps: cat.id === "ai" ? filteredAIApps : cat.id === "editing" ? filteredEditingApps : cat.id === "music" ? filteredMusicApps : cat.id === "telegram" ? filteredTelegramApps : [],
+      })).filter(g => g.items.length > 0 || g.filteredApps.length > 0 || (!q && ["ai", "editing", "music", "telegram"].includes(g.cat.id)))
     : null;
 
   const handleCategoryClick = (catId: CategoryId) => {
@@ -1150,8 +1197,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Category Overview — Main Menu */}
-      <section className="py-10 px-4 sm:px-6 border-t border-white/5">
+      {/* Category Overview — Main Menu (hidden during search) */}
+      {!q && <section className="py-10 px-4 sm:px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <p className="text-white/30 text-xs uppercase tracking-widest font-semibold mb-1">Browse by Category</p>
@@ -1205,7 +1252,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Category Filter Bar */}
       <section className="sticky top-16 z-40 bg-[#080810]/90 backdrop-blur-xl border-b border-white/5 py-3 px-4 sm:px-6">
@@ -1324,6 +1371,11 @@ export default function Home() {
                         </div>
                       )}
                     </div>
+                  ) : cat.id === "telegram" ? (
+                    <AIAccordion
+                      apps={filteredApps}
+                      onSelect={app => openProductModal(app, "telegram")}
+                    />
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       {items.map(product => (
@@ -1337,12 +1389,20 @@ export default function Home() {
           )}
 
           {/* Single category filtered view — plain product cards */}
-          {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && activeCategory !== "editing" && (
+          {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && activeCategory !== "editing" && activeCategory !== "telegram" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredProducts.map(product => (
                 <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
               ))}
             </div>
+          )}
+
+          {/* Telegram Premium — dedicated accordion view */}
+          {activeCategory === "telegram" && (
+            <AIAccordion
+              apps={filteredTelegramApps}
+              onSelect={app => openProductModal(app, "telegram")}
+            />
           )}
 
           {/* Editing Software — dedicated accordion view */}
