@@ -1141,13 +1141,12 @@ export default function Home() {
           </div>
 
           {/* Testimonial cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+          <div className="flex flex-nowrap overflow-x-auto snap-x snap-mandatory hide-scrollbar md:grid md:grid-cols-3 md:gap-6 md:overflow-visible mt-8 gap-4">
             {[
               {
                 name: "Aung Ko Ko",
                 handle: "@aungkoko.mm",
-                avatar: "AK",
-                avatarColor: "from-teal-500 to-cyan-600",
+                avatarSrc: "/local-1.jpg",
                 border: "hover:border-teal-500/30",
                 glow: "hover:shadow-teal-500/10",
                 text: "KBZPay payment was confirmed in under 2 minutes. My ChatGPT Plus was active immediately. Best service I've used!",
@@ -1155,8 +1154,7 @@ export default function Home() {
               {
                 name: "Thida Myint",
                 handle: "@thida.creates",
-                avatar: "TM",
-                avatarColor: "from-violet-500 to-fuchsia-600",
+                avatarSrc: "/local-2.jpg",
                 border: "hover:border-violet-500/30",
                 glow: "hover:shadow-violet-500/10",
                 text: "Canva Pro at 20,000 KS for 2 years is unreal. The team responded on Telegram instantly whenever I needed help.",
@@ -1164,8 +1162,7 @@ export default function Home() {
               {
                 name: "Min Thu",
                 handle: "@minthu.dev",
-                avatar: "MT",
-                avatarColor: "from-fuchsia-500 to-pink-600",
+                avatarSrc: "/local-3.jpg",
                 border: "hover:border-fuchsia-500/30",
                 glow: "hover:shadow-fuchsia-500/10",
                 text: "Used WavePay to buy Gemini Pro. Got access in minutes. The local support is what makes PuriStep stand out.",
@@ -1173,13 +1170,15 @@ export default function Home() {
             ].map((t, i) => (
               <div
                 key={i}
-                className={`glass-card rounded-2xl p-5 border border-white/7 ${t.border} ${t.glow} hover:shadow-lg transition-all duration-300 hover:scale-[1.02] animate-fade-in-up stagger-${i + 2}`}
+                className={`min-w-[85vw] snap-center md:min-w-0 md:w-full glass-card rounded-2xl p-5 border border-white/7 ${t.border} ${t.glow} hover:shadow-lg transition-all duration-300 hover:scale-[1.02] animate-fade-in-up stagger-${i + 2}`}
                 data-testid={`testimonial-card-${i}`}
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.avatarColor} flex items-center justify-center flex-shrink-0`}>
-                    <span className="text-white text-xs font-bold">{t.avatar}</span>
-                  </div>
+                  <img
+                    src={t.avatarSrc}
+                    alt={t.name}
+                    className="w-12 h-12 rounded-full object-cover border border-white/10 flex-shrink-0"
+                  />
                   <div>
                     <p className="font-semibold text-white text-sm">{t.name}</p>
                     <p className="text-white/35 text-xs">{t.handle}</p>
