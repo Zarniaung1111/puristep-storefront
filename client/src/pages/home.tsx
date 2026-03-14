@@ -5,21 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   CheckCircle2,
   Shield,
@@ -44,9 +35,6 @@ import {
   HelpCircle,
   ExternalLink,
   Copy,
-  LogIn,
-  LogOut,
-  Package,
   Clapperboard,
 } from "lucide-react";
 import {
@@ -60,7 +48,6 @@ import {
   SiOpenai,
   SiGooglegemini,
   SiAnthropic,
-  SiGoogle,
 } from "react-icons/si";
 
 const orderFormSchema = z.object({
@@ -851,39 +838,8 @@ export default function Home() {
   const [spotifyModalOpen, setSpotifyModalOpen] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
 
-  const { user, loading: authLoading, supabase, signInWithGoogle, signOut } = useAuth();
-  const [signInOpen, setSignInOpen] = useState(false);
-  const [signInLoading, setSignInLoading] = useState(false);
-  const [ordersOpen, setOrdersOpen] = useState(false);
-  const [orderHistory, setOrderHistory] = useState<Array<{
-    id: string;
-    order_id: string;
-    product_name: string;
-    price: string;
-    created_at: string;
-  }>>([]);
-  const [ordersLoading, setOrdersLoading] = useState(false);
-
   const productsRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-
-  useEffect(() => {
-    if (user && signInOpen) setSignInOpen(false);
-  }, [user, signInOpen]);
-
-  useEffect(() => {
-    if (!ordersOpen || !user || !supabase) return;
-    setOrdersLoading(true);
-    supabase
-      .from("orders")
-      .select("id, order_id, product_name, price, created_at")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false })
-      .then(({ data, error }) => {
-        if (!error && data) setOrderHistory(data as typeof orderHistory);
-        setOrdersLoading(false);
-      });
-  }, [ordersOpen, user, supabase]);
 
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
@@ -904,22 +860,13 @@ export default function Home() {
         price: selectedProduct?.price,
         ...data,
       }),
-    onSuccess: async () => {
+    onSuccess: () => {
       setOrderSuccess(true);
-      if (user && supabase) {
-        await supabase.from("orders").insert({
-          order_id: orderId,
-          product_name: selectedProduct?.serviceName ?? "",
-          price: selectedProduct?.price ?? "",
-          user_id: user.id,
-        });
-      }
     },
     onError: () => toast({ title: "Error", description: "Failed to submit order. Please try again.", variant: "destructive" }),
   });
 
   const handleBuyNow = (product: Product) => {
-    if (!user) { setSignInOpen(true); return; }
     if (product.id === "spotify-premium") {
       setSpotifyModalOpen(true);
       return;
@@ -970,7 +917,6 @@ export default function Home() {
   };
 
   const handleAIPlanBuyNow = (app: AIApp, plan: AIPlan) => {
-    if (!user) { setSignInOpen(true); return; }
     setSelectedProduct({
       id: plan.id,
       categoryId: "ai",
@@ -991,7 +937,6 @@ export default function Home() {
   };
 
   const handleMusicPlanBuyNow = (app: AIApp, plan: AIPlan) => {
-    if (!user) { setSignInOpen(true); return; }
     setSelectedProduct({
       id: plan.id,
       categoryId: "music",
@@ -1012,7 +957,6 @@ export default function Home() {
   };
 
   const handleEditingPlanBuyNow = (app: AIApp, plan: AIPlan) => {
-    if (!user) { setSignInOpen(true); return; }
     setSelectedProduct({
       id: plan.id,
       categoryId: "editing",
@@ -1082,59 +1026,6 @@ export default function Home() {
               Browse Packs
             </Button>
 
-            {!authLoading && !user && (
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-violet-500/40 bg-violet-950/30 hover:bg-violet-900/40 text-violet-300 hover:text-white text-xs font-semibold transition-all gap-1.5"
-                onClick={() => setSignInOpen(true)}
-                data-testid="button-sign-in"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                Sign In
-              </Button>
-            )}
-
-            {!authLoading && user && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button
-                    className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
-                    data-testid="button-user-menu"
-                  >
-                    <Avatar className="w-6 h-6">
-                      <AvatarFallback className="bg-gradient-to-br from-violet-500 to-cyan-600 text-white text-[10px] font-bold">
-                        {user.email?.[0]?.toUpperCase() ?? "U"}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className="text-white/70 text-xs hidden sm:block max-w-[100px] truncate">{user.email}</span>
-                    <ChevronDown className="w-3 h-3 text-white/40" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="end"
-                  className="w-48 bg-[#0e0e1a] border border-white/10 text-white rounded-xl shadow-xl shadow-black/40"
-                >
-                  <DropdownMenuItem
-                    className="gap-2 text-white/70 hover:text-white focus:text-white cursor-pointer"
-                    onClick={() => setOrdersOpen(true)}
-                    data-testid="button-my-orders"
-                  >
-                    <Package className="w-4 h-4 text-violet-400" />
-                    My Orders
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator className="bg-white/10" />
-                  <DropdownMenuItem
-                    className="gap-2 text-red-400 hover:text-red-300 focus:text-red-300 cursor-pointer"
-                    onClick={() => signOut()}
-                    data-testid="button-sign-out"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
           </div>
         </div>
       </nav>
@@ -1776,108 +1667,6 @@ export default function Home() {
               </div>
             </>
           )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Sign In Modal */}
-      <Dialog open={signInOpen} onOpenChange={setSignInOpen}>
-        <DialogContent className="bg-[#0e0e1a] border border-white/10 text-white max-w-sm w-[calc(100vw-2rem)] rounded-2xl p-0 overflow-hidden">
-          <div className="p-6 pb-5 border-b border-white/5">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-violet-950/60 border border-violet-500/20 flex items-center justify-center flex-shrink-0">
-                <LogIn className="w-5 h-5 text-violet-400" />
-              </div>
-              <div>
-                <DialogTitle className="text-base font-semibold text-white">Sign In to PuriStep</DialogTitle>
-                <DialogDescription className="text-white/40 text-xs">Sign in to place orders and track your history</DialogDescription>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-6 space-y-4">
-            {/* Neon divider accent */}
-            <div className="flex items-center gap-3 py-1">
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
-              <span className="text-white/25 text-xs">Secure login via</span>
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
-            </div>
-
-            <Button
-              className="w-full h-12 bg-white hover:bg-white/90 active:bg-white/80 text-gray-900 font-semibold text-sm border-0 rounded-xl flex items-center justify-center gap-3 shadow-lg shadow-black/20 transition-all duration-200 hover:scale-[1.02]"
-              disabled={signInLoading}
-              onClick={async () => {
-                setSignInLoading(true);
-                await signInWithGoogle();
-                setSignInLoading(false);
-              }}
-              data-testid="button-sign-in-google"
-            >
-              {signInLoading ? (
-                <div className="w-5 h-5 border-2 border-gray-300 border-t-gray-700 rounded-full animate-spin" />
-              ) : (
-                <SiGoogle className="w-5 h-5 text-gray-700" />
-              )}
-              {signInLoading ? "Redirecting..." : "Continue with Google"}
-            </Button>
-
-            <p className="text-white/20 text-xs text-center leading-relaxed">
-              By signing in, you agree to our terms of service.
-              Your data is secured by Google & Supabase.
-            </p>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* My Orders Modal */}
-      <Dialog open={ordersOpen} onOpenChange={setOrdersOpen}>
-        <DialogContent className="bg-[#0e0e1a] border border-white/10 text-white max-w-md w-[calc(100vw-2rem)] rounded-2xl p-0 overflow-hidden">
-          <div className="p-6 pb-4 border-b border-white/5">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-violet-950/60 border border-violet-500/20 flex items-center justify-center flex-shrink-0">
-                <Package className="w-5 h-5 text-violet-400" />
-              </div>
-              <div>
-                <DialogTitle className="text-base font-semibold text-white">My Orders</DialogTitle>
-                <DialogDescription className="text-white/40 text-xs">Your PuriStep order history</DialogDescription>
-              </div>
-            </div>
-          </div>
-          <div className="p-6 max-h-[60vh] overflow-y-auto">
-            {ordersLoading ? (
-              <div className="space-y-3">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-16 rounded-xl bg-white/[0.04] animate-pulse" />
-                ))}
-              </div>
-            ) : orderHistory.length === 0 ? (
-              <div className="text-center py-10">
-                <Package className="w-10 h-10 text-white/20 mx-auto mb-3" />
-                <p className="text-white/40 text-sm">No orders yet</p>
-                <p className="text-white/25 text-xs mt-1">Your orders will appear here after checkout</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {orderHistory.map((order) => (
-                  <div
-                    key={order.id}
-                    className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4 hover:bg-white/[0.05] transition-colors"
-                    data-testid={`order-card-${order.id}`}
-                  >
-                    <div className="flex items-start justify-between gap-2 mb-1">
-                      <span className="text-white font-medium text-sm">{order.product_name}</span>
-                      <span className="text-violet-400 font-bold text-sm flex-shrink-0">{order.price}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-teal-400 font-mono text-xs">{order.order_id}</span>
-                      <span className="text-white/30 text-xs">
-                        {new Date(order.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
         </DialogContent>
       </Dialog>
 

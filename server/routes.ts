@@ -66,17 +66,6 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
 
-  app.get("/api/config", (_req, res) => {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    if (!supabaseUrl || !supabaseAnonKey) {
-      return res.status(500).json({ error: "Supabase config not set" });
-    }
-
-    res.json({ supabaseUrl, supabaseAnonKey });
-  });
-
   app.post("/api/checkout", async (req, res) => {
     try {
       const data = insertOrderSchema.parse(req.body);
