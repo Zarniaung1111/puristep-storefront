@@ -1105,6 +1105,9 @@ export default function Home() {
           {/* Floating asset cards */}
           <div className="relative w-full h-48 md:h-60 flex justify-center items-end overflow-hidden mb-6">
 
+            {/* Ambient brand glow — sits behind all cards */}
+            <div className="absolute inset-0 -z-10 m-auto w-3/4 h-3/4 bg-gradient-to-r from-purple-600/40 via-cyan-500/30 to-purple-600/40 blur-[80px] rounded-full pointer-events-none" />
+
             {/* Left card — Netflix */}
             <div className="absolute bottom-4 left-[4%] sm:left-[8%] w-32 sm:w-36 -rotate-[10deg] bg-gray-900/80 border border-white/5 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-black/60 flex flex-col gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-red-600/20 flex items-center justify-center">
