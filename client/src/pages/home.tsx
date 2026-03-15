@@ -1099,9 +1099,40 @@ export default function Home() {
       </nav>
 
       {/* ── Premium Hero Section ── */}
-      <section className="flex flex-col items-center text-center pt-10 pb-6 px-4">
+      <section className="flex flex-col items-center text-center pt-4 pb-6 px-4">
 
-        {/* ① Headline */}
+        {/* ① Floating overlapping cards */}
+        <div className="relative w-full max-w-sm mx-auto h-48 md:h-56 flex justify-center items-end mt-8 mb-8">
+
+          {/* Left — Netflix (tilted, recessed) */}
+          <div className="absolute left-0 bottom-4 w-32 md:w-40 bg-[#161616] border border-white/5 rounded-2xl p-4 flex flex-col items-center gap-2 -rotate-12 -translate-x-4 z-0 opacity-80">
+            <div className="w-10 h-10 rounded-xl bg-red-600/15 flex items-center justify-center">
+              <SiNetflix className="w-5 h-5 text-red-500" />
+            </div>
+            <p className="text-[11px] font-bold text-white leading-tight">Netflix Premium</p>
+            <p className="text-[10px] font-semibold text-red-400">From 22,000 KS</p>
+          </div>
+
+          {/* Right — Spotify (tilted, recessed) */}
+          <div className="absolute right-0 bottom-4 w-32 md:w-40 bg-[#161616] border border-white/5 rounded-2xl p-4 flex flex-col items-center gap-2 rotate-12 translate-x-4 z-0 opacity-80">
+            <div className="w-10 h-10 rounded-xl bg-green-600/15 flex items-center justify-center">
+              <SiSpotify className="w-5 h-5 text-green-500" />
+            </div>
+            <p className="text-[11px] font-bold text-white leading-tight">Spotify</p>
+            <p className="text-[10px] font-semibold text-green-400">From 8,000 KS</p>
+          </div>
+
+          {/* Center — ChatGPT (front, elevated) */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 md:w-48 bg-[#1a1a1a] border border-white/10 rounded-2xl p-5 flex flex-col items-center gap-2.5 z-10 shadow-2xl shadow-black">
+            <div className="w-11 h-11 rounded-xl bg-violet-600/15 flex items-center justify-center">
+              <SiOpenai className="w-6 h-6 text-violet-400" />
+            </div>
+            <p className="text-xs font-bold text-white leading-tight">ChatGPT Plus</p>
+            <p className="text-[11px] font-semibold text-violet-400">From 19,000 KS</p>
+          </div>
+        </div>
+
+        {/* ② Headline */}
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] mb-4">
           Digital Subscriptions{" "}
           <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
@@ -1109,13 +1140,13 @@ export default function Home() {
           </span>
         </h1>
 
-        {/* ② Subtitle */}
+        {/* ③ Subtitle */}
         <p className="text-gray-400 text-sm md:text-base max-w-lg mx-auto mb-8">
           Instant delivery. 24/7 local support. Premium packs for Myanmar.
         </p>
 
-        {/* ③ CTA Buttons */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto mb-12">
+        {/* ④ CTA Buttons */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto mb-6">
           <button
             onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
             className="w-full sm:w-auto px-8 py-3.5 rounded-2xl font-extrabold text-base text-white bg-gradient-to-r from-violet-600 to-cyan-500 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:opacity-95 transition-all duration-150 ease-out active:scale-95"
@@ -1135,56 +1166,14 @@ export default function Home() {
           </button>
         </div>
 
-        {/* ④ Glass Bento Showcase */}
-        <div className="w-full max-w-3xl mx-auto grid grid-cols-3 gap-3 md:gap-4 relative mb-10">
-          {/* Ambient backlight */}
-          <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-purple-600/10 blur-[80px] -z-10 rounded-full" />
-
-          {/* Card 1 — Netflix (left) */}
-          <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col items-center justify-center gap-3 transition-all duration-300 hover:bg-white/[0.06] hover:border-white/20 hover:-translate-y-1">
-            <div className="w-12 h-12 rounded-2xl bg-red-600/15 flex items-center justify-center" style={{ filter: "drop-shadow(0 0 8px rgba(239,68,68,0.3))" }}>
-              <SiNetflix className="w-6 h-6 text-red-500" />
-            </div>
-            <p className="text-xs font-semibold text-white tracking-wide">Netflix Premium</p>
-          </div>
-
-          {/* Card 2 — ChatGPT (center, taller) */}
-          <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-2xl md:rounded-3xl p-4 md:p-6 py-8 flex flex-col items-center justify-center gap-3 transition-all duration-300 hover:bg-white/[0.06] hover:border-white/20 hover:-translate-y-1">
-            <div className="w-12 h-12 rounded-2xl bg-violet-600/15 flex items-center justify-center" style={{ filter: "drop-shadow(0 0 8px rgba(139,92,246,0.35))" }}>
-              <SiOpenai className="w-6 h-6 text-violet-400" />
-            </div>
-            <p className="text-xs font-semibold text-white tracking-wide">ChatGPT Plus</p>
-          </div>
-
-          {/* Card 3 — 24/7 Support (right) */}
-          <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col items-center justify-center gap-3 transition-all duration-300 hover:bg-white/[0.06] hover:border-white/20 hover:-translate-y-1">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/40" />
-            <p className="text-xs font-semibold text-white tracking-wide">24/7 Support</p>
-          </div>
-        </div>
-
-        {/* ⑤ Live social proof marquee */}
-        <div className="w-full max-w-3xl mx-auto overflow-hidden relative flex items-center [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <div className="flex animate-marquee whitespace-nowrap">
-            {[
-              "⚡ Aung K. bought Netflix Premium",
-              "⚡ Thida renewed ChatGPT Plus",
-              "⚡ Min just bought Canva Pro",
-              "⚡ Zarni upgraded to Spotify Family",
-              "⚡ Htet activated Gemini Advanced",
-              "⚡ Nay bought Express VPN 1-Year",
-              "⚡ Aung K. bought Netflix Premium",
-              "⚡ Thida renewed ChatGPT Plus",
-              "⚡ Min just bought Canva Pro",
-              "⚡ Zarni upgraded to Spotify Family",
-              "⚡ Htet activated Gemini Advanced",
-              "⚡ Nay bought Express VPN 1-Year",
-            ].map((text, i) => (
-              <div key={i} className="bg-[#1a1a1a] border border-white/5 rounded-full px-4 py-2 text-[11px] text-gray-300 flex items-center gap-2 mx-1.5 flex-shrink-0">
-                {text}
-              </div>
+        {/* ⑤ Trust bar */}
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <div className="flex items-center gap-0.5">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-3.5 h-3.5 fill-green-500 text-green-500" />
             ))}
           </div>
+          <span className="text-gray-500 text-xs">4.9/5 Rating · Trusted by 500+ Myanmar Creators</span>
         </div>
 
       </section>
