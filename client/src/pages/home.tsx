@@ -1106,7 +1106,7 @@ export default function Home() {
           <div className="relative w-full h-48 md:h-60 flex justify-center items-end overflow-hidden mb-6">
 
             {/* Left card — Netflix */}
-            <div className="absolute bottom-4 left-[4%] sm:left-[8%] w-32 sm:w-36 -rotate-[10deg] bg-gray-900/80 border border-white/10 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-black/60 flex flex-col gap-2.5">
+            <div className="absolute bottom-4 left-[4%] sm:left-[8%] w-32 sm:w-36 -rotate-[10deg] bg-gray-900/80 border border-white/5 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-black/60 flex flex-col gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-red-600/20 flex items-center justify-center">
                 <SiNetflix className="w-5 h-5 text-red-500" />
               </div>
@@ -1121,7 +1121,7 @@ export default function Home() {
             </div>
 
             {/* Center card — ChatGPT (slightly raised) */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-36 sm:w-40 rotate-0 bg-gray-900/90 border border-violet-500/20 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-violet-900/30 flex flex-col gap-2.5 z-10">
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-36 sm:w-40 rotate-0 bg-gray-900/90 border border-violet-500/10 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-violet-900/15 flex flex-col gap-2.5 z-10">
               <div className="w-9 h-9 rounded-xl bg-violet-600/20 flex items-center justify-center">
                 <SiOpenai className="w-5 h-5 text-violet-400" />
               </div>
@@ -1136,7 +1136,7 @@ export default function Home() {
             </div>
 
             {/* Right card — Spotify */}
-            <div className="absolute bottom-4 right-[4%] sm:right-[8%] w-32 sm:w-36 rotate-[10deg] bg-gray-900/80 border border-white/10 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-black/60 flex flex-col gap-2.5">
+            <div className="absolute bottom-4 right-[4%] sm:right-[8%] w-32 sm:w-36 rotate-[10deg] bg-gray-900/80 border border-white/5 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-black/60 flex flex-col gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-green-600/20 flex items-center justify-center">
                 <SiSpotify className="w-5 h-5 text-green-500" />
               </div>
@@ -1151,7 +1151,7 @@ export default function Home() {
             </div>
 
             {/* Ambient glow behind center card */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-violet-600/15 blur-3xl rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-violet-600/8 blur-3xl rounded-full pointer-events-none" />
           </div>
 
           {/* Headline */}
@@ -1171,7 +1171,7 @@ export default function Home() {
           <div className="flex flex-col w-full gap-3 mb-6">
             <button
               onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              className="w-full py-3.5 rounded-2xl font-bold text-sm text-white bg-gradient-to-r from-violet-600 to-cyan-500 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:opacity-95 transition-all duration-150 ease-out active:scale-95"
+              className="w-full py-3.5 rounded-2xl font-extrabold text-base text-white bg-gradient-to-r from-violet-600 to-cyan-500 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:opacity-95 transition-all duration-150 ease-out active:scale-95"
               data-testid="button-hero-shop"
             >
               Shop Subscriptions
@@ -1189,7 +1189,7 @@ export default function Home() {
           </div>
 
           {/* Trust bar */}
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2 mb-8">
             <div className="flex items-center gap-0.5">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-3.5 h-3.5 fill-green-400 text-green-400" />
