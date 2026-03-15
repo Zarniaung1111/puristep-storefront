@@ -1099,63 +1099,27 @@ export default function Home() {
       </nav>
 
       {/* ── Premium Hero Section ── */}
-      <section className="px-4 sm:px-6 pt-6 pb-8">
-        <div className="max-w-lg mx-auto flex flex-col items-center text-center">
+      <section className="px-4 sm:px-6 pt-8 pb-2">
+        <div className="max-w-2xl mx-auto flex flex-col items-center text-center">
 
-          {/* Bento Box */}
-          <div className="w-full max-w-md mx-auto grid grid-cols-2 gap-3 mb-8">
-            {/* Wide — Netflix */}
-            <div className="col-span-2 bg-[#121212] border border-white/5 rounded-2xl p-4 flex items-center gap-4 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-red-900/20 rounded-full blur-3xl pointer-events-none" />
-              <div className="w-11 h-11 rounded-xl bg-red-600/20 flex items-center justify-center flex-shrink-0 relative z-10">
-                <SiNetflix className="w-6 h-6 text-red-500" />
-              </div>
-              <div className="relative z-10 flex-1 min-w-0">
-                <p className="text-sm font-bold text-white leading-tight">Netflix Premium</p>
-                <p className="text-[11px] text-white/35 leading-tight mt-0.5">Stream everything, anywhere</p>
-              </div>
-              <span className="relative z-10 bg-green-500/10 text-green-400 text-[10px] font-semibold px-2.5 py-1 rounded-full border border-green-500/20 whitespace-nowrap flex-shrink-0">
-                Instant Delivery
-              </span>
-            </div>
-
-            {/* Square — ChatGPT */}
-            <div className="col-span-1 bg-[#121212] border border-white/5 rounded-2xl p-4 flex flex-col justify-center items-center gap-2.5">
-              <div className="w-11 h-11 rounded-xl bg-violet-600/20 flex items-center justify-center">
-                <SiOpenai className="w-6 h-6 text-violet-400" />
-              </div>
-              <p className="text-xs font-bold text-white leading-tight text-center">ChatGPT Plus</p>
-            </div>
-
-            {/* Accent Square — 24/7 Support */}
-            <div className="col-span-1 bg-gradient-to-br from-cyan-500/10 to-purple-600/10 border border-purple-500/20 rounded-2xl p-4 flex flex-col justify-center items-center text-center gap-2.5">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <div>
-                <p className="text-xs font-bold text-white leading-tight">24/7 Local</p>
-                <p className="text-xs font-bold text-white leading-tight">Support</p>
-              </div>
-              <p className="text-[10px] text-white/30 leading-tight">Myanmar-based team</p>
-            </div>
-          </div>
-
-          {/* Headline */}
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.15] mb-3">
+          {/* ① Headline — top of hero */}
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">
             Digital Subscriptions{" "}
             <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
               Made Simple
             </span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-white/40 text-sm sm:text-base max-w-xs mb-7 leading-relaxed">
+          {/* ② Subtitle */}
+          <p className="text-white/40 text-sm sm:text-base max-w-sm mb-8 leading-relaxed">
             Instant delivery. 24/7 local support. Premium packs for Myanmar.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col w-full gap-3 mb-6">
+          {/* ③ CTA Buttons */}
+          <div className="flex flex-col sm:flex-row w-full max-w-sm gap-3 mb-10">
             <button
               onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              className="w-full py-3.5 rounded-2xl font-extrabold text-base text-white bg-gradient-to-r from-violet-600 to-cyan-500 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:opacity-95 transition-all duration-150 ease-out active:scale-95"
+              className="flex-1 py-3.5 rounded-2xl font-extrabold text-base text-white bg-gradient-to-r from-violet-600 to-cyan-500 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:opacity-95 transition-all duration-150 ease-out active:scale-95"
               data-testid="button-hero-shop"
             >
               Shop Subscriptions
@@ -1165,15 +1129,53 @@ export default function Home() {
                 const el = document.getElementById("payment-section");
                 el?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="w-full py-3.5 rounded-2xl font-semibold text-sm text-white/65 bg-[#121212] border border-white/10 hover:border-white/20 hover:text-white/80 transition-all duration-150 ease-out active:scale-95"
+              className="flex-1 py-3.5 rounded-2xl font-semibold text-sm text-white/65 bg-[#121212] border border-white/10 hover:border-white/20 hover:text-white/80 transition-all duration-150 ease-out active:scale-95"
               data-testid="button-hero-howto"
             >
               How to Buy (Wave / KBZ)
             </button>
           </div>
 
-          {/* Live social proof marquee */}
-          <div className="w-full overflow-hidden relative flex items-center mt-6 mb-4 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          {/* ④ Glass Bento Showcase */}
+          <div className="w-full max-w-2xl mx-auto grid grid-cols-3 gap-3 sm:gap-4 relative">
+            {/* Ambient glow behind grid */}
+            <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-purple-500/10 blur-3xl -z-10 rounded-full" />
+
+            {/* Card 1 — ChatGPT */}
+            <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-3xl p-5 flex flex-col items-center justify-center gap-3 transition-all hover:bg-white/[0.05] hover:border-white/20">
+              <div className="w-12 h-12 rounded-2xl bg-violet-600/15 flex items-center justify-center" style={{ filter: "drop-shadow(0 0 8px rgba(139,92,246,0.35))" }}>
+                <SiOpenai className="w-6 h-6 text-violet-400" />
+              </div>
+              <p className="text-xs font-semibold text-white tracking-wide">ChatGPT Plus</p>
+            </div>
+
+            {/* Card 2 — Netflix (center, taller accent) */}
+            <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-3xl p-5 flex flex-col items-center justify-center gap-3 transition-all hover:bg-white/[0.05] hover:border-white/20 ring-1 ring-violet-500/15 min-h-[140px]">
+              <div className="w-12 h-12 rounded-2xl bg-red-600/15 flex items-center justify-center" style={{ filter: "drop-shadow(0 0 8px rgba(239,68,68,0.3))" }}>
+                <SiNetflix className="w-6 h-6 text-red-500" />
+              </div>
+              <p className="text-xs font-semibold text-white tracking-wide">Netflix Premium</p>
+              <span className="bg-green-500/10 text-green-400 text-[9px] font-semibold px-2 py-0.5 rounded-full border border-green-500/20">
+                Instant
+              </span>
+            </div>
+
+            {/* Card 3 — 24/7 Support */}
+            <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-3xl p-5 flex flex-col items-center justify-center gap-3 transition-all hover:bg-white/[0.05] hover:border-white/20">
+              <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/40" />
+              <div className="text-center">
+                <p className="text-xs font-semibold text-white tracking-wide leading-tight">24/7 Local</p>
+                <p className="text-xs font-semibold text-white tracking-wide leading-tight">Support</p>
+              </div>
+              <p className="text-[10px] text-white/25">Myanmar team</p>
+            </div>
+          </div>
+
+          {/* ⑤ Bottom fade-out into search area */}
+          <div className="w-full h-12 bg-gradient-to-b from-transparent to-[#05050f] -mt-1 relative z-20 pointer-events-none" />
+
+          {/* ⑥ Live social proof marquee */}
+          <div className="w-full overflow-hidden relative flex items-center mt-2 mb-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
             <div className="flex animate-marquee whitespace-nowrap">
               {[
                 "⚡ Aung K. bought Netflix Premium",
