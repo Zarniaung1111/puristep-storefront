@@ -1088,7 +1088,7 @@ export default function Home() {
             <a href="/admin" className="text-sm text-white/30 hover:text-white/60 transition-colors hidden sm:block">Admin</a>
             <Button
               size="sm"
-              className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-white border-0 text-xs font-semibold shadow-md shadow-teal-500/20 transition-all duration-200 hover:scale-[1.03] hidden sm:flex"
+              className="bg-[#1A1A1A] hover:bg-[#222] text-white border border-green-500/30 text-xs font-semibold transition-all duration-150 ease-out active:scale-95 hidden sm:flex"
               onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth" })}
               data-testid="button-view-products"
             >
@@ -1101,38 +1101,32 @@ export default function Home() {
 
       {/* Hero */}
       <section className="relative pt-32 pb-20 px-4 sm:px-6 overflow-hidden">
-        {/* Ambient glows */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-60 -right-60 w-[700px] h-[700px] bg-violet-700/12 rounded-full blur-[140px]" />
-          <div className="absolute top-10 -left-40 w-[500px] h-[500px] bg-cyan-700/10 rounded-full blur-[120px]" />
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-fuchsia-800/8 rounded-full blur-[100px]" />
-        </div>
-
         <div className="relative max-w-4xl mx-auto text-center">
           {/* Trust pill */}
-          <div className="animate-fade-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal-500/25 bg-teal-950/30 text-teal-400 text-xs font-semibold mb-8 backdrop-blur-sm" data-testid="badge-hero">
-            <Star className="w-3 h-3 fill-teal-400 flex-shrink-0" />
+          <div className="animate-fade-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-white/50 text-xs font-semibold mb-8" data-testid="badge-hero">
+            <Star className="w-3 h-3 fill-white/40 flex-shrink-0" />
             Trusted by 500+ creators in Myanmar
           </div>
 
           {/* Headline */}
-          <h1 className="animate-fade-in-up stagger-1 text-4xl sm:text-5xl md:text-[3.75rem] font-extrabold tracking-tight mb-6 leading-[1.08]">
-            Unlock the World's Best
-            <span className="block bg-gradient-to-r from-teal-400 via-cyan-300 to-violet-400 bg-clip-text text-transparent mt-1 pb-1">
-              Creative & AI Tools
+          <h1 className="animate-fade-in-up stagger-1 text-4xl sm:text-5xl md:text-[3.75rem] font-extrabold tracking-tight mb-6 leading-[1.12]">
+            What would you like to{" "}
+            <span className="bg-gradient-to-r from-cyan-400 to-violet-500 bg-clip-text text-transparent">
+              unlock
             </span>
+            {" "}today?
           </h1>
 
           {/* Subheadline */}
-          <p className="animate-fade-in-up stagger-2 text-white/50 text-lg max-w-xl mx-auto mb-10 leading-relaxed">
-            Instant delivery, 24/7 local support, and premium subscriptions in Myanmar.
+          <p className="animate-fade-in-up stagger-2 text-white/45 text-lg max-w-xl mx-auto mb-10 leading-relaxed">
+            Instant access to the world's best digital packs in Myanmar.
           </p>
 
-          {/* CTAs */}
+          {/* CTAs — matte style */}
           <div className="animate-fade-in-up stagger-3 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-white border-0 px-9 h-13 text-base font-semibold shadow-lg shadow-teal-500/25 transition-all duration-300 hover:scale-[1.03] hover:shadow-teal-500/40"
+              className="bg-[#1A1A1A] hover:bg-[#222] text-white border border-green-500/30 px-9 h-13 text-base font-semibold transition-all duration-150 ease-out active:scale-95"
               onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth" })}
               data-testid="button-hero-browse"
             >
@@ -1140,8 +1134,7 @@ export default function Home() {
             </Button>
             <Button
               size="lg"
-              variant="outline"
-              className="border-white/12 bg-white/[0.04] backdrop-blur-sm hover:bg-white/[0.09] hover:border-white/25 text-white px-9 h-13 text-base font-semibold transition-all duration-300 hover:scale-[1.03]"
+              className="bg-[#1A1A1A] hover:bg-[#222] text-white/65 border border-green-500/30 px-9 h-13 text-base font-semibold transition-all duration-150 ease-out active:scale-95"
               onClick={() => {
                 const paymentSection = document.getElementById("payment-section");
                 paymentSection?.scrollIntoView({ behavior: "smooth" });
@@ -1216,7 +1209,7 @@ export default function Home() {
             ].map((t, i) => (
               <div
                 key={i}
-                className={`min-w-[85vw] snap-center md:min-w-0 md:w-full glass-card rounded-2xl p-5 border border-white/7 ${t.border} ${t.glow} hover:shadow-lg transition-all duration-300 hover:scale-[1.02] animate-fade-in-up stagger-${i + 2}`}
+                className={`min-w-[85vw] snap-center md:min-w-0 md:w-full bg-[#121212] rounded-2xl p-5 border border-white/[0.06] transition-all duration-200 animate-fade-in-up stagger-${i + 2}`}
                 data-testid={`testimonial-card-${i}`}
               >
                 <div className="flex items-center gap-3 mb-3">
@@ -1257,11 +1250,10 @@ export default function Home() {
                 key={cat.id}
                 onClick={() => handleCategoryClick(cat.id)}
                 data-testid={`category-card-${cat.id}`}
-                className={`group relative flex flex-col items-center text-center gap-4 p-6 rounded-2xl border border-white/[0.07] glass-card ${cat.borderHover} hover:bg-white/[0.07] hover:scale-[1.03] transition-all duration-300 cursor-pointer overflow-hidden animate-fade-in-up stagger-${i + 1}`}
-                style={{ boxShadow: "0 4px 24px 0 rgba(0,0,0,0.3)" }}
+                className={`group relative flex flex-col items-center text-center gap-4 p-6 rounded-2xl border border-white/[0.07] bg-[#0e0e0e] ${cat.borderHover} hover:bg-[#151515] hover:scale-[1.03] transition-all duration-200 cursor-pointer overflow-hidden animate-fade-in-up stagger-${i + 1}`}
               >
-                {/* Glow blob behind icon */}
-                <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 bg-gradient-to-br ${cat.color}`} />
+                {/* subtle glow on hover only */}
+                <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-300 bg-gradient-to-br ${cat.color}`} />
 
                 {/* Icon circle */}
                 <div className={`relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br ${cat.color} flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300`}>
@@ -1354,6 +1346,14 @@ export default function Home() {
       <section ref={productsRef} className="py-12 px-4 sm:px-6 scroll-mt-32">
         <div className="max-w-6xl mx-auto">
 
+          {/* PuriStep Suite header — shown in All view only */}
+          {activeCategory === "all" && !q && (
+            <div className="mb-8">
+              <p className="text-white/25 text-xs uppercase tracking-widest font-semibold mb-1">Digital Subscriptions</p>
+              <h2 className="text-2xl font-bold text-white">PuriStep Suite</h2>
+            </div>
+          )}
+
           {/* Active category header */}
           {activeCategory !== "all" && (
             <div className="mb-8">
@@ -1392,122 +1392,84 @@ export default function Home() {
                       See all <ChevronRight className="w-3 h-3" />
                     </button>
                   </div>
-                  {cat.id === "ai" ? (
-                    <AIAccordion
+                  {filteredApps.length > 0 ? (
+                    <MatteAppGrid
                       apps={filteredApps}
-                      onSelect={app => openProductModal(app, "ai")}
+                      onSelect={app => openProductModal(app, cat.id)}
                     />
-                  ) : cat.id === "editing" ? (
-                    <AIAccordion
-                      apps={filteredApps}
-                      onSelect={app => openProductModal(app, "editing")}
-                    />
-                  ) : cat.id === "music" ? (
-                    <div className="space-y-6">
-                      <AIAccordion
-                        apps={filteredApps}
-                        onSelect={app => openProductModal(app, "music")}
-                      />
-                      {items.length > 0 && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {items.map(product => (
-                            <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ) : cat.id === "telegram" ? (
-                    <AIAccordion
-                      apps={filteredApps}
-                      onSelect={app => openProductModal(app, "telegram")}
-                    />
-                  ) : cat.id === "vpn" ? (
-                    <div className="space-y-6">
-                      <AIAccordion
-                        apps={filteredApps}
-                        onSelect={app => openProductModal(app, "vpn")}
-                      />
-                      {items.length > 0 && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {items.map(product => (
-                            <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  ) : items.length > 0 ? (
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                       {items.map(product => (
-                        <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
+                        <MatteProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
                       ))}
                     </div>
-                  )}
+                  ) : null}
                 </div>
               ))}
             </div>
           )}
 
-          {/* Single category filtered view — plain product cards */}
+          {/* Single category filtered view — matte product cards */}
           {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && activeCategory !== "editing" && activeCategory !== "telegram" && activeCategory !== "vpn" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {filteredProducts.map(product => (
-                <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
+                <MatteProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
               ))}
             </div>
           )}
 
-          {/* Telegram Premium — dedicated accordion view */}
+          {/* Telegram Premium — matte card grid */}
           {activeCategory === "telegram" && (
-            <AIAccordion
+            <MatteAppGrid
               apps={filteredTelegramApps}
               onSelect={app => openProductModal(app, "telegram")}
             />
           )}
 
-          {/* Editing Software — dedicated accordion view */}
+          {/* Editing Software — matte card grid */}
           {activeCategory === "editing" && (
-            <AIAccordion
+            <MatteAppGrid
               apps={filteredEditingApps}
               onSelect={app => openProductModal(app, "editing")}
             />
           )}
 
-          {/* Music & Streaming — accordion + remaining product cards */}
+          {/* Music & Streaming — matte card grid + remaining product cards */}
           {activeCategory === "music" && (
             <div className="space-y-6">
-              <AIAccordion
+              <MatteAppGrid
                 apps={filteredMusicApps}
                 onSelect={app => openProductModal(app, "music")}
               />
               {filteredProducts.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {filteredProducts.map(product => (
-                    <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
+                    <MatteProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
                   ))}
                 </div>
               )}
             </div>
           )}
 
-          {/* AI category — dedicated accordion view */}
+          {/* AI category — matte card grid */}
           {activeCategory === "ai" && (
-            <AIAccordion
+            <MatteAppGrid
               apps={filteredAIApps}
               onSelect={app => openProductModal(app, "ai")}
             />
           )}
 
-          {/* VPN — accordion + remaining coming-soon product cards */}
+          {/* VPN — matte card grid + remaining coming-soon cards */}
           {activeCategory === "vpn" && (
             <div className="space-y-6">
-              <AIAccordion
+              <MatteAppGrid
                 apps={filteredVpnApps}
                 onSelect={app => openProductModal(app, "vpn")}
               />
               {filteredProducts.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {filteredProducts.map(product => (
-                    <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
+                    <MatteProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
                   ))}
                 </div>
               )}
@@ -1895,6 +1857,67 @@ function AIAccordion({
         </button>
       ))}
     </div>
+  );
+}
+
+function MatteAppGrid({
+  apps,
+  onSelect,
+}: {
+  apps: AIApp[];
+  onSelect: (app: AIApp) => void;
+}) {
+  if (!apps.length) return null;
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {apps.map(app => (
+        <button
+          key={app.id}
+          onClick={() => onSelect(app)}
+          className="bg-[#121212] rounded-2xl border border-white/5 p-4 flex flex-col min-h-[145px] cursor-pointer transition-transform duration-150 ease-out active:scale-95 hover:border-white/[0.12] hover:bg-[#181818] text-left w-full"
+          data-testid={`card-${app.id}`}
+        >
+          <div className="flex items-start justify-between mb-3">
+            <div className="w-11 h-11 rounded-xl bg-white/[0.07] flex items-center justify-center flex-shrink-0">
+              {app.icon}
+            </div>
+            <span className="bg-white/[0.08] text-white/40 text-[10px] px-2 py-0.5 rounded-full whitespace-nowrap leading-5">
+              {app.plans.length} plan{app.plans.length !== 1 ? "s" : ""}
+            </span>
+          </div>
+          <div className="mt-auto">
+            <p className="text-sm font-semibold text-white leading-tight">{app.name}</p>
+            <p className="text-xs text-gray-400 mt-0.5 line-clamp-2 leading-relaxed">{app.tagline}</p>
+          </div>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function MatteProductCard({ product, onBuyNow }: { product: Product; onBuyNow: (p: Product) => void }) {
+  return (
+    <button
+      onClick={() => !product.comingSoon && onBuyNow(product)}
+      disabled={product.comingSoon}
+      className={`bg-[#121212] rounded-2xl border border-white/5 p-4 flex flex-col min-h-[145px] text-left w-full transition-transform duration-150 ease-out ${product.comingSoon ? "opacity-50 cursor-not-allowed" : "cursor-pointer active:scale-95 hover:border-white/[0.12] hover:bg-[#181818]"}`}
+      data-testid={`card-product-${product.id}`}
+    >
+      <div className="flex items-start justify-between mb-3">
+        <div className="w-11 h-11 rounded-xl bg-white/[0.07] flex items-center justify-center flex-shrink-0">
+          {product.icon}
+        </div>
+        {product.comingSoon && (
+          <span className="bg-white/[0.08] text-white/40 text-[10px] px-2 py-0.5 rounded-full whitespace-nowrap leading-5">
+            Soon
+          </span>
+        )}
+      </div>
+      <div className="mt-auto">
+        <p className="text-sm font-semibold text-white leading-tight">{product.serviceName}</p>
+        <p className="text-xs text-gray-400 mt-0.5 line-clamp-2 leading-relaxed">{product.planName}</p>
+      </div>
+    </button>
   );
 }
 
