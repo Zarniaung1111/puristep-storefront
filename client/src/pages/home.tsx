@@ -1171,79 +1171,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trusted by Creators / Testimonials */}
-      <section className="py-14 px-4 sm:px-6 border-t border-white/[0.05]">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-4 animate-fade-in-up">
-            <p className="text-white/25 text-xs uppercase tracking-widest font-semibold mb-2">What our users say</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Trusted by Creators</h2>
-          </div>
-
-          {/* Stats strip */}
-          <div className="animate-fade-in-up stagger-1 flex items-center justify-center gap-3 text-sm text-white/40 my-6 flex-wrap">
-            <span className="font-semibold text-teal-400">500+ Active Subs</span>
-            <span className="text-white/15">|</span>
-            <span className="font-semibold text-cyan-400">Instant Access</span>
-            <span className="text-white/15">|</span>
-            <span className="font-semibold text-violet-400">Local Payments</span>
-          </div>
-
-          {/* Testimonial cards */}
-          <div className="flex flex-nowrap overflow-x-auto snap-x snap-mandatory hide-scrollbar md:grid md:grid-cols-3 md:gap-6 md:overflow-visible mt-8 gap-4">
-            {[
-              {
-                name: "Aung Ko Ko",
-                handle: "@aungkoko.mm",
-                avatarSrc: "/local-1.jpg",
-                border: "hover:border-teal-500/30",
-                glow: "hover:shadow-teal-500/10",
-                text: "KBZPay payment was confirmed in under 2 minutes. My ChatGPT Plus was active immediately. Best service I've used!",
-              },
-              {
-                name: "Thida Myint",
-                handle: "@thida.creates",
-                avatarSrc: "/local-2.jpg",
-                border: "hover:border-violet-500/30",
-                glow: "hover:shadow-violet-500/10",
-                text: "Canva Pro at 20,000 KS for 2 years is unreal. The team responded on Telegram instantly whenever I needed help.",
-              },
-              {
-                name: "Min Thu",
-                handle: "@minthu.dev",
-                avatarSrc: "/local-3.jpg",
-                border: "hover:border-fuchsia-500/30",
-                glow: "hover:shadow-fuchsia-500/10",
-                text: "Used WavePay to buy Gemini Pro. Got access in minutes. The local support is what makes PuriStep stand out.",
-              },
-            ].map((t, i) => (
-              <div
-                key={i}
-                className={`min-w-[85vw] snap-center md:min-w-0 md:w-full bg-[#121212] rounded-2xl p-5 border border-white/[0.06] transition-all duration-200 animate-fade-in-up stagger-${i + 2}`}
-                data-testid={`testimonial-card-${i}`}
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <img
-                    src={t.avatarSrc}
-                    alt={t.name}
-                    className="w-12 h-12 rounded-full object-cover border border-white/10 flex-shrink-0"
-                  />
-                  <div>
-                    <p className="font-semibold text-white text-sm">{t.name}</p>
-                    <p className="text-white/35 text-xs">{t.handle}</p>
-                  </div>
-                  <div className="ml-auto flex gap-0.5">
-                    {[...Array(5)].map((_, s) => (
-                      <Star key={s} className="w-3 h-3 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                </div>
-                <p className="text-white/55 text-sm leading-relaxed">"{t.text}"</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Category Overview — Main Menu (hidden during search) */}
       {!q && <section className="py-10 px-4 sm:px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
@@ -1541,6 +1468,64 @@ export default function Home() {
                 </div>
                 <h3 className="font-semibold text-white mb-2">{s.title}</h3>
                 <p className="text-white/40 text-sm leading-relaxed">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trusted by Creators / Testimonials */}
+      <section data-testid="testimonial-section" className="py-14 px-4 sm:px-6 border-t border-white/[0.05]">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-8 animate-fade-in-up">
+            <p className="text-white/25 text-xs uppercase tracking-widest font-semibold mb-2">What our users say</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">Trusted by Creators</h2>
+          </div>
+
+          {/* Testimonial cards */}
+          <div className="flex flex-nowrap overflow-x-auto snap-x snap-mandatory hide-scrollbar md:grid md:grid-cols-3 md:gap-6 md:overflow-visible gap-4">
+            {[
+              {
+                name: "Aung Ko Ko",
+                handle: "@aungkoko.mm",
+                avatarSrc: "https://api.dicebear.com/9.x/micah/svg?seed=Aung&backgroundColor=transparent",
+                text: "KBZPay payment was confirmed in under 2 minutes. My ChatGPT Plus was active immediately. Best service I've used!",
+              },
+              {
+                name: "Thida Myint",
+                handle: "@thida.creates",
+                avatarSrc: "https://api.dicebear.com/9.x/micah/svg?seed=Thida&backgroundColor=transparent",
+                text: "Canva Pro at 20,000 KS for 2 years is unreal. The team responded on Telegram instantly whenever I needed help.",
+              },
+              {
+                name: "Min Thu",
+                handle: "@minthu.dev",
+                avatarSrc: "https://api.dicebear.com/9.x/micah/svg?seed=MinThu&backgroundColor=transparent",
+                text: "Used WavePay to buy Gemini Pro. Got access in minutes. The local support is what makes PuriStep stand out.",
+              },
+            ].map((t, i) => (
+              <div
+                key={i}
+                className={`min-w-[85vw] snap-center md:min-w-0 md:w-full bg-[#121212] rounded-2xl p-5 border border-white/[0.06] transition-all duration-200 animate-fade-in-up stagger-${i + 2}`}
+                data-testid={`testimonial-card-${i}`}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <img
+                    src={t.avatarSrc}
+                    alt={t.name}
+                    className="w-12 h-12 rounded-full object-cover border border-white/10 flex-shrink-0 bg-transparent"
+                  />
+                  <div>
+                    <p className="font-semibold text-white text-sm">{t.name}</p>
+                    <p className="text-white/35 text-xs">{t.handle}</p>
+                  </div>
+                  <div className="ml-auto flex gap-0.5">
+                    {[...Array(5)].map((_, s) => (
+                      <Star key={s} className="w-3 h-3 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-white/55 text-sm leading-relaxed">"{t.text}"</p>
               </div>
             ))}
           </div>
