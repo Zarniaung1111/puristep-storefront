@@ -1098,6 +1098,109 @@ export default function Home() {
         </div>
       </nav>
 
+      {/* ── Premium Hero Section ── */}
+      <section className="px-4 sm:px-6 pt-6 pb-8">
+        <div className="max-w-lg mx-auto flex flex-col items-center text-center">
+
+          {/* Floating asset cards */}
+          <div className="relative w-full h-48 md:h-60 flex justify-center items-end overflow-hidden mb-6">
+
+            {/* Left card — Netflix */}
+            <div className="absolute bottom-4 left-[4%] sm:left-[8%] w-32 sm:w-36 -rotate-[10deg] bg-gray-900/80 border border-white/10 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-black/60 flex flex-col gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-red-600/20 flex items-center justify-center">
+                <SiNetflix className="w-5 h-5 text-red-500" />
+              </div>
+              <div>
+                <p className="text-[11px] font-bold text-white leading-tight">Netflix</p>
+                <p className="text-[10px] text-white/35 leading-tight">Premium</p>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="text-[10px] text-white/25 leading-none">From</span>
+                <span className="text-[11px] font-bold text-red-400 leading-none">22,000 KS</span>
+              </div>
+            </div>
+
+            {/* Center card — ChatGPT (slightly raised) */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-36 sm:w-40 rotate-0 bg-gray-900/90 border border-violet-500/20 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-violet-900/30 flex flex-col gap-2.5 z-10">
+              <div className="w-9 h-9 rounded-xl bg-violet-600/20 flex items-center justify-center">
+                <SiOpenai className="w-5 h-5 text-violet-400" />
+              </div>
+              <div>
+                <p className="text-[11px] font-bold text-white leading-tight">ChatGPT Plus</p>
+                <p className="text-[10px] text-white/35 leading-tight">AI Assistant</p>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="text-[10px] text-white/25 leading-none">From</span>
+                <span className="text-[11px] font-bold text-violet-400 leading-none">19,000 KS</span>
+              </div>
+            </div>
+
+            {/* Right card — Spotify */}
+            <div className="absolute bottom-4 right-[4%] sm:right-[8%] w-32 sm:w-36 rotate-[10deg] bg-gray-900/80 border border-white/10 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-black/60 flex flex-col gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-green-600/20 flex items-center justify-center">
+                <SiSpotify className="w-5 h-5 text-green-500" />
+              </div>
+              <div>
+                <p className="text-[11px] font-bold text-white leading-tight">Spotify</p>
+                <p className="text-[10px] text-white/35 leading-tight">Music & Podcasts</p>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="text-[10px] text-white/25 leading-none">From</span>
+                <span className="text-[11px] font-bold text-green-400 leading-none">8,000 KS</span>
+              </div>
+            </div>
+
+            {/* Ambient glow behind center card */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-violet-600/15 blur-3xl rounded-full pointer-events-none" />
+          </div>
+
+          {/* Headline */}
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.15] mb-3">
+            Digital Subscriptions{" "}
+            <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
+              Made Simple
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-white/40 text-sm sm:text-base max-w-xs mb-7 leading-relaxed">
+            Instant delivery. 24/7 local support. Premium packs for Myanmar.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col w-full gap-3 mb-6">
+            <button
+              onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
+              className="w-full py-3.5 rounded-2xl font-bold text-sm text-white bg-gradient-to-r from-violet-600 to-cyan-500 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:opacity-95 transition-all duration-150 ease-out active:scale-95"
+              data-testid="button-hero-shop"
+            >
+              Shop Subscriptions
+            </button>
+            <button
+              onClick={() => {
+                const el = document.getElementById("payment-section");
+                el?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="w-full py-3.5 rounded-2xl font-semibold text-sm text-white/65 bg-[#121212] border border-white/10 hover:border-white/20 hover:text-white/80 transition-all duration-150 ease-out active:scale-95"
+              data-testid="button-hero-howto"
+            >
+              How to Buy (Wave / KBZ)
+            </button>
+          </div>
+
+          {/* Trust bar */}
+          <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-3.5 h-3.5 fill-green-400 text-green-400" />
+              ))}
+            </div>
+            <span className="text-white/35 text-xs">4.9/5 Rating · Trusted by 500+ Myanmar Creators</span>
+          </div>
+
+        </div>
+      </section>
+
       {/* Category Filter Bar */}
       <section className="sticky top-16 z-40 bg-[#080810]/90 backdrop-blur-xl border-b border-white/5 py-3 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto space-y-3">
