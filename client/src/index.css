@@ -251,6 +251,14 @@
   display: none;
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
 @layer utilities {
 
   /* Hide ugly search cancel button in Chrome until we can style it properly */

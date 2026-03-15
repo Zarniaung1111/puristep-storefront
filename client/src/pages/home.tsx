@@ -1102,57 +1102,40 @@ export default function Home() {
       <section className="px-4 sm:px-6 pt-6 pb-8">
         <div className="max-w-lg mx-auto flex flex-col items-center text-center">
 
-          {/* Floating asset cards — overflow-hidden removed so blur glow is not clipped */}
-          <div className="relative w-full h-48 md:h-60 flex justify-center items-end mb-6">
-
-            {/* Brute-force ambient glow — centered behind all cards */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] bg-purple-600/70 rounded-full blur-[80px] -z-10 pointer-events-none" />
-
-            {/* Left card — Netflix */}
-            <div className="absolute bottom-4 left-[4%] sm:left-[8%] w-32 sm:w-36 -rotate-[10deg] bg-gray-900/80 border border-white/5 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-black/60 flex flex-col gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-red-600/20 flex items-center justify-center">
-                <SiNetflix className="w-5 h-5 text-red-500" />
+          {/* Bento Box */}
+          <div className="w-full max-w-md mx-auto grid grid-cols-2 gap-3 mb-8">
+            {/* Wide — Netflix */}
+            <div className="col-span-2 bg-[#121212] border border-white/5 rounded-2xl p-4 flex items-center gap-4 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-red-900/20 rounded-full blur-3xl pointer-events-none" />
+              <div className="w-11 h-11 rounded-xl bg-red-600/20 flex items-center justify-center flex-shrink-0 relative z-10">
+                <SiNetflix className="w-6 h-6 text-red-500" />
               </div>
-              <div>
-                <p className="text-[11px] font-bold text-white leading-tight">Netflix</p>
-                <p className="text-[10px] text-white/35 leading-tight">Premium</p>
+              <div className="relative z-10 flex-1 min-w-0">
+                <p className="text-sm font-bold text-white leading-tight">Netflix Premium</p>
+                <p className="text-[11px] text-white/35 leading-tight mt-0.5">Stream everything, anywhere</p>
               </div>
-              <div className="flex items-center gap-1">
-                <span className="text-[10px] text-white/25 leading-none">From</span>
-                <span className="text-[11px] font-bold text-red-400 leading-none">22,000 KS</span>
-              </div>
+              <span className="relative z-10 bg-green-500/10 text-green-400 text-[10px] font-semibold px-2.5 py-1 rounded-full border border-green-500/20 whitespace-nowrap flex-shrink-0">
+                Instant Delivery
+              </span>
             </div>
 
-            {/* Center card — ChatGPT (slightly raised) */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-36 sm:w-40 rotate-0 bg-gray-900/90 border border-violet-500/10 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-violet-900/15 flex flex-col gap-2.5 z-10">
-              <div className="w-9 h-9 rounded-xl bg-violet-600/20 flex items-center justify-center">
-                <SiOpenai className="w-5 h-5 text-violet-400" />
+            {/* Square — ChatGPT */}
+            <div className="col-span-1 bg-[#121212] border border-white/5 rounded-2xl p-4 flex flex-col justify-center items-center gap-2.5">
+              <div className="w-11 h-11 rounded-xl bg-violet-600/20 flex items-center justify-center">
+                <SiOpenai className="w-6 h-6 text-violet-400" />
               </div>
-              <div>
-                <p className="text-[11px] font-bold text-white leading-tight">ChatGPT Plus</p>
-                <p className="text-[10px] text-white/35 leading-tight">AI Assistant</p>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="text-[10px] text-white/25 leading-none">From</span>
-                <span className="text-[11px] font-bold text-violet-400 leading-none">19,000 KS</span>
-              </div>
+              <p className="text-xs font-bold text-white leading-tight text-center">ChatGPT Plus</p>
             </div>
 
-            {/* Right card — Spotify */}
-            <div className="absolute bottom-4 right-[4%] sm:right-[8%] w-32 sm:w-36 rotate-[10deg] bg-gray-900/80 border border-white/5 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-black/60 flex flex-col gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-green-600/20 flex items-center justify-center">
-                <SiSpotify className="w-5 h-5 text-green-500" />
-              </div>
+            {/* Accent Square — 24/7 Support */}
+            <div className="col-span-1 bg-gradient-to-br from-cyan-500/10 to-purple-600/10 border border-purple-500/20 rounded-2xl p-4 flex flex-col justify-center items-center text-center gap-2.5">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               <div>
-                <p className="text-[11px] font-bold text-white leading-tight">Spotify</p>
-                <p className="text-[10px] text-white/35 leading-tight">Music & Podcasts</p>
+                <p className="text-xs font-bold text-white leading-tight">24/7 Local</p>
+                <p className="text-xs font-bold text-white leading-tight">Support</p>
               </div>
-              <div className="flex items-center gap-1">
-                <span className="text-[10px] text-white/25 leading-none">From</span>
-                <span className="text-[11px] font-bold text-green-400 leading-none">8,000 KS</span>
-              </div>
+              <p className="text-[10px] text-white/30 leading-tight">Myanmar-based team</p>
             </div>
-
           </div>
 
           {/* Headline */}
@@ -1189,14 +1172,28 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Trust bar */}
-          <div className="flex items-center justify-center gap-2 mb-8">
-            <div className="flex items-center gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-green-400 text-green-400" />
+          {/* Live social proof marquee */}
+          <div className="w-full overflow-hidden relative flex items-center mt-6 mb-4 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+            <div className="flex animate-marquee whitespace-nowrap">
+              {[
+                "⚡ Aung K. bought Netflix Premium",
+                "⚡ Thida renewed ChatGPT Plus",
+                "⚡ Min just bought Canva Pro",
+                "⚡ Zarni upgraded to Spotify Family",
+                "⚡ Htet activated Gemini Advanced",
+                "⚡ Nay bought Express VPN 1-Year",
+                "⚡ Aung K. bought Netflix Premium",
+                "⚡ Thida renewed ChatGPT Plus",
+                "⚡ Min just bought Canva Pro",
+                "⚡ Zarni upgraded to Spotify Family",
+                "⚡ Htet activated Gemini Advanced",
+                "⚡ Nay bought Express VPN 1-Year",
+              ].map((text, i) => (
+                <div key={i} className="bg-[#1a1a1a] border border-white/5 rounded-full px-4 py-2 text-[11px] text-gray-300 flex items-center gap-2 mx-1.5 flex-shrink-0">
+                  {text}
+                </div>
               ))}
             </div>
-            <span className="text-white/35 text-xs">4.9/5 Rating · Trusted by 500+ Myanmar Creators</span>
           </div>
 
         </div>
