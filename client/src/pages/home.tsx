@@ -554,7 +554,16 @@ const musicApps: AIApp[] = [
     accentGlow: "shadow-green-500/10",
     neon: "text-green-400",
     startingFrom: "Individual & Family",
-    plans: [],
+    plans: [
+      { id: "spotify-individual-1m",  name: "Individual Monthly",   price: "14,000 KS", period: "monthly",   features: [] },
+      { id: "spotify-individual-2m",  name: "Individual 2 Months",  price: "26,000 KS", period: "2 months",  features: [] },
+      { id: "spotify-individual-3m",  name: "Individual 3 Months",  price: "34,000 KS", period: "3 months",  features: [] },
+      { id: "spotify-family-1m",      name: "Family Monthly",       price: "8,000 KS",  period: "monthly",   features: [] },
+      { id: "spotify-family-2m",      name: "Family 2 Months",      price: "14,000 KS", period: "2 months",  features: [] },
+      { id: "spotify-family-3m",      name: "Family 3 Months",      price: "22,000 KS", period: "3 months",  features: [] },
+      { id: "spotify-family-6m",      name: "Family 6 Months",      price: "47,000 KS", period: "6 months",  features: [] },
+      { id: "spotify-family-12m",     name: "Family 12 Months",     price: "74,000 KS", period: "12 months", features: [] },
+    ],
   },
 ];
 
@@ -2006,6 +2015,15 @@ function ProductModal({
 }) {
   const [spotifyTab, setSpotifyTab] = useState<"individual" | "family">("individual");
 
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => { document.body.style.overflow = "unset"; };
+  }, [open]);
+
   const isSpotify = app?.id === "spotify-premium";
 
   const spotifyIndividualPlans: AIPlan[] = [
@@ -2040,7 +2058,7 @@ function ProductModal({
       data-testid="product-modal-backdrop"
     >
       <div
-        className={`w-full sm:max-w-2xl sm:mx-4 bg-[#0e0e1a] border border-white/10 rounded-t-3xl sm:rounded-2xl max-h-[88vh] overflow-y-auto transition-all duration-300
+        className={`w-full sm:max-w-2xl sm:mx-4 bg-[#0e0e1a] border border-white/10 rounded-t-3xl sm:rounded-2xl max-h-[88vh] overflow-y-auto transition-all duration-300 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full
           ${open ? "translate-y-0 sm:scale-100 sm:opacity-100" : "translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"}`}
         onClick={e => e.stopPropagation()}
         data-testid="product-modal"
@@ -2073,7 +2091,7 @@ function ProductModal({
         </div>
 
         {/* Body */}
-        <div className="p-5 space-y-5">
+        <div className="p-5 pr-2 space-y-5">
 
           {/* Spotify Individual / Family toggle */}
           {isSpotify && (
