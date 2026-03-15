@@ -1105,30 +1105,33 @@ export default function Home() {
         <div className="relative w-full max-w-sm mx-auto h-48 md:h-56 flex justify-center items-end mt-8 mb-8">
 
           {/* Left — Netflix (tilted, recessed) */}
-          <div className="absolute left-0 bottom-4 w-32 md:w-40 bg-[#161616] border border-white/5 rounded-2xl p-4 flex flex-col items-center gap-2 -rotate-12 -translate-x-4 z-0 opacity-80">
-            <div className="w-10 h-10 rounded-xl bg-red-600/15 flex items-center justify-center">
-              <SiNetflix className="w-5 h-5 text-red-500" />
+          <div className="absolute left-0 bottom-4 w-[110px] h-[130px] bg-[#13151A] border border-white/5 rounded-2xl p-3.5 flex flex-col items-center justify-center gap-1.5 -rotate-12 -translate-x-6 z-0 opacity-80">
+            <div className="w-9 h-9 rounded-lg bg-red-600/15 flex items-center justify-center">
+              <SiNetflix className="w-4.5 h-4.5 text-red-500" />
             </div>
-            <p className="text-[11px] font-bold text-white leading-tight">Netflix Premium</p>
-            <p className="text-[10px] font-semibold text-red-400">From 22,000 KS</p>
+            <p className="text-sm font-bold text-white leading-tight">Netflix</p>
+            <p className="text-[10px] text-gray-500 leading-tight">Premium</p>
+            <p className="text-[10px] leading-tight mt-0.5"><span className="text-gray-600">From </span><span className="font-semibold text-red-400">22,000 KS</span></p>
           </div>
 
           {/* Right — Spotify (tilted, recessed) */}
-          <div className="absolute right-0 bottom-4 w-32 md:w-40 bg-[#161616] border border-white/5 rounded-2xl p-4 flex flex-col items-center gap-2 rotate-12 translate-x-4 z-0 opacity-80">
-            <div className="w-10 h-10 rounded-xl bg-green-600/15 flex items-center justify-center">
-              <SiSpotify className="w-5 h-5 text-green-500" />
+          <div className="absolute right-0 bottom-4 w-[110px] h-[130px] bg-[#13151A] border border-white/5 rounded-2xl p-3.5 flex flex-col items-center justify-center gap-1.5 rotate-12 translate-x-6 z-0 opacity-80">
+            <div className="w-9 h-9 rounded-lg bg-green-600/15 flex items-center justify-center">
+              <SiSpotify className="w-4.5 h-4.5 text-green-500" />
             </div>
-            <p className="text-[11px] font-bold text-white leading-tight">Spotify</p>
-            <p className="text-[10px] font-semibold text-green-400">From 8,000 KS</p>
+            <p className="text-sm font-bold text-white leading-tight">Spotify</p>
+            <p className="text-[10px] text-gray-500 leading-tight">Music & Podcasts</p>
+            <p className="text-[10px] leading-tight mt-0.5"><span className="text-gray-600">From </span><span className="font-semibold text-green-400">8,000 KS</span></p>
           </div>
 
           {/* Center — ChatGPT (front, elevated) */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 md:w-48 bg-[#1a1a1a] border border-white/10 rounded-2xl p-5 flex flex-col items-center gap-2.5 z-10 shadow-2xl shadow-black">
-            <div className="w-11 h-11 rounded-xl bg-violet-600/15 flex items-center justify-center">
-              <SiOpenai className="w-6 h-6 text-violet-400" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[130px] h-[140px] bg-[#13151A] border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 z-10 shadow-2xl shadow-black/60">
+            <div className="w-10 h-10 rounded-lg bg-violet-600/15 flex items-center justify-center">
+              <SiOpenai className="w-5 h-5 text-violet-400" />
             </div>
-            <p className="text-xs font-bold text-white leading-tight">ChatGPT Plus</p>
-            <p className="text-[11px] font-semibold text-violet-400">From 19,000 KS</p>
+            <p className="text-sm font-bold text-white leading-tight">ChatGPT Plus</p>
+            <p className="text-[10px] text-gray-500 leading-tight">AI Assistant</p>
+            <p className="text-[10px] leading-tight mt-0.5"><span className="text-gray-600">From </span><span className="font-semibold text-violet-400">19,000 KS</span></p>
           </div>
         </div>
 
