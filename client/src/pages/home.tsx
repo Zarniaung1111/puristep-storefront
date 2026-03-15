@@ -1099,106 +1099,94 @@ export default function Home() {
       </nav>
 
       {/* ── Premium Hero Section ── */}
-      <section className="px-4 sm:px-6 pt-8 pb-2">
-        <div className="max-w-2xl mx-auto flex flex-col items-center text-center">
+      <section className="flex flex-col items-center text-center pt-10 pb-6 px-4">
 
-          {/* ① Headline — top of hero */}
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">
-            Digital Subscriptions{" "}
-            <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
-              Made Simple
-            </span>
-          </h1>
+        {/* ① Headline */}
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] mb-4">
+          Digital Subscriptions{" "}
+          <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
+            Made Simple
+          </span>
+        </h1>
 
-          {/* ② Subtitle */}
-          <p className="text-white/40 text-sm sm:text-base max-w-sm mb-8 leading-relaxed">
-            Instant delivery. 24/7 local support. Premium packs for Myanmar.
-          </p>
+        {/* ② Subtitle */}
+        <p className="text-gray-400 text-sm md:text-base max-w-lg mx-auto mb-8">
+          Instant delivery. 24/7 local support. Premium packs for Myanmar.
+        </p>
 
-          {/* ③ CTA Buttons */}
-          <div className="flex flex-col sm:flex-row w-full max-w-sm gap-3 mb-10">
-            <button
-              onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              className="flex-1 py-3.5 rounded-2xl font-extrabold text-base text-white bg-gradient-to-r from-violet-600 to-cyan-500 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:opacity-95 transition-all duration-150 ease-out active:scale-95"
-              data-testid="button-hero-shop"
-            >
-              Shop Subscriptions
-            </button>
-            <button
-              onClick={() => {
-                const el = document.getElementById("payment-section");
-                el?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="flex-1 py-3.5 rounded-2xl font-semibold text-sm text-white/65 bg-[#121212] border border-white/10 hover:border-white/20 hover:text-white/80 transition-all duration-150 ease-out active:scale-95"
-              data-testid="button-hero-howto"
-            >
-              How to Buy (Wave / KBZ)
-            </button>
-          </div>
-
-          {/* ④ Glass Bento Showcase */}
-          <div className="w-full max-w-2xl mx-auto grid grid-cols-3 gap-3 sm:gap-4 relative">
-            {/* Ambient glow behind grid */}
-            <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-purple-500/10 blur-3xl -z-10 rounded-full" />
-
-            {/* Card 1 — ChatGPT */}
-            <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-3xl p-5 flex flex-col items-center justify-center gap-3 transition-all hover:bg-white/[0.05] hover:border-white/20">
-              <div className="w-12 h-12 rounded-2xl bg-violet-600/15 flex items-center justify-center" style={{ filter: "drop-shadow(0 0 8px rgba(139,92,246,0.35))" }}>
-                <SiOpenai className="w-6 h-6 text-violet-400" />
-              </div>
-              <p className="text-xs font-semibold text-white tracking-wide">ChatGPT Plus</p>
-            </div>
-
-            {/* Card 2 — Netflix (center, taller accent) */}
-            <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-3xl p-5 flex flex-col items-center justify-center gap-3 transition-all hover:bg-white/[0.05] hover:border-white/20 ring-1 ring-violet-500/15 min-h-[140px]">
-              <div className="w-12 h-12 rounded-2xl bg-red-600/15 flex items-center justify-center" style={{ filter: "drop-shadow(0 0 8px rgba(239,68,68,0.3))" }}>
-                <SiNetflix className="w-6 h-6 text-red-500" />
-              </div>
-              <p className="text-xs font-semibold text-white tracking-wide">Netflix Premium</p>
-              <span className="bg-green-500/10 text-green-400 text-[9px] font-semibold px-2 py-0.5 rounded-full border border-green-500/20">
-                Instant
-              </span>
-            </div>
-
-            {/* Card 3 — 24/7 Support */}
-            <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-3xl p-5 flex flex-col items-center justify-center gap-3 transition-all hover:bg-white/[0.05] hover:border-white/20">
-              <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/40" />
-              <div className="text-center">
-                <p className="text-xs font-semibold text-white tracking-wide leading-tight">24/7 Local</p>
-                <p className="text-xs font-semibold text-white tracking-wide leading-tight">Support</p>
-              </div>
-              <p className="text-[10px] text-white/25">Myanmar team</p>
-            </div>
-          </div>
-
-          {/* ⑤ Bottom fade-out into search area */}
-          <div className="w-full h-12 bg-gradient-to-b from-transparent to-[#05050f] -mt-1 relative z-20 pointer-events-none" />
-
-          {/* ⑥ Live social proof marquee */}
-          <div className="w-full overflow-hidden relative flex items-center mt-2 mb-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-            <div className="flex animate-marquee whitespace-nowrap">
-              {[
-                "⚡ Aung K. bought Netflix Premium",
-                "⚡ Thida renewed ChatGPT Plus",
-                "⚡ Min just bought Canva Pro",
-                "⚡ Zarni upgraded to Spotify Family",
-                "⚡ Htet activated Gemini Advanced",
-                "⚡ Nay bought Express VPN 1-Year",
-                "⚡ Aung K. bought Netflix Premium",
-                "⚡ Thida renewed ChatGPT Plus",
-                "⚡ Min just bought Canva Pro",
-                "⚡ Zarni upgraded to Spotify Family",
-                "⚡ Htet activated Gemini Advanced",
-                "⚡ Nay bought Express VPN 1-Year",
-              ].map((text, i) => (
-                <div key={i} className="bg-[#1a1a1a] border border-white/5 rounded-full px-4 py-2 text-[11px] text-gray-300 flex items-center gap-2 mx-1.5 flex-shrink-0">
-                  {text}
-                </div>
-              ))}
-            </div>
-          </div>
-
+        {/* ③ CTA Buttons */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto mb-12">
+          <button
+            onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            className="w-full sm:w-auto px-8 py-3.5 rounded-2xl font-extrabold text-base text-white bg-gradient-to-r from-violet-600 to-cyan-500 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:opacity-95 transition-all duration-150 ease-out active:scale-95"
+            data-testid="button-hero-shop"
+          >
+            Shop Subscriptions
+          </button>
+          <button
+            onClick={() => {
+              const el = document.getElementById("payment-section");
+              el?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="w-full sm:w-auto px-8 py-3.5 rounded-2xl font-semibold text-sm text-white/65 bg-[#121212] border border-white/10 hover:border-white/20 hover:text-white/80 transition-all duration-150 ease-out active:scale-95"
+            data-testid="button-hero-howto"
+          >
+            How to Buy (Wave / KBZ)
+          </button>
         </div>
+
+        {/* ④ Glass Bento Showcase */}
+        <div className="w-full max-w-3xl mx-auto grid grid-cols-3 gap-3 md:gap-4 relative mb-10">
+          {/* Ambient backlight */}
+          <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-purple-600/10 blur-[80px] -z-10 rounded-full" />
+
+          {/* Card 1 — Netflix (left) */}
+          <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col items-center justify-center gap-3 transition-all duration-300 hover:bg-white/[0.06] hover:border-white/20 hover:-translate-y-1">
+            <div className="w-12 h-12 rounded-2xl bg-red-600/15 flex items-center justify-center" style={{ filter: "drop-shadow(0 0 8px rgba(239,68,68,0.3))" }}>
+              <SiNetflix className="w-6 h-6 text-red-500" />
+            </div>
+            <p className="text-xs font-semibold text-white tracking-wide">Netflix Premium</p>
+          </div>
+
+          {/* Card 2 — ChatGPT (center, taller) */}
+          <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-2xl md:rounded-3xl p-4 md:p-6 py-8 flex flex-col items-center justify-center gap-3 transition-all duration-300 hover:bg-white/[0.06] hover:border-white/20 hover:-translate-y-1">
+            <div className="w-12 h-12 rounded-2xl bg-violet-600/15 flex items-center justify-center" style={{ filter: "drop-shadow(0 0 8px rgba(139,92,246,0.35))" }}>
+              <SiOpenai className="w-6 h-6 text-violet-400" />
+            </div>
+            <p className="text-xs font-semibold text-white tracking-wide">ChatGPT Plus</p>
+          </div>
+
+          {/* Card 3 — 24/7 Support (right) */}
+          <div className="bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-2xl md:rounded-3xl p-4 md:p-6 flex flex-col items-center justify-center gap-3 transition-all duration-300 hover:bg-white/[0.06] hover:border-white/20 hover:-translate-y-1">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/40" />
+            <p className="text-xs font-semibold text-white tracking-wide">24/7 Support</p>
+          </div>
+        </div>
+
+        {/* ⑤ Live social proof marquee */}
+        <div className="w-full max-w-3xl mx-auto overflow-hidden relative flex items-center [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <div className="flex animate-marquee whitespace-nowrap">
+            {[
+              "⚡ Aung K. bought Netflix Premium",
+              "⚡ Thida renewed ChatGPT Plus",
+              "⚡ Min just bought Canva Pro",
+              "⚡ Zarni upgraded to Spotify Family",
+              "⚡ Htet activated Gemini Advanced",
+              "⚡ Nay bought Express VPN 1-Year",
+              "⚡ Aung K. bought Netflix Premium",
+              "⚡ Thida renewed ChatGPT Plus",
+              "⚡ Min just bought Canva Pro",
+              "⚡ Zarni upgraded to Spotify Family",
+              "⚡ Htet activated Gemini Advanced",
+              "⚡ Nay bought Express VPN 1-Year",
+            ].map((text, i) => (
+              <div key={i} className="bg-[#1a1a1a] border border-white/5 rounded-full px-4 py-2 text-[11px] text-gray-300 flex items-center gap-2 mx-1.5 flex-shrink-0">
+                {text}
+              </div>
+            ))}
+          </div>
+        </div>
+
       </section>
 
       {/* Category Filter Bar */}
