@@ -251,13 +251,6 @@
   display: none;
 }
 
-@keyframes orbit3d {
-  from { transform: rotateY(0deg); }
-  to   { transform: rotateY(360deg); }
-}
-.animate-orbit3d {
-  animation: orbit3d 14s linear infinite;
-}
 
 @layer utilities {
 
