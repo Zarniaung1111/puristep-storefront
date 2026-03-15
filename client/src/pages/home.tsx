@@ -1102,11 +1102,11 @@ export default function Home() {
       <section className="px-4 sm:px-6 pt-6 pb-8">
         <div className="max-w-lg mx-auto flex flex-col items-center text-center">
 
-          {/* Floating asset cards */}
-          <div className="relative w-full h-48 md:h-60 flex justify-center items-end overflow-hidden mb-6">
+          {/* Floating asset cards — overflow-hidden removed so blur glow is not clipped */}
+          <div className="relative w-full h-48 md:h-60 flex justify-center items-end mb-6">
 
-            {/* Ambient brand glow — sits behind all cards */}
-            <div className="absolute inset-0 -z-10 m-auto w-3/4 h-3/4 bg-gradient-to-r from-purple-600/40 via-cyan-500/30 to-purple-600/40 blur-[80px] rounded-full pointer-events-none" />
+            {/* Brute-force ambient glow — centered behind all cards */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] bg-purple-600/70 rounded-full blur-[80px] -z-10 pointer-events-none" />
 
             {/* Left card — Netflix */}
             <div className="absolute bottom-4 left-[4%] sm:left-[8%] w-32 sm:w-36 -rotate-[10deg] bg-gray-900/80 border border-white/5 rounded-2xl backdrop-blur-md p-4 shadow-2xl shadow-black/60 flex flex-col gap-2.5">
@@ -1153,8 +1153,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Ambient glow behind center card */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-violet-600/8 blur-3xl rounded-full pointer-events-none" />
           </div>
 
           {/* Headline */}
