@@ -740,6 +740,64 @@ const telegramApps: AIApp[] = [
   },
 ];
 
+const vpnApps: AIApp[] = [
+  {
+    id: "expressvpn",
+    name: "Express VPN Premium",
+    tagline: "High-speed, unblock any app",
+    icon: <Lock className="w-6 h-6 text-red-300" />,
+    iconBg: "from-red-600 to-orange-700",
+    accentBorder: "border-red-500/25 hover:border-red-400/50",
+    accentGlow: "shadow-red-500/10",
+    neon: "text-red-400",
+    startingFrom: "From 4,000 KS",
+    plans: [
+      {
+        id: "expressvpn-1m",
+        name: "Monthly",
+        price: "4,000 KS",
+        period: "1 month",
+        features: [
+          "Unblock all restricted apps (FB, IG, Telegram)",
+          "Fast & stable connection",
+          "100% private browsing",
+          "1 device supported",
+        ],
+        buttonLabel: "Select Plan",
+      },
+      {
+        id: "expressvpn-3m",
+        name: "3 Months",
+        price: "12,000 KS",
+        period: "3 months",
+        features: [
+          "90 days uninterrupted access",
+          "All monthly premium features",
+          "High-speed streaming support",
+          "Bypass ISP throttling",
+        ],
+        buttonLabel: "Select Plan",
+      },
+      {
+        id: "expressvpn-1y",
+        name: "1 Year",
+        price: "32,000 KS",
+        period: "1 year",
+        features: [
+          "Save 16,000 KS instantly",
+          "Full 12-months uninterrupted",
+          "Top-priority fast servers",
+          "Ultimate security lock",
+        ],
+        badge: "🏆 BEST VALUE",
+        badgeStyle: "bg-red-500/20 text-red-300 border-red-500/40",
+        highlight: true,
+        buttonLabel: "Select Plan",
+      },
+    ],
+  },
+];
+
 const products: Product[] = [
   // --- AI (non-ChatGPT) ---
   {
@@ -855,20 +913,6 @@ const products: Product[] = [
     badge: "Soon",
     comingSoon: true,
   },
-  {
-    id: "expressvpn-monthly",
-    categoryId: "vpn",
-    serviceName: "ExpressVPN",
-    planName: "Standard",
-    price: "Coming Soon",
-    duration: "1 Month",
-    features: ["3,000+ servers", "Lightway protocol", "TrustedServer tech", "Split tunneling", "5 devices"],
-    cardColor: "from-red-900/40 to-orange-950/60",
-    gradient: "from-red-500 to-orange-600",
-    icon: <Lock className="w-7 h-7 text-orange-400" />,
-    badge: "Soon",
-    comingSoon: true,
-  },
 ];
 
 function generateOrderId(): string {
@@ -949,6 +993,7 @@ export default function Home() {
       editing: "from-amber-900/40 to-orange-950/60",
       music: "from-red-900/40 to-rose-950/60",
       telegram: "from-blue-900/40 to-cyan-950/60",
+      vpn: "from-red-900/40 to-orange-950/60",
     };
     setSelectedProduct({
       id: plan.id,
@@ -1005,6 +1050,7 @@ export default function Home() {
   const filteredEditingApps = editingApps.filter(matchesApp);
   const filteredMusicApps = musicApps.filter(matchesApp);
   const filteredTelegramApps = telegramApps.filter(matchesApp);
+  const filteredVpnApps = vpnApps.filter(matchesApp);
 
   const filteredProducts = (activeCategory === "all"
     ? products
@@ -1015,8 +1061,8 @@ export default function Home() {
     ? categories.slice(1).map(cat => ({
         cat,
         items: products.filter(p => p.categoryId === cat.id).filter(matchesProduct),
-        filteredApps: cat.id === "ai" ? filteredAIApps : cat.id === "editing" ? filteredEditingApps : cat.id === "music" ? filteredMusicApps : cat.id === "telegram" ? filteredTelegramApps : [],
-      })).filter(g => g.items.length > 0 || g.filteredApps.length > 0 || (!q && ["ai", "editing", "music", "telegram"].includes(g.cat.id)))
+        filteredApps: cat.id === "ai" ? filteredAIApps : cat.id === "editing" ? filteredEditingApps : cat.id === "music" ? filteredMusicApps : cat.id === "telegram" ? filteredTelegramApps : cat.id === "vpn" ? filteredVpnApps : [],
+      })).filter(g => g.items.length > 0 || g.filteredApps.length > 0 || (!q && ["ai", "editing", "music", "telegram", "vpn"].includes(g.cat.id)))
     : null;
 
   const handleCategoryClick = (catId: CategoryId) => {
@@ -1375,6 +1421,20 @@ export default function Home() {
                       apps={filteredApps}
                       onSelect={app => openProductModal(app, "telegram")}
                     />
+                  ) : cat.id === "vpn" ? (
+                    <div className="space-y-6">
+                      <AIAccordion
+                        apps={filteredApps}
+                        onSelect={app => openProductModal(app, "vpn")}
+                      />
+                      {items.length > 0 && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                          {items.map(product => (
+                            <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       {items.map(product => (
@@ -1388,7 +1448,7 @@ export default function Home() {
           )}
 
           {/* Single category filtered view — plain product cards */}
-          {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && activeCategory !== "editing" && activeCategory !== "telegram" && (
+          {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && activeCategory !== "editing" && activeCategory !== "telegram" && activeCategory !== "vpn" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredProducts.map(product => (
                 <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
@@ -1435,6 +1495,23 @@ export default function Home() {
               apps={filteredAIApps}
               onSelect={app => openProductModal(app, "ai")}
             />
+          )}
+
+          {/* VPN — accordion + remaining coming-soon product cards */}
+          {activeCategory === "vpn" && (
+            <div className="space-y-6">
+              <AIAccordion
+                apps={filteredVpnApps}
+                onSelect={app => openProductModal(app, "vpn")}
+              />
+              {filteredProducts.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {filteredProducts.map(product => (
+                    <ProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
+                  ))}
+                </div>
+              )}
+            </div>
           )}
         </div>
       </section>
