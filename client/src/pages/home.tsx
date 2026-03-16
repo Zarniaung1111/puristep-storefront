@@ -210,6 +210,7 @@ interface AIApp {
   tagline: string;
   icon: React.ReactNode;
   iconBg: string;
+  iconGlow?: string;
   accentBorder: string;
   accentGlow: string;
   neon: string;
@@ -223,7 +224,8 @@ const aiApps: AIApp[] = [
     name: "ChatGPT Plus",
     tagline: "OpenAI's flagship AI assistant",
     icon: <SiOpenai className="w-6 h-6 text-white" />,
-    iconBg: "from-emerald-600 to-green-700",
+    iconBg: "from-[#10A37F] to-[#0a8a6b]",
+    iconGlow: "0 0 18px rgba(16,163,127,0.45)",
     accentBorder: "border-emerald-500/25 hover:border-emerald-400/50",
     accentGlow: "shadow-emerald-500/10",
     neon: "text-emerald-400",
@@ -276,7 +278,8 @@ const aiApps: AIApp[] = [
     name: "Gemini Pro",
     tagline: "Google's most capable AI model",
     icon: <SiGooglegemini className="w-6 h-6 text-white" />,
-    iconBg: "from-blue-500 to-indigo-600",
+    iconBg: "from-blue-400 to-purple-500",
+    iconGlow: "0 0 18px rgba(139,92,246,0.45)",
     accentBorder: "border-blue-500/25 hover:border-blue-400/50",
     accentGlow: "shadow-blue-500/10",
     neon: "text-blue-400",
@@ -320,7 +323,8 @@ const aiApps: AIApp[] = [
     name: "Claude Pro",
     tagline: "Anthropic's thoughtful AI assistant",
     icon: <SiAnthropic className="w-6 h-6 text-white" />,
-    iconBg: "from-orange-500 to-amber-600",
+    iconBg: "from-[#D97757] to-[#be5c38]",
+    iconGlow: "0 0 18px rgba(217,119,87,0.45)",
     accentBorder: "border-orange-500/25 hover:border-orange-400/50",
     accentGlow: "shadow-orange-500/10",
     neon: "text-orange-400",
@@ -348,7 +352,8 @@ const aiApps: AIApp[] = [
     name: "Canva Pro",
     tagline: "AI-powered design for everyone",
     icon: <SiCanva className="w-6 h-6 text-white" />,
-    iconBg: "from-teal-500 to-cyan-600",
+    iconBg: "from-[#00C4CC] to-[#009ea5]",
+    iconGlow: "0 0 18px rgba(0,196,204,0.45)",
     accentBorder: "border-teal-500/25 hover:border-teal-400/50",
     accentGlow: "shadow-teal-500/10",
     neon: "text-teal-400",
@@ -2015,7 +2020,10 @@ function AIAccordion({
           data-testid={`accordion-${app.id}`}
         >
           <div className="flex items-center gap-4 px-5 py-4">
-            <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center flex-shrink-0 shadow-lg`}>
+            <div
+              className={`w-11 h-11 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center flex-shrink-0`}
+              style={{ boxShadow: app.iconGlow ?? "0 4px 12px rgba(0,0,0,0.35)" }}
+            >
               {app.icon}
             </div>
             <div className="flex-1 min-w-0">
@@ -2289,7 +2297,10 @@ function ProductModal({
         <div className="sticky top-0 z-10 bg-[#0e0e1a]/95 backdrop-blur-sm border-b border-white/[0.07] px-5 py-4 flex items-center justify-between">
           {app && (
             <div className="flex items-center gap-3">
-              <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center shadow-md`}>
+              <div
+                className={`w-9 h-9 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center`}
+                style={{ boxShadow: app.iconGlow ?? "0 2px 8px rgba(0,0,0,0.3)" }}
+              >
                 {app.icon}
               </div>
               <div>
