@@ -1002,7 +1002,7 @@ function HeroCarousel({ onCardClick }: { onCardClick?: () => void }) {
   }, []);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto h-[250px] flex items-center justify-center mt-4 mb-8">
+    <div className="relative w-full max-w-5xl mx-auto h-[250px] flex items-center justify-center mt-4 mb-8">
       {/* Purple ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[200px] bg-purple-600/50 blur-[100px] -z-10 rounded-full pointer-events-none" />
 
@@ -1200,7 +1200,7 @@ export default function Home() {
 
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#05050f]/85 backdrop-blur-xl border-b border-white/[0.06]" style={{ boxShadow: "0 1px 0 0 rgba(139,92,246,0.08), 0 4px 24px 0 rgba(0,0,0,0.4)" }}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
               <Sparkles className="w-4 h-4 text-white" />
@@ -1222,7 +1222,7 @@ export default function Home() {
         <HeroCarousel onCardClick={() => productsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })} />
 
         {/* ② Headline */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] mb-4">
+        <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-4">
           Digital Subscriptions{" "}
           <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
             Made Simple
@@ -1268,11 +1268,11 @@ export default function Home() {
       </section>
 
       {/* ── Browse by Category ── */}
-      <section className="w-full max-w-5xl mx-auto px-4 py-12 flex flex-col items-center">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center">
         <p className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Browse by Category</p>
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">What are you looking for?</h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 w-full">
 
           {/* AI Tools */}
           <div
@@ -1381,7 +1381,7 @@ export default function Home() {
 
       {/* Category Filter Bar */}
       <section className="sticky top-16 z-40 bg-[#080810]/90 backdrop-blur-xl border-b border-white/5 py-3 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto space-y-3">
+        <div className="max-w-7xl mx-auto space-y-3">
 
           {/* Search Bar */}
           <div
@@ -1431,8 +1431,8 @@ export default function Home() {
       </section>
 
       {/* Products Section */}
-      <section ref={productsRef} className="py-6 pb-12 px-4 sm:px-6 scroll-mt-48">
-        <div className="max-w-6xl mx-auto">
+      <section ref={productsRef} className="py-6 pb-12 px-4 sm:px-6 lg:px-8 scroll-mt-48">
+        <div className="max-w-7xl mx-auto">
 
           {/* Trending Packs header — shown in All view only */}
           {activeCategory === "all" && !q && (
@@ -1485,7 +1485,7 @@ export default function Home() {
                       onSelect={app => openProductModal(app, cat.id)}
                     />
                   ) : items.length > 0 ? (
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
                       {items.map(product => (
                         <MatteProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
                       ))}
@@ -1498,7 +1498,7 @@ export default function Home() {
 
           {/* Single category filtered view — matte product cards */}
           {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && activeCategory !== "editing" && activeCategory !== "telegram" && activeCategory !== "vpn" && activeCategory !== "gaming" && (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
               {filteredProducts.map(product => (
                 <MatteProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
               ))}
@@ -1529,7 +1529,7 @@ export default function Home() {
                 onSelect={app => openProductModal(app, "music")}
               />
               {filteredProducts.length > 0 && (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
                   {filteredProducts.map(product => (
                     <MatteProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
                   ))}
@@ -1554,7 +1554,7 @@ export default function Home() {
                 onSelect={app => openProductModal(app, "vpn")}
               />
               {filteredProducts.length > 0 && (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
                   {filteredProducts.map(product => (
                     <MatteProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
                   ))}
@@ -2052,7 +2052,7 @@ function MatteAppGrid({
 }) {
   if (!apps.length) return null;
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
       {apps.map(app => (
         <button
           key={app.id}
