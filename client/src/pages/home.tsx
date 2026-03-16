@@ -1267,6 +1267,39 @@ export default function Home() {
 
       </section>
 
+      {/* ── Recent Purchases Marquee ── */}
+      <div className="w-full overflow-hidden border-y border-white/[0.05] bg-[#07070e]/80 py-2.5 flex items-stretch">
+        {/* Label */}
+        <div className="flex-shrink-0 flex items-center px-4 border-r border-white/[0.07] mr-4">
+          <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/20 whitespace-nowrap">Recent Purchases</span>
+        </div>
+        {/* Scrolling strip */}
+        <div className="flex-1 overflow-hidden relative">
+          <div className="animate-marquee flex items-center whitespace-nowrap w-max">
+            {[
+              { action: "Thida upgraded to",       product: "ChatGPT Plus"                  },
+              { action: "Min Thu Aung bought",      product: "Canva Pro 1 Year"               },
+              { action: "Kyaw Zin topped up",       product: "Mobile Legends 706 Diamonds"    },
+              { action: "Hsu Htet Shin purchased",  product: "Netflix Premium 1 Month"        },
+              { action: "Hein Htet bought",         product: "Spotify Premium"                },
+              { action: "Zaw secured",              product: "NordVPN 1 Year"                 },
+              { action: "Thida upgraded to",        product: "ChatGPT Plus"                   },
+              { action: "Min Thu Aung bought",      product: "Canva Pro 1 Year"               },
+              { action: "Kyaw Zin topped up",       product: "Mobile Legends 706 Diamonds"    },
+              { action: "Hsu Htet Shin purchased",  product: "Netflix Premium 1 Month"        },
+              { action: "Hein Htet bought",         product: "Spotify Premium"                },
+              { action: "Zaw secured",              product: "NordVPN 1 Year"                 },
+            ].map((item, i) => (
+              <span key={i} className="inline-flex items-center mr-10">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse mr-2 flex-shrink-0" />
+                <span className="text-white/35 text-xs">{item.action}</span>
+                <span className="text-purple-400 font-semibold text-xs ml-1">{item.product}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ── Browse by Category ── */}
       <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center">
         <p className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Browse by Category</p>
