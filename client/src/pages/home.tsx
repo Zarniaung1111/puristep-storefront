@@ -48,6 +48,7 @@ import {
   SiGooglegemini,
   SiAnthropic,
   SiAdobecreativecloud,
+  SiMessenger,
 } from "react-icons/si";
 
 const orderFormSchema = z.object({
@@ -1067,6 +1068,14 @@ export default function Home() {
   const productsRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
+  const [fabVisible, setFabVisible] = useState(false);
+  const [fabOpen, setFabOpen] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setFabVisible(window.scrollY > 300);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
@@ -1744,6 +1753,51 @@ export default function Home() {
         </div>
         <p className="text-white/20 text-xs">© 2025 PuriStep. Myanmar's Premium Digital Subscription Reseller.</p>
       </footer>
+
+      {/* ── Contact Admin FAB ── */}
+      <div
+        className={`fixed bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end gap-3 transition-all duration-300 ${
+          fabVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        {/* Popup options */}
+        <div
+          className={`flex flex-col gap-3 mb-1 origin-bottom transition-all duration-200 ${
+            fabOpen ? "scale-100 opacity-100" : "scale-75 opacity-0 pointer-events-none"
+          }`}
+        >
+          <a
+            href="https://t.me/PuriStep"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 bg-[#2AABEE] hover:bg-[#2298D6] text-white px-4 py-3 rounded-2xl shadow-lg transition-colors"
+            data-testid="fab-telegram"
+          >
+            <SiTelegram className="w-5 h-5 flex-shrink-0" />
+            <span className="font-bold text-sm">Telegram</span>
+          </a>
+          <a
+            href="https://m.me/PuriStep"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 bg-[#0084FF] hover:bg-[#0073E6] text-white px-4 py-3 rounded-2xl shadow-lg transition-colors"
+            data-testid="fab-messenger"
+          >
+            <SiMessenger className="w-5 h-5 flex-shrink-0" />
+            <span className="font-bold text-sm">Messenger</span>
+          </a>
+        </div>
+
+        {/* Toggle button */}
+        <button
+          onClick={() => setFabOpen(o => !o)}
+          className="w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 shadow-[0_10px_40px_rgba(168,85,247,0.4)] hover:scale-105 active:scale-95 transition-transform flex items-center justify-center text-white"
+          data-testid="fab-toggle"
+          aria-label="Contact admin"
+        >
+          <MessageCircle className="w-6 h-6" />
+        </button>
+      </div>
 
       {/* Order Dialog */}
       <Dialog
