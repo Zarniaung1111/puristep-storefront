@@ -1660,25 +1660,40 @@ export default function Home() {
 
       {/* How to Order */}
       <section className="py-16 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-white/25 text-xs uppercase tracking-widest font-semibold mb-2">Simple process</p>
-            <h2 className="text-2xl font-bold mb-2">How to Order</h2>
-            <p className="text-white/40 text-sm">Get your subscription in 3 simple steps</p>
+            <h2 className="text-2xl font-bold mb-2">How to Buy</h2>
+            <p className="text-white/40 text-sm">အဆင့် (၃) ဆင့်ဖြင့် လွယ်ကူစွာ ဝယ်ယူနိုင်ပါသည်</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+
+          {/* Timeline wrapper */}
+          <div className="relative grid grid-cols-1 gap-5">
+            {/* Vertical connecting line */}
+            <div className="absolute left-[35px] top-10 bottom-10 w-[2px] bg-gradient-to-b from-teal-500/40 via-violet-500/40 to-fuchsia-500/40 -z-0 pointer-events-none" />
+
             {[
-              { step: "01", icon: <Play className="w-5 h-5" />, title: "Choose a Plan", desc: "Browse our plans and click Buy Now on your preferred subscription.", color: "bg-teal-950/60 border-teal-500/25 text-teal-400" },
-              { step: "02", icon: <Zap className="w-5 h-5" />, title: "Make Payment", desc: "Pay via KBZPay or WavePay and take a screenshot of your transaction.", color: "bg-violet-950/60 border-violet-500/25 text-violet-400" },
-              { step: "03", icon: <CheckCircle2 className="w-5 h-5" />, title: "Submit & Receive", desc: "Fill the form with your Telegram/Messenger and upload your payment screenshot.", color: "bg-fuchsia-950/60 border-fuchsia-500/25 text-fuchsia-400" },
+              { step: "01", icon: <Play className="w-5 h-5" />,       title: "မိမိနှစ်သက်ရာ Plan ကိုရွေးပါ",       desc: "မိမိဝယ်ယူလိုသော Subscription ကိုရွေးချယ်ပြီး Buy Now ကိုနှိပ်ပါ။",                                                     color: "bg-teal-950/60 border-teal-500/25 text-teal-400"     },
+              { step: "02", icon: <Zap className="w-5 h-5" />,        title: "ငွေပေးချေပါ",                          desc: "KBZPay (သို့) WavePay ဖြင့် ငွေပေးချေပြီး screenshot မှတ်ယူထားပါ။",                                                   color: "bg-violet-950/60 border-violet-500/25 text-violet-400" },
+              { step: "03", icon: <CheckCircle2 className="w-5 h-5" />, title: "ပြေစာပို့ပြီး အကောင့်ရယူပါ",      desc: "Telegram/Messenger အကောင့်နှင့် ငွေလွှဲပြေစာ screenshot ကို payment form တွင် ပေးပို့ပါ။", color: "bg-fuchsia-950/60 border-fuchsia-500/25 text-fuchsia-400" },
             ].map((s, i) => (
-              <div key={i} className={`relative glass-card rounded-2xl p-6 hover:bg-white/[0.06] hover:scale-[1.02] transition-all duration-300 border border-white/[0.07] animate-fade-in-up stagger-${i + 1}`}>
-                <div className="text-5xl font-black text-white/[0.04] absolute top-4 right-4 leading-none select-none">{s.step}</div>
-                <div className={`w-10 h-10 rounded-xl border flex items-center justify-center mb-4 ${s.color}`}>
+              <div
+                key={i}
+                className={`relative z-10 flex items-start gap-4 bg-[#0B0C10] rounded-2xl p-5 border border-white/[0.07] hover:bg-white/[0.04] transition-all duration-300 animate-fade-in-up stagger-${i + 1}`}
+              >
+                {/* Step number watermark */}
+                <div className="text-5xl font-black text-white/[0.04] absolute top-3 right-4 leading-none select-none">{s.step}</div>
+
+                {/* Icon — positioned so the timeline line threads through its center */}
+                <div className={`relative z-10 w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 ${s.color}`}>
                   {s.icon}
                 </div>
-                <h3 className="font-semibold text-white mb-2">{s.title}</h3>
-                <p className="text-white/40 text-sm leading-relaxed">{s.desc}</p>
+
+                {/* Text */}
+                <div className="flex-1 min-w-0 pt-1">
+                  <h3 className="font-semibold text-white mb-1 leading-snug">{s.title}</h3>
+                  <p className="text-white/40 text-sm leading-relaxed">{s.desc}</p>
+                </div>
               </div>
             ))}
           </div>
