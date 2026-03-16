@@ -251,6 +251,21 @@
   display: none;
 }
 
+@keyframes ringSpinY {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(-360deg); }
+}
+@keyframes cardOrbitFade {
+  0%    { opacity: 1.00; }
+  12.5% { opacity: 0.60; }
+  25%   { opacity: 0.45; }
+  37.5% { opacity: 0.25; }
+  50%   { opacity: 0.12; }
+  62.5% { opacity: 0.25; }
+  75%   { opacity: 0.45; }
+  87.5% { opacity: 0.60; }
+  100%  { opacity: 1.00; }
+}
 
 @layer utilities {
 

@@ -949,65 +949,70 @@ const CAROUSEL_CARDS = [
   { icon: <SiNordvpn className="w-5 h-5 text-blue-300" />,        bg: "bg-blue-500/15",   title: "NordVPN",      sub: "VPN Security",     price: "14,000 KS", accent: "text-blue-300"   },
 ];
 
-const SLOT_STYLES = [
-  { x: 0,    scale: 1.10, opacity: 1.00, blur: 0, zIndex: 50 },
-  { x: 135,  scale: 0.88, opacity: 0.65, blur: 0, zIndex: 30 },
-  { x: 195,  scale: 0.73, opacity: 0.38, blur: 1, zIndex: 15 },
-  { x: 175,  scale: 0.62, opacity: 0.18, blur: 2, zIndex: 5  },
-  { x: 0,    scale: 0.58, opacity: 0.08, blur: 3, zIndex: 0  },
-  { x: -175, scale: 0.62, opacity: 0.18, blur: 2, zIndex: 5  },
-  { x: -195, scale: 0.73, opacity: 0.38, blur: 1, zIndex: 15 },
-  { x: -135, scale: 0.88, opacity: 0.65, blur: 0, zIndex: 30 },
-];
-
-function HeroCarousel() {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => setActive(p => (p + 1) % 8), 2500);
-    return () => clearInterval(id);
-  }, []);
+function HeroCarousel({ onCardClick }: { onCardClick?: () => void }) {
+  const DURATION = 25;
+  const N = 8;
+  const Z = 150;
 
   return (
-    <div className="relative w-full flex justify-center items-center mt-8 mb-10" style={{ height: '250px' }}>
+    <div className="relative w-full h-[280px] flex justify-center items-center mt-4 mb-8">
       {/* Deep purple ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-purple-600/40 rounded-full blur-[120px] -z-10 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-600/30 rounded-full blur-[120px] -z-10 pointer-events-none" />
 
-      {/* Card stage */}
-      <div className="relative w-full h-full flex items-center justify-center">
-        {CAROUSEL_CARDS.map((card, i) => {
-          const slot = (i - active + 8) % 8;
-          const s = SLOT_STYLES[slot];
-          return (
+      {/* 3D Stage — perspective applied here */}
+      <div style={{ perspective: '1200px', perspectiveOrigin: 'center' }}>
+
+        {/* Rotating ring — preserve-3d so children orbit in real 3D space */}
+        <div style={{
+          width: '110px',
+          height: '130px',
+          position: 'relative',
+          transformStyle: 'preserve-3d',
+          animation: `ringSpinY ${DURATION}s linear infinite`,
+        }}>
+          {CAROUSEL_CARDS.map((card, i) => (
+            /*
+             * Two-layer pattern:
+             *   Outer div → 3D position only (no opacity/filter to avoid
+             *               flattening the preserve-3d context).
+             *   Inner div → opacity fade animation + click handler (safe here
+             *               because opacity on a non-preserve-3d child doesn't
+             *               flatten its parent's 3D scene).
+             */
             <div
               key={i}
               style={{
                 position: 'absolute',
                 width: '110px',
                 height: '130px',
-                transform: `translateX(${s.x}px) scale(${s.scale})`,
-                opacity: s.opacity,
-                filter: s.blur > 0 ? `blur(${s.blur}px)` : 'none',
-                zIndex: s.zIndex,
-                transition: 'transform 0.75s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.75s ease, filter 0.75s ease',
+                transform: `rotateY(${i * (360 / N)}deg) translateZ(${Z}px)`,
               }}
-              className="bg-[#13151A] border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center gap-1.5 shadow-2xl shadow-black/60"
             >
-              {slot === 0 && (
-                <div className="absolute inset-0 rounded-2xl bg-purple-500/5 ring-1 ring-purple-500/20 pointer-events-none" />
-              )}
-              <div className={`w-9 h-9 rounded-lg ${card.bg} flex items-center justify-center flex-shrink-0`}>
-                {card.icon}
+              <div
+                onClick={onCardClick}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  animation: `cardOrbitFade ${DURATION}s linear infinite`,
+                  animationDelay: `${-(i * DURATION / N)}s`,
+                  cursor: 'pointer',
+                }}
+                className="bg-[#13151A] border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center gap-1.5 shadow-2xl shadow-black/60"
+              >
+                <div className={`w-9 h-9 rounded-lg ${card.bg} flex items-center justify-center flex-shrink-0`}>
+                  {card.icon}
+                </div>
+                <p className="text-[13px] font-bold text-white leading-tight text-center">{card.title}</p>
+                <p className="text-[10px] text-gray-500 leading-tight text-center">{card.sub}</p>
+                <p className="text-[10px] leading-tight">
+                  <span className="text-gray-600">From </span>
+                  <span className={`font-semibold ${card.accent}`}>{card.price}</span>
+                </p>
               </div>
-              <p className="text-[13px] font-bold text-white leading-tight text-center">{card.title}</p>
-              <p className="text-[10px] text-gray-500 leading-tight text-center">{card.sub}</p>
-              <p className="text-[10px] leading-tight">
-                <span className="text-gray-600">From </span>
-                <span className={`font-semibold ${card.accent}`}>{card.price}</span>
-              </p>
             </div>
-          );
-        })}
+          ))}
+        </div>
+
       </div>
     </div>
   );
@@ -1177,7 +1182,7 @@ export default function Home() {
       <section className="flex flex-col items-center text-center pt-4 pb-6 px-4">
 
         {/* ① 3D Orbit Carousel */}
-        <HeroCarousel />
+        <HeroCarousel onCardClick={() => productsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })} />
 
         {/* ② Headline */}
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] mb-4">
