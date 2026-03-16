@@ -1066,6 +1066,7 @@ export default function Home() {
   const [mlbbServerId, setMlbbServerId] = useState("");
 
   const productsRef = useRef<HTMLDivElement>(null);
+  const selectedFileRef = useRef<File | null>(null);
   const { toast } = useToast();
 
   const [fabVisible, setFabVisible] = useState(false);
@@ -1087,18 +1088,28 @@ export default function Home() {
   });
 
   const mutation = useMutation({
-    mutationFn: (data: OrderFormValues) =>
-      apiRequest("POST", "/api/checkout", {
-        orderId,
-        productName: selectedProduct?.serviceName,
-        planName: selectedProduct?.planName,
-        price: selectedProduct?.price,
-        ...(selectedProduct?.serviceName === "Mobile Legends" ? { mlbbUserId, mlbbServerId } : {}),
-        ...data,
-      }),
-    onSuccess: () => {
-      setOrderSuccess(true);
+    mutationFn: (data: OrderFormValues) => {
+      const fd = new FormData();
+      fd.append("orderId", orderId);
+      fd.append("productName", selectedProduct?.serviceName ?? "");
+      fd.append("planName", selectedProduct?.planName ?? "");
+      fd.append("price", selectedProduct?.price ?? "");
+      fd.append("contactPlatform", data.contactPlatform);
+      fd.append("contactUsername", data.contactUsername);
+      fd.append("paymentMethod", data.paymentMethod);
+      if (selectedProduct?.serviceName === "Mobile Legends") {
+        fd.append("mlbbUserId", mlbbUserId);
+        fd.append("mlbbServerId", mlbbServerId);
+      }
+      if (selectedFileRef.current) {
+        fd.append("paymentScreenshot", selectedFileRef.current);
+      }
+      return fetch("/api/checkout", { method: "POST", body: fd, credentials: "include" }).then(async res => {
+        if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`);
+        return res;
+      });
     },
+    onSuccess: () => setOrderSuccess(true),
     onError: () => toast({ title: "Error", description: "Failed to submit order. Please try again.", variant: "destructive" }),
   });
 
@@ -1109,6 +1120,7 @@ export default function Home() {
     setOrderSuccess(false);
     form.reset();
     setPreviewImg(null);
+    selectedFileRef.current = null;
     setMlbbUserId("");
     setMlbbServerId("");
   };
@@ -1145,6 +1157,7 @@ export default function Home() {
     setOrderSuccess(false);
     form.reset();
     setPreviewImg(null);
+    selectedFileRef.current = null;
     setMlbbUserId("");
     setMlbbServerId("");
   };
@@ -1156,12 +1169,9 @@ export default function Home() {
       toast({ title: "File too large", description: "Max file size is 5MB", variant: "destructive" });
       return;
     }
+    selectedFileRef.current = file;
     const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64 = reader.result as string;
-      setPreviewImg(base64);
-      form.setValue("paymentScreenshot", base64);
-    };
+    reader.onloadend = () => setPreviewImg(reader.result as string);
     reader.readAsDataURL(file);
   };
 
@@ -1813,7 +1823,7 @@ export default function Home() {
         open={orderOpen}
         onOpenChange={(open) => {
           setOrderOpen(open);
-          if (!open) { setOrderSuccess(false); form.reset(); setPreviewImg(null); setOrderId(""); setMlbbUserId(""); setMlbbServerId(""); }
+          if (!open) { setOrderSuccess(false); form.reset(); setPreviewImg(null); selectedFileRef.current = null; setOrderId(""); setMlbbUserId(""); setMlbbServerId(""); }
         }}
       >
         <DialogContent className="bg-[#0e0e1a] border border-white/10 text-white max-w-md w-[calc(100vw-2rem)] rounded-2xl p-0 overflow-hidden max-h-[90dvh] flex flex-col">
@@ -2006,7 +2016,7 @@ export default function Home() {
                           <img src={previewImg} alt="Payment screenshot" className="w-full h-40 object-cover" data-testid="img-screenshot-preview" />
                           <button
                             type="button"
-                            onClick={() => { setPreviewImg(null); form.setValue("paymentScreenshot", ""); }}
+                            onClick={() => { setPreviewImg(null); selectedFileRef.current = null; }}
                             className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/60 flex items-center justify-center hover:bg-black/80 transition-colors"
                             data-testid="button-remove-screenshot"
                           >
