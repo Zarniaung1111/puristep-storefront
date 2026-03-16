@@ -1071,6 +1071,8 @@ export default function Home() {
 
   const [fabVisible, setFabVisible] = useState(false);
   const [fabOpen, setFabOpen] = useState(false);
+  const [orderIdCopied, setOrderIdCopied] = useState(false);
+  const [showChatOptions, setShowChatOptions] = useState(false);
   useEffect(() => {
     const onScroll = () => setFabVisible(window.scrollY > 300);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -1823,12 +1825,13 @@ export default function Home() {
         open={orderOpen}
         onOpenChange={(open) => {
           setOrderOpen(open);
-          if (!open) { setOrderSuccess(false); form.reset(); setPreviewImg(null); selectedFileRef.current = null; setOrderId(""); setMlbbUserId(""); setMlbbServerId(""); }
+          if (!open) { setOrderSuccess(false); form.reset(); setPreviewImg(null); selectedFileRef.current = null; setOrderId(""); setMlbbUserId(""); setMlbbServerId(""); setOrderIdCopied(false); setShowChatOptions(false); }
         }}
       >
         <DialogContent className="bg-[#0e0e1a] border border-white/10 text-white max-w-md w-[calc(100vw-2rem)] rounded-2xl p-0 overflow-hidden max-h-[90dvh] flex flex-col">
           {orderSuccess ? (
             <div className="p-8 text-center">
+              {/* Success icon */}
               <div className="w-16 h-16 rounded-full bg-green-950/60 border border-green-500/30 flex items-center justify-center mx-auto mb-4">
                 <CheckCircle2 className="w-8 h-8 text-green-400" />
               </div>
@@ -1838,28 +1841,73 @@ export default function Home() {
                 <span className="text-white font-medium">{selectedProduct?.serviceName} {selectedProduct?.planName}</span>.
               </p>
 
-              {/* Order ID highlighted box */}
-              <div className="my-4 p-4 rounded-xl border border-teal-500/50 bg-teal-950/20 backdrop-blur-sm">
-                <p className="text-white/40 text-xs uppercase tracking-widest mb-1.5">Your Order ID</p>
-                <p
-                  className="text-teal-400 font-black text-2xl tracking-[0.2em] font-mono"
-                  data-testid="text-order-id"
-                >
+              {/* Clickable Order ID box — copies on tap */}
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard.writeText(orderId).then(() => {
+                    setOrderIdCopied(true);
+                    setTimeout(() => setOrderIdCopied(false), 2000);
+                  });
+                }}
+                className="w-full my-4 p-4 rounded-xl border border-teal-500/50 bg-teal-950/20 backdrop-blur-sm hover:bg-teal-900/25 active:scale-[0.98] transition-all duration-150 cursor-pointer group"
+                data-testid="button-copy-order-id"
+              >
+                <p className="text-white/40 text-xs uppercase tracking-widest mb-1.5 flex items-center justify-center gap-1.5">
+                  Your Order ID
+                  <Copy className="w-3 h-3 opacity-40 group-hover:opacity-70 transition-opacity" />
+                </p>
+                <p className="text-teal-400 font-black text-2xl tracking-[0.2em] font-mono" data-testid="text-order-id">
                   {orderId}
                 </p>
-              </div>
+                <p className={`text-xs mt-1.5 transition-all duration-200 ${orderIdCopied ? "text-green-400" : "text-white/20"}`}>
+                  {orderIdCopied ? "✓ Copied!" : "Tap to copy"}
+                </p>
+              </button>
 
+              {/* Burmese instruction */}
               <p className="text-amber-400/80 text-xs leading-relaxed mb-6">
-                Please copy this Order ID and send it to our Admin to receive your product instantly.
+                ကျေးဇူးပြု၍ မိမိ order id ကို Admin ထံသို့ပို့ပေးပြီး Subscription ကို ရယူနိုင်ပါပြီ
               </p>
 
-              <Button
-                className="bg-violet-700 hover:bg-violet-600 w-full active:scale-95 transition-all duration-150 ease-out"
-                onClick={() => setOrderOpen(false)}
-                data-testid="button-close-success"
+              {/* Chat options (revealed after clicking Get your order) */}
+              <div
+                className={`flex flex-col gap-3 mb-3 origin-bottom transition-all duration-200 ${
+                  showChatOptions ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none h-0 mb-0 overflow-hidden"
+                }`}
               >
-                Done
-              </Button>
+                <a
+                  href={`https://t.me/PuriStep?text=${encodeURIComponent("Hello Admin, I have submitted my order. My Order ID is: " + orderId)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 bg-[#2AABEE] hover:bg-[#2298D6] text-white px-4 py-3 rounded-2xl shadow-lg transition-colors font-bold text-sm active:scale-95"
+                  data-testid="button-success-telegram"
+                >
+                  <SiTelegram className="w-5 h-5" />
+                  Telegram
+                </a>
+                <a
+                  href="https://m.me/PuriStep"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 bg-[#0084FF] hover:bg-[#0073E6] text-white px-4 py-3 rounded-2xl shadow-lg transition-colors font-bold text-sm active:scale-95"
+                  data-testid="button-success-messenger"
+                >
+                  <SiMessenger className="w-5 h-5" />
+                  Messenger
+                </a>
+              </div>
+
+              {/* Primary CTA */}
+              {!showChatOptions && (
+                <Button
+                  className="bg-gradient-to-r from-violet-600 to-cyan-500 hover:opacity-90 w-full active:scale-95 transition-all duration-150 ease-out font-bold"
+                  onClick={() => setShowChatOptions(true)}
+                  data-testid="button-get-order"
+                >
+                  Get your order
+                </Button>
+              )}
             </div>
           ) : (
             <>
