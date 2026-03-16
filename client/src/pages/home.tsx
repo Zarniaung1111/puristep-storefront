@@ -973,8 +973,8 @@ function HeroCarousel({ onCardClick }: { onCardClick?: () => void }) {
       {/* Purple ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[200px] bg-purple-600/50 blur-[100px] -z-10 rounded-full pointer-events-none" />
 
-      {/* Track with edge-fade mask */}
-      <div className="relative w-full h-full flex items-center justify-center [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+      {/* Track with edge-fade mask — overflow-hidden clips cards at ±560px slots */}
+      <div className="relative w-full h-full flex items-center justify-center overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
         {CAROUSEL_CARDS.map((card, i) => {
           const slot = (i - active + 8) % 8;
           const s = CAROUSEL_SLOTS[slot];
@@ -1155,7 +1155,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#05050f] text-white pt-16">
+    <div className="min-h-screen bg-[#05050f] text-white pt-16 w-full max-w-[100vw] overflow-x-hidden">
 
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#05050f]/85 backdrop-blur-xl border-b border-white/[0.06]" style={{ boxShadow: "0 1px 0 0 rgba(139,92,246,0.08), 0 4px 24px 0 rgba(0,0,0,0.4)" }}>
@@ -1175,7 +1175,7 @@ export default function Home() {
       </nav>
 
       {/* ── Premium Hero Section ── */}
-      <section className="flex flex-col items-center text-center pt-4 pb-6 px-4">
+      <section className="flex flex-col items-center text-center pt-4 pb-6 px-4 w-full overflow-x-hidden">
 
         {/* ① 3D Orbit Carousel */}
         <HeroCarousel onCardClick={() => productsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })} />
