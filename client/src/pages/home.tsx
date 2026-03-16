@@ -47,6 +47,7 @@ import {
   SiOpenai,
   SiGooglegemini,
   SiAnthropic,
+  SiAdobecreativecloud,
 } from "react-icons/si";
 
 const orderFormSchema = z.object({
@@ -590,9 +591,9 @@ const editingApps: AIApp[] = [
     id: "capcut",
     name: "CapCut",
     tagline: "Professional video editing & creation",
-    icon: <img src="https://cdn.simpleicons.org/capcut/white" alt="CapCut" className="w-8 h-8 object-contain" />,
-    iconBg: "from-[#121212] to-[#1e1e1e]",
-    iconGlow: "0 0 14px rgba(255,255,255,0.08)",
+    icon: <Clapperboard className="w-6 h-6 text-white" />,
+    iconBg: "from-black to-[#111111]",
+    iconGlow: "0 0 14px rgba(255,255,255,0.10)",
     accentBorder: "border-amber-500/25 hover:border-amber-400/50",
     accentGlow: "shadow-amber-500/10",
     neon: "text-amber-400",
@@ -649,9 +650,9 @@ const editingApps: AIApp[] = [
     id: "adobe-cc",
     name: "Adobe Creative Cloud",
     tagline: "Professional creative suite for creators",
-    icon: <img src="https://cdn.simpleicons.org/adobecreativecloud" alt="Adobe CC" className="w-8 h-8 object-contain" />,
+    icon: <SiAdobecreativecloud className="w-6 h-6 text-[#FF0000]" />,
     iconBg: "from-[#1a1a1a] to-[#111111]",
-    iconGlow: "0 0 14px rgba(255,255,255,0.06)",
+    iconGlow: "0 0 14px rgba(255,0,0,0.25)",
     accentBorder: "border-red-500/25 hover:border-red-400/50",
     accentGlow: "shadow-red-500/10",
     neon: "text-red-400",
