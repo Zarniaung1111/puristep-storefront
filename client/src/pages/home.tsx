@@ -1218,10 +1218,18 @@ export default function Home() {
       </nav>
 
       {/* ── Premium Hero Section ── */}
-      <section className="flex flex-col items-center text-center pt-4 pb-6 px-4 w-full overflow-x-hidden">
+      <section className="relative overflow-hidden flex flex-col items-center text-center pt-4 pb-6 px-4 w-full bg-gradient-to-b from-purple-900/20 via-[#0B0C10] to-[#0B0C10]">
+
+        {/* Background nebula orbs */}
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none -z-10">
+          <div className="absolute w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-purple-600/30 rounded-full blur-[100px] md:blur-[120px] top-[-10%] opacity-70" />
+          <div className="absolute w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-cyan-600/20 rounded-full blur-[90px] md:blur-[100px] top-[10%] left-[20%] opacity-60" />
+        </div>
 
         {/* ① 3D Orbit Carousel */}
-        <HeroCarousel onCardClick={() => productsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })} />
+        <div className="relative z-20 w-full">
+          <HeroCarousel onCardClick={() => productsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })} />
+        </div>
 
         {/* ② Headline */}
         <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-4">
