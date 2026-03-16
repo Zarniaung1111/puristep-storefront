@@ -2018,10 +2018,7 @@ function AIAccordion({
           data-testid={`accordion-${app.id}`}
         >
           <div className="flex items-center gap-4 px-5 py-4">
-            <div
-              className={`w-11 h-11 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center flex-shrink-0`}
-              style={{ boxShadow: app.iconGlow ?? "0 4px 12px rgba(0,0,0,0.35)" }}
-            >
+            <div className="w-11 h-11 rounded-xl bg-[#0a0a0a] border border-white/10 flex items-center justify-center flex-shrink-0">
               {app.icon}
             </div>
             <div className="flex-1 min-w-0">
@@ -2064,10 +2061,7 @@ function MatteAppGrid({
           data-testid={`card-${app.id}`}
         >
           {/* Icon top-left */}
-          <div
-            className={`w-11 h-11 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center flex-shrink-0 mb-3`}
-            style={{ boxShadow: app.iconGlow ?? "0 4px 12px rgba(0,0,0,0.35)" }}
-          >
+          <div className="w-11 h-11 rounded-xl bg-[#0a0a0a] border border-white/10 flex items-center justify-center flex-shrink-0 mb-3">
             {app.icon}
           </div>
 
