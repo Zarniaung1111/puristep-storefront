@@ -1262,16 +1262,13 @@ export default function Home() {
           >
             Shop Subscriptions
           </button>
-          <button
-            onClick={() => {
-              const el = document.getElementById("payment-section");
-              el?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="w-full sm:w-auto px-8 py-3.5 rounded-2xl font-semibold text-sm text-white/65 bg-[#121212] border border-white/10 hover:border-white/20 hover:text-white/80 transition-all duration-150 ease-out active:scale-95"
+          <a
+            href="#how-to-buy-section"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-2xl font-semibold text-sm text-white/65 bg-[#121212] border border-white/10 hover:border-white/20 hover:text-white/80 transition-all duration-150 ease-out active:scale-95 text-center"
             data-testid="button-hero-howto"
           >
             How to Buy (Wave / KBZ)
-          </button>
+          </a>
         </div>
 
         {/* ⑤ Trust bar */}
@@ -1659,7 +1656,7 @@ export default function Home() {
       </section>
 
       {/* How to Order */}
-      <section className="py-16 px-4 sm:px-6">
+      <section id="how-to-buy-section" className="py-16 px-4 sm:px-6">
         <div className="max-w-xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-white/25 text-xs uppercase tracking-widest font-semibold mb-2">Simple process</p>
@@ -1681,9 +1678,6 @@ export default function Home() {
                 key={i}
                 className={`relative z-10 flex items-start gap-4 bg-[#0B0C10] rounded-2xl p-5 border border-white/[0.07] hover:bg-white/[0.04] transition-all duration-300 animate-fade-in-up stagger-${i + 1}`}
               >
-                {/* Step number watermark */}
-                <div className="text-5xl font-black text-white/[0.04] absolute top-3 right-4 leading-none select-none">{s.step}</div>
-
                 {/* Icon — positioned so the timeline line threads through its center */}
                 <div className={`relative z-10 w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 ${s.color}`}>
                   {s.icon}
