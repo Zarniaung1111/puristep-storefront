@@ -1056,6 +1056,8 @@ export default function Home() {
   const [productModalCategoryId, setProductModalCategoryId] = useState<string>("ai");
   const [productModalOpen, setProductModalOpen] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
+  const [mlbbUserId, setMlbbUserId] = useState("");
+  const [mlbbServerId, setMlbbServerId] = useState("");
 
   const productsRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
@@ -1077,6 +1079,7 @@ export default function Home() {
         productName: selectedProduct?.serviceName,
         planName: selectedProduct?.planName,
         price: selectedProduct?.price,
+        ...(selectedProduct?.serviceName === "Mobile Legends" ? { mlbbUserId, mlbbServerId } : {}),
         ...data,
       }),
     onSuccess: () => {
@@ -1092,6 +1095,8 @@ export default function Home() {
     setOrderSuccess(false);
     form.reset();
     setPreviewImg(null);
+    setMlbbUserId("");
+    setMlbbServerId("");
   };
 
   const openProductModal = (app: AIApp, categoryId: string) => {
@@ -1126,6 +1131,8 @@ export default function Home() {
     setOrderSuccess(false);
     form.reset();
     setPreviewImg(null);
+    setMlbbUserId("");
+    setMlbbServerId("");
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -1697,10 +1704,10 @@ export default function Home() {
         open={orderOpen}
         onOpenChange={(open) => {
           setOrderOpen(open);
-          if (!open) { setOrderSuccess(false); form.reset(); setPreviewImg(null); setOrderId(""); }
+          if (!open) { setOrderSuccess(false); form.reset(); setPreviewImg(null); setOrderId(""); setMlbbUserId(""); setMlbbServerId(""); }
         }}
       >
-        <DialogContent className="bg-[#0e0e1a] border border-white/10 text-white max-w-md w-[calc(100vw-2rem)] rounded-2xl p-0 overflow-hidden">
+        <DialogContent className="bg-[#0e0e1a] border border-white/10 text-white max-w-md w-[calc(100vw-2rem)] rounded-2xl p-0 overflow-hidden max-h-[90dvh] flex flex-col">
           {orderSuccess ? (
             <div className="p-8 text-center">
               <div className="w-16 h-16 rounded-full bg-green-950/60 border border-green-500/30 flex items-center justify-center mx-auto mb-4">
@@ -1754,7 +1761,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="p-6">
+              <div className="p-6 overflow-y-auto flex-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full">
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <FormField
@@ -1822,6 +1829,36 @@ export default function Home() {
                         </FormItem>
                       )}
                     />
+
+                    {/* MLBB — Game ID fields */}
+                    {selectedProduct?.serviceName === "Mobile Legends" && (
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-1.5">
+                          <label className="text-[10px] text-gray-400 uppercase tracking-wider block">User ID</label>
+                          <input
+                            type="text"
+                            inputMode="numeric"
+                            value={mlbbUserId}
+                            onChange={e => setMlbbUserId(e.target.value)}
+                            placeholder="e.g., 12345678"
+                            className="w-full bg-[#13151A] border border-white/10 rounded-xl px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/30 transition-colors"
+                            data-testid="input-mlbb-user-id"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-[10px] text-gray-400 uppercase tracking-wider block">Server ID</label>
+                          <input
+                            type="text"
+                            inputMode="numeric"
+                            value={mlbbServerId}
+                            onChange={e => setMlbbServerId(e.target.value)}
+                            placeholder="e.g., (1234)"
+                            className="w-full bg-[#13151A] border border-white/10 rounded-xl px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/30 transition-colors"
+                            data-testid="input-mlbb-server-id"
+                          />
+                        </div>
+                      </div>
+                    )}
 
                     {/* Dynamic payment info box */}
                     {activePaymentInfo && (
@@ -2345,6 +2382,10 @@ function ProductModal({
 
               {/* 2x Diamonds grid */}
               {mlbbTab === "double" && (
+                <div className="space-y-4">
+                <div className="w-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs md:text-sm rounded-xl p-3 text-center font-medium">
+                  1 / jan / 2025 မှစ၍ ပထမအကြိမ် recharge အတွက်သာ အကျိုးဝင်သည်။
+                </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                   {mlbbDoublePackages.map(pkg => (
                     <button
@@ -2372,6 +2413,7 @@ function ProductModal({
                       <p className="font-semibold text-xs text-yellow-400">{pkg.price}</p>
                     </button>
                   ))}
+                </div>
                 </div>
               )}
             </div>
