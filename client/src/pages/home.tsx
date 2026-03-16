@@ -59,7 +59,7 @@ const orderFormSchema = z.object({
 
 type OrderFormValues = z.infer<typeof orderFormSchema>;
 
-type CategoryId = "all" | "ai" | "editing" | "music" | "telegram" | "vpn";
+type CategoryId = "all" | "ai" | "editing" | "music" | "telegram" | "vpn" | "gaming";
 
 interface Category {
   id: CategoryId;
@@ -160,6 +160,20 @@ const categories: Category[] = [
     description: "Secure browsing & online privacy",
     startingFrom: null,
     productCount: 2,
+  },
+  {
+    id: "gaming",
+    label: "Gaming Coins",
+    icon: <Gamepad2 className="w-4 h-4" />,
+    bigIcon: <Gamepad2 className="w-8 h-8" />,
+    color: "from-yellow-500 to-amber-600",
+    neon: "text-yellow-400",
+    glow: "shadow-yellow-500/30",
+    glowBg: "bg-yellow-500/10",
+    borderHover: "hover:border-yellow-500/40",
+    description: "In-game currency and top-ups",
+    startingFrom: "3,500 KS",
+    productCount: 1,
   },
 ];
 
@@ -924,6 +938,21 @@ const products: Product[] = [
   },
 ];
 
+const gamingApps: AIApp[] = [
+  {
+    id: "mobile-legends",
+    name: "Mobile Legends",
+    tagline: "Diamonds & Weekly/Twilight Passes",
+    icon: <Gamepad2 className="w-6 h-6 text-yellow-300" />,
+    iconBg: "from-yellow-500 to-amber-600",
+    accentBorder: "border-yellow-500/25 hover:border-yellow-400/50",
+    accentGlow: "shadow-yellow-500/10",
+    neon: "text-yellow-400",
+    startingFrom: "From 3,500 KS",
+    plans: [],
+  },
+];
+
 function generateOrderId(): string {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let id = "PS-";
@@ -1136,6 +1165,7 @@ export default function Home() {
   const filteredMusicApps = musicApps.filter(matchesApp);
   const filteredTelegramApps = telegramApps.filter(matchesApp);
   const filteredVpnApps = vpnApps.filter(matchesApp);
+  const filteredGamingApps = gamingApps.filter(matchesApp);
 
   const filteredProducts = (activeCategory === "all"
     ? products
@@ -1146,8 +1176,8 @@ export default function Home() {
     ? categories.slice(1).map(cat => ({
         cat,
         items: products.filter(p => p.categoryId === cat.id).filter(matchesProduct),
-        filteredApps: cat.id === "ai" ? filteredAIApps : cat.id === "editing" ? filteredEditingApps : cat.id === "music" ? filteredMusicApps : cat.id === "telegram" ? filteredTelegramApps : cat.id === "vpn" ? filteredVpnApps : [],
-      })).filter(g => g.items.length > 0 || g.filteredApps.length > 0 || (!q && ["ai", "editing", "music", "telegram", "vpn"].includes(g.cat.id)))
+        filteredApps: cat.id === "ai" ? filteredAIApps : cat.id === "editing" ? filteredEditingApps : cat.id === "music" ? filteredMusicApps : cat.id === "telegram" ? filteredTelegramApps : cat.id === "vpn" ? filteredVpnApps : cat.id === "gaming" ? filteredGamingApps : [],
+      })).filter(g => g.items.length > 0 || g.filteredApps.length > 0 || (!q && ["ai", "editing", "music", "telegram", "vpn", "gaming"].includes(g.cat.id)))
     : null;
 
   const handleCategoryClick = (catId: CategoryId) => {
@@ -1321,8 +1351,9 @@ export default function Home() {
 
           {/* Gaming Coins */}
           <div
-            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors opacity-60"
+            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] hover:border-yellow-500/30 transition-colors"
             data-testid="category-card-gaming"
+            onClick={() => handleCategoryClick("gaming")}
           >
             <div className="w-12 h-12 rounded-2xl bg-yellow-500 flex items-center justify-center mb-4">
               <Gamepad2 className="w-6 h-6 text-white" />
@@ -1330,8 +1361,8 @@ export default function Home() {
             <p className="text-sm font-bold text-white mb-1">Gaming Coins</p>
             <p className="text-xs text-gray-500 mb-auto pb-4">In-game currency and top-ups</p>
             <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
-              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Pricing</span>
-              <span className="text-xs font-bold text-yellow-400 mt-0.5">Coming Soon</span>
+              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Starting From</span>
+              <span className="text-xs font-bold text-yellow-400 mt-0.5">3,500 KS</span>
             </div>
           </div>
 
@@ -1456,7 +1487,7 @@ export default function Home() {
           )}
 
           {/* Single category filtered view — matte product cards */}
-          {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && activeCategory !== "editing" && activeCategory !== "telegram" && activeCategory !== "vpn" && (
+          {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && activeCategory !== "editing" && activeCategory !== "telegram" && activeCategory !== "vpn" && activeCategory !== "gaming" && (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {filteredProducts.map(product => (
                 <MatteProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
@@ -1520,6 +1551,14 @@ export default function Home() {
                 </div>
               )}
             </div>
+          )}
+
+          {/* Gaming Coins — matte card grid */}
+          {activeCategory === "gaming" && (
+            <MatteAppGrid
+              apps={filteredGamingApps}
+              onSelect={app => openProductModal(app, "gaming")}
+            />
           )}
         </div>
       </section>
@@ -2133,6 +2172,7 @@ function ProductModal({
   onBuyNow: (app: AIApp, plan: AIPlan) => void;
 }) {
   const [spotifyTab, setSpotifyTab] = useState<"individual" | "family">("individual");
+  const [mlbbTab, setMlbbTab] = useState<"standard" | "double">("standard");
 
   useEffect(() => {
     if (open) {
@@ -2144,6 +2184,27 @@ function ProductModal({
   }, [open]);
 
   const isSpotify = app?.id === "spotify-premium";
+  const isMLBB = app?.id === "mobile-legends";
+
+  const mlbbStandardPackages = [
+    { id: "ml-86",   amount: "86",                   label: "Diamonds",     price: "5,000 KS",   isPass: false },
+    { id: "ml-172",  amount: "172",                  label: "Diamonds",     price: "10,000 KS",  isPass: false },
+    { id: "ml-257",  amount: "257",                  label: "Diamonds",     price: "14,500 KS",  isPass: false },
+    { id: "ml-706",  amount: "706",                  label: "Diamonds",     price: "36,500 KS",  isPass: false },
+    { id: "ml-2195", amount: "2,195",                label: "Diamonds",     price: "103,000 KS", isPass: false },
+    { id: "ml-3688", amount: "3,688",                label: "Diamonds",     price: "162,000 KS", isPass: false },
+    { id: "ml-5532", amount: "5,532",                label: "Diamonds",     price: "258,000 KS", isPass: false },
+    { id: "ml-9288", amount: "9,288",                label: "Diamonds",     price: "430,000 KS", isPass: false },
+    { id: "ml-wdp",  amount: "Weekly",               label: "Diamond Pass", price: "6,500 KS",   isPass: true  },
+    { id: "ml-twi",  amount: "Twilight",             label: "Pass",         price: "30,000 KS",  isPass: true  },
+  ];
+
+  const mlbbDoublePackages = [
+    { id: "ml2x-100",  amount: "50+50",   label: "Bonus (100 total)",  price: "3,500 KS"  },
+    { id: "ml2x-300",  amount: "150+150", label: "Bonus (300 total)",  price: "9,500 KS"  },
+    { id: "ml2x-500",  amount: "250+250", label: "Bonus (500 total)",  price: "16,000 KS" },
+    { id: "ml2x-1000", amount: "500+500", label: "Bonus (1,000 total)", price: "32,000 KS" },
+  ];
 
   const spotifyIndividualPlans: AIPlan[] = [
     { id: "spotify-individual-1m", name: "Monthly",  price: "14,000 KS", period: "monthly",  features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Listen with friends in real-time"] },
@@ -2232,8 +2293,92 @@ function ProductModal({
             </div>
           )}
 
-          {/* Plan cards */}
-          {app && (
+          {/* MLBB — Standard / 2x Diamonds tab + square grid */}
+          {isMLBB && app && (
+            <div className="space-y-5">
+              {/* Tab toggle */}
+              <div className="flex p-1 bg-[#1a1a1a] rounded-xl w-full max-w-md mx-auto border border-white/[0.06]">
+                {(["standard", "double"] as const).map(t => (
+                  <button
+                    key={t}
+                    onClick={() => setMlbbTab(t)}
+                    className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ease-out active:scale-95
+                      ${mlbbTab === t
+                        ? "bg-[#2a2d36] text-white shadow-md"
+                        : "text-gray-400 hover:text-white"
+                      }`}
+                    data-testid={`tab-mlbb-${t}`}
+                  >
+                    {t === "standard" ? "Standard Diamonds" : "2x Diamonds"}
+                  </button>
+                ))}
+              </div>
+
+              {/* Standard Diamonds grid */}
+              {mlbbTab === "standard" && (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                  {mlbbStandardPackages.map(pkg => (
+                    <button
+                      key={pkg.id}
+                      onClick={() => {
+                        const fakePlan: AIPlan = { id: pkg.id, name: `${pkg.amount} ${pkg.label}`, price: pkg.price, period: "one-time", features: [] };
+                        onBuyNow(app, fakePlan);
+                      }}
+                      className="aspect-square bg-[#121212] border border-white/5 hover:border-cyan-500 hover:bg-white/[0.04] rounded-2xl p-4 flex flex-col items-center justify-center transition-all cursor-pointer text-center relative group"
+                      data-testid={`button-mlbb-pkg-${pkg.id}`}
+                    >
+                      {/* Diamond icon */}
+                      <div className={`mb-1.5 ${pkg.isPass ? "text-purple-400" : "text-cyan-400"} group-hover:scale-110 transition-transform duration-150`}>
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 opacity-60">
+                          <path d="M12 2L2 9l10 13L22 9z" />
+                        </svg>
+                      </div>
+                      {/* Amount */}
+                      <p className="font-bold text-white text-sm leading-tight">{pkg.amount}</p>
+                      <p className="text-white/45 text-[10px] leading-tight mb-2">{pkg.label}</p>
+                      {/* Price */}
+                      <p className={`font-semibold text-xs ${pkg.isPass ? "text-purple-400" : "text-cyan-400"}`}>{pkg.price}</p>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* 2x Diamonds grid */}
+              {mlbbTab === "double" && (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                  {mlbbDoublePackages.map(pkg => (
+                    <button
+                      key={pkg.id}
+                      onClick={() => {
+                        const fakePlan: AIPlan = { id: pkg.id, name: `${pkg.amount} ${pkg.label}`, price: pkg.price, period: "one-time", features: [] };
+                        onBuyNow(app, fakePlan);
+                      }}
+                      className="aspect-square bg-[#121212] border border-white/5 hover:border-yellow-400 hover:bg-white/[0.04] rounded-2xl p-4 flex flex-col items-center justify-center transition-all cursor-pointer text-center relative group"
+                      data-testid={`button-mlbb-2x-${pkg.id}`}
+                    >
+                      {/* Double diamond icon */}
+                      <div className="mb-1.5 text-yellow-400 group-hover:scale-110 transition-transform duration-150 relative">
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-50 absolute -left-2 top-0.5">
+                          <path d="M12 2L2 9l10 13L22 9z" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 opacity-70 relative">
+                          <path d="M12 2L2 9l10 13L22 9z" />
+                        </svg>
+                      </div>
+                      {/* Amount */}
+                      <p className="font-bold text-white text-sm leading-tight mt-1">{pkg.amount}</p>
+                      <p className="text-white/45 text-[10px] leading-tight mb-2">{pkg.label}</p>
+                      {/* Price */}
+                      <p className="font-semibold text-xs text-yellow-400">{pkg.price}</p>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Plan cards — hidden for MLBB */}
+          {app && !isMLBB && (
             <div className={`grid gap-3 ${gridCols}`}>
               {plans.map(plan => (
                 <div
