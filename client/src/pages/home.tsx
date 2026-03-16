@@ -1002,9 +1002,11 @@ function HeroCarousel({ onCardClick }: { onCardClick?: () => void }) {
   }, []);
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto h-[250px] flex items-center justify-center mt-4 mb-8">
-      {/* Purple ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[200px] bg-purple-600/50 blur-[100px] -z-10 rounded-full pointer-events-none" />
+    <div className="relative w-full max-w-5xl mx-auto h-[250px] flex items-center justify-center mt-4 mb-8 overflow-hidden">
+      {/* Tech grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none -z-20" />
+      {/* Ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[500px] h-[150px] bg-purple-600/30 blur-[80px] md:blur-[100px] rounded-[100%] pointer-events-none -z-10" />
 
       {/* Track with edge-fade mask — overflow-hidden clips cards at ±560px slots */}
       <div className="relative w-full h-full flex items-center justify-center overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
