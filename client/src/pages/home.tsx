@@ -2066,7 +2066,10 @@ function MatteAppGrid({
           data-testid={`card-${app.id}`}
         >
           {/* Icon top-left */}
-          <div className="w-11 h-11 rounded-xl bg-white/[0.07] flex items-center justify-center flex-shrink-0 mb-3">
+          <div
+            className={`w-11 h-11 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center flex-shrink-0 mb-3`}
+            style={{ boxShadow: app.iconGlow ?? "0 4px 12px rgba(0,0,0,0.35)" }}
+          >
             {app.icon}
           </div>
 
