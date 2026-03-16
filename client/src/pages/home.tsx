@@ -35,6 +35,7 @@ import {
   Copy,
   Clapperboard,
   Plus,
+  Gamepad2,
 } from "lucide-react";
 import {
   SiNetflix,
@@ -1224,6 +1225,117 @@ export default function Home() {
           <span className="text-gray-500 text-xs">4.9/5 Rating · Trusted by 500+ Myanmar Creators</span>
         </div>
 
+      </section>
+
+      {/* ── Browse by Category ── */}
+      <section className="w-full max-w-5xl mx-auto px-4 py-12 flex flex-col items-center">
+        <p className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Browse by Category</p>
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">What are you looking for?</h2>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
+
+          {/* AI Tools */}
+          <div
+            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors"
+            onClick={() => handleCategoryClick("ai")}
+            data-testid="category-card-ai"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-purple-600 flex items-center justify-center mb-4">
+              <Brain className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-sm font-bold text-white mb-1">AI Tools</p>
+            <p className="text-xs text-gray-500 mb-auto pb-4">AI-powered creative & productivity tools</p>
+            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
+              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Starting From</span>
+              <span className="text-xs font-bold text-purple-400 mt-0.5">6,000 KS</span>
+            </div>
+          </div>
+
+          {/* Editing Software */}
+          <div
+            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors"
+            onClick={() => handleCategoryClick("editing")}
+            data-testid="category-card-editing"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-orange-500 flex items-center justify-center mb-4">
+              <Clapperboard className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-sm font-bold text-white mb-1">Editing Software</p>
+            <p className="text-xs text-gray-500 mb-auto pb-4">Professional video editing & creation</p>
+            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
+              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Starting From</span>
+              <span className="text-xs font-bold text-orange-400 mt-0.5">19,000 KS</span>
+            </div>
+          </div>
+
+          {/* Music & Streaming */}
+          <div
+            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors"
+            onClick={() => handleCategoryClick("music")}
+            data-testid="category-card-music"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-pink-600 flex items-center justify-center mb-4">
+              <Music2 className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-sm font-bold text-white mb-1">Music & Streaming</p>
+            <p className="text-xs text-gray-500 mb-auto pb-4">Streaming music, video & entertainment</p>
+            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
+              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Starting From</span>
+              <span className="text-xs font-bold text-pink-400 mt-0.5">2,500 KS</span>
+            </div>
+          </div>
+
+          {/* Telegram */}
+          <div
+            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors"
+            onClick={() => handleCategoryClick("telegram")}
+            data-testid="category-card-telegram"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-blue-500 flex items-center justify-center mb-4">
+              <Send className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-sm font-bold text-white mb-1">Telegram</p>
+            <p className="text-xs text-gray-500 mb-auto pb-4">Telegram Premium subscriptions</p>
+            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
+              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Pricing</span>
+              <span className="text-xs font-bold text-blue-400 mt-0.5">Coming Soon</span>
+            </div>
+          </div>
+
+          {/* VPN */}
+          <div
+            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors"
+            onClick={() => handleCategoryClick("vpn")}
+            data-testid="category-card-vpn"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-teal-500 flex items-center justify-center mb-4">
+              <Shield className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-sm font-bold text-white mb-1">VPN</p>
+            <p className="text-xs text-gray-500 mb-auto pb-4">Secure browsing & online privacy</p>
+            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
+              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Pricing</span>
+              <span className="text-xs font-bold text-teal-400 mt-0.5">Coming Soon</span>
+            </div>
+          </div>
+
+          {/* Gaming Coins */}
+          <div
+            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors opacity-60"
+            data-testid="category-card-gaming"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-yellow-500 flex items-center justify-center mb-4">
+              <Gamepad2 className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-sm font-bold text-white mb-1">Gaming Coins</p>
+            <p className="text-xs text-gray-500 mb-auto pb-4">In-game currency and top-ups</p>
+            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
+              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Pricing</span>
+              <span className="text-xs font-bold text-yellow-400 mt-0.5">Coming Soon</span>
+            </div>
+          </div>
+
+        </div>
       </section>
 
       {/* Category Filter Bar */}
