@@ -23,7 +23,6 @@ import {
   Search,
   Clock,
   Brain,
-  Scissors,
   Music2,
   Send,
   Lock,
@@ -591,8 +590,9 @@ const editingApps: AIApp[] = [
     id: "capcut",
     name: "CapCut",
     tagline: "Professional video editing & creation",
-    icon: <Scissors className="w-6 h-6 text-white" />,
-    iconBg: "from-amber-500 to-orange-600",
+    icon: <img src="https://cdn.simpleicons.org/capcut/white" alt="CapCut" className="w-8 h-8 object-contain" />,
+    iconBg: "from-[#121212] to-[#1e1e1e]",
+    iconGlow: "0 0 14px rgba(255,255,255,0.08)",
     accentBorder: "border-amber-500/25 hover:border-amber-400/50",
     accentGlow: "shadow-amber-500/10",
     neon: "text-amber-400",
@@ -649,12 +649,9 @@ const editingApps: AIApp[] = [
     id: "adobe-cc",
     name: "Adobe Creative Cloud",
     tagline: "Professional creative suite for creators",
-    icon: (
-      <div className="w-6 h-6 rounded-md bg-gradient-to-br from-red-500 to-rose-700 flex items-center justify-center">
-        <span className="text-white text-[9px] font-black tracking-tighter">Cc</span>
-      </div>
-    ),
-    iconBg: "from-red-500 to-rose-700",
+    icon: <img src="https://cdn.simpleicons.org/adobecreativecloud" alt="Adobe CC" className="w-8 h-8 object-contain" />,
+    iconBg: "from-[#1a1a1a] to-[#111111]",
+    iconGlow: "0 0 14px rgba(255,255,255,0.06)",
     accentBorder: "border-red-500/25 hover:border-red-400/50",
     accentGlow: "shadow-red-500/10",
     neon: "text-red-400",
