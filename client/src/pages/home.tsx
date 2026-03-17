@@ -52,6 +52,7 @@ import {
   SiAnthropic,
   SiAdobecreativecloud,
   SiMessenger,
+  SiBinance,
 } from "react-icons/si";
 
 const orderFormSchema = z.object({
@@ -1122,10 +1123,10 @@ function generateOrderId(): string {
 
 const PAYMENT_INFO: Record<string, { label: string; value: string; name: string; color: string }> = {
   KBZPay:  { label: "Phone", value: "09892246556", name: "AungNaingOo", color: "border-purple-500/50 text-purple-400" },
-  UABPay:  { label: "Phone", value: "09892246556", name: "AungNaingOo", color: "border-purple-500/50 text-purple-400" },
-  WavePay: { label: "Phone", value: "09963707270", name: "Zarni Aung",  color: "border-teal-500/50 text-teal-400"   },
-  AYAPay:  { label: "Phone", value: "09963707270", name: "Zarni Aung",  color: "border-teal-500/50 text-teal-400"   },
-  Binance: { label: "UID",   value: "979804957",   name: "Zarni Aung",  color: "border-amber-500/50 text-amber-400" },
+  UABPay:  { label: "Phone", value: "09442988204", name: "AungNaingOo", color: "border-teal-500/50 text-teal-400"    },
+  WavePay: { label: "Phone", value: "09442988204", name: "AungNaingOo", color: "border-blue-500/50 text-blue-400"    },
+  AYAPay:  { label: "Phone", value: "09442988204", name: "AungNaingOo", color: "border-teal-500/50 text-teal-400"    },
+  Binance: { label: "UID",   value: "979804957",   name: "PuriStep",    color: "border-amber-500/50 text-amber-400"  },
 };
 
 const CAROUSEL_CARDS = [
@@ -1818,33 +1819,123 @@ export default function Home() {
 
       {/* Payment Details */}
       <section id="payment-section" className="py-16 px-4 sm:px-6 bg-white/[0.02] border-y border-white/[0.06]">
-        <div className="max-w-2xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-bold mb-2">Payment Details</h2>
           <p className="text-white/40 text-sm mb-8">Transfer to one of these accounts, then submit your order</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { name: "KBZPay", bgClass: "bg-red-950/30 border-red-800/30", dotColor: "bg-red-500", number: "09-XXX-XXX-XXX" },
-              { name: "WavePay", bgClass: "bg-blue-950/30 border-blue-800/30", dotColor: "bg-blue-500", number: "09-XXX-XXX-XXX" },
-            ].map((p, i) => (
-              <div key={i} className={`${p.bgClass} border rounded-2xl p-6 text-left backdrop-blur-md hover:scale-[1.02] transition-all duration-300 hover:shadow-lg`} data-testid={`payment-${p.name.toLowerCase()}`}>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className={`w-8 h-8 rounded-full ${p.dotColor} flex items-center justify-center`}>
-                    <span className="text-white text-xs font-bold">{p.name[0]}</span>
-                  </div>
-                  <span className="font-semibold text-white">{p.name}</span>
+
+            {/* KBZPay */}
+            <div className="bg-red-950/20 border border-red-800/30 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-kbzpay">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">K</span>
                 </div>
-                <div className="space-y-2">
-                  <div>
-                    <p className="text-white/30 text-xs">Phone Number</p>
-                    <p className="text-white font-mono font-medium">{p.number}</p>
-                  </div>
-                  <div>
-                    <p className="text-white/30 text-xs">Account Name</p>
-                    <p className="text-white font-medium">PuriStep</p>
-                  </div>
+                <span className="font-semibold text-white">KBZPay</span>
+              </div>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-white/30 text-xs mb-1">Phone Number</p>
+                  <button
+                    type="button"
+                    onClick={() => { navigator.clipboard.writeText("09892246556"); toast({ title: "Copied!", description: "09892246556 copied to clipboard" }); }}
+                    className="flex items-center gap-2 group"
+                    data-testid="copy-kbzpay-number"
+                  >
+                    <span className="text-white font-mono font-medium">09892246556</span>
+                    <Copy className="w-3.5 h-3.5 text-white/20 group-hover:text-red-400 transition-colors" />
+                  </button>
+                </div>
+                <div>
+                  <p className="text-white/30 text-xs mb-0.5">Account Name</p>
+                  <p className="text-white font-medium">AungNaingOo</p>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* WavePay */}
+            <div className="bg-blue-950/20 border border-blue-800/30 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-wavepay">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">W</span>
+                </div>
+                <span className="font-semibold text-white">WavePay</span>
+              </div>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-white/30 text-xs mb-1">Phone Number</p>
+                  <button
+                    type="button"
+                    onClick={() => { navigator.clipboard.writeText("09442988204"); toast({ title: "Copied!", description: "09442988204 copied to clipboard" }); }}
+                    className="flex items-center gap-2 group"
+                    data-testid="copy-wavepay-number"
+                  >
+                    <span className="text-white font-mono font-medium">09442988204</span>
+                    <Copy className="w-3.5 h-3.5 text-white/20 group-hover:text-blue-400 transition-colors" />
+                  </button>
+                </div>
+                <div>
+                  <p className="text-white/30 text-xs mb-0.5">Account Name</p>
+                  <p className="text-white font-medium">AungNaingOo</p>
+                </div>
+              </div>
+            </div>
+
+            {/* UABPay */}
+            <div className="bg-teal-950/20 border border-teal-500/30 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-uabpay">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-teal-600 flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">U</span>
+                </div>
+                <span className="font-semibold text-white">UABPay</span>
+              </div>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-white/30 text-xs mb-1">Phone Number</p>
+                  <button
+                    type="button"
+                    onClick={() => { navigator.clipboard.writeText("09442988204"); toast({ title: "Copied!", description: "09442988204 copied to clipboard" }); }}
+                    className="flex items-center gap-2 group"
+                    data-testid="copy-uabpay-number"
+                  >
+                    <span className="text-white font-mono font-medium">09442988204</span>
+                    <Copy className="w-3.5 h-3.5 text-white/20 group-hover:text-teal-400 transition-colors" />
+                  </button>
+                </div>
+                <div>
+                  <p className="text-white/30 text-xs mb-0.5">Account Name</p>
+                  <p className="text-white font-medium">AungNaingOo</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Binance */}
+            <div className="bg-[#FCD535]/5 border border-[#FCD535]/25 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-binance">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-[#FCD535] flex items-center justify-center">
+                  <SiBinance className="w-4 h-4 text-[#1E1E2E]" />
+                </div>
+                <span className="font-semibold text-white">Binance</span>
+              </div>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-white/30 text-xs mb-1">UID</p>
+                  <button
+                    type="button"
+                    onClick={() => { navigator.clipboard.writeText("979804957"); toast({ title: "Copied!", description: "Binance UID copied to clipboard" }); }}
+                    className="flex items-center gap-2 group"
+                    data-testid="copy-binance-uid"
+                  >
+                    <span className="text-white font-mono font-medium">979804957</span>
+                    <Copy className="w-3.5 h-3.5 text-white/20 group-hover:text-[#FCD535] transition-colors" />
+                  </button>
+                </div>
+                <div>
+                  <p className="text-white/30 text-xs mb-0.5">Account Name</p>
+                  <p className="text-white font-medium">PuriStep</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
