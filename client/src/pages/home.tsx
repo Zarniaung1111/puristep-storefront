@@ -1490,7 +1490,7 @@ export default function Home() {
         <p className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Browse by Category</p>
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">What are you looking for?</h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 w-full">
 
           {/* AI Tools */}
           <div
@@ -1591,6 +1591,23 @@ export default function Home() {
             <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
               <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Starting From</span>
               <span className="text-xs font-bold text-yellow-400 mt-0.5">3,500 KS</span>
+            </div>
+          </div>
+
+          {/* Education */}
+          <div
+            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] hover:border-sky-500/30 transition-colors"
+            data-testid="category-card-education"
+            onClick={() => handleCategoryClick("education")}
+          >
+            <div className="w-12 h-12 rounded-2xl bg-sky-500 flex items-center justify-center mb-4">
+              <BookOpen className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-sm font-bold text-white mb-1">Education</p>
+            <p className="text-xs text-gray-500 mb-auto pb-4">Language learning and online courses</p>
+            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
+              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Starting From</span>
+              <span className="text-xs font-bold text-sky-400 mt-0.5">5,000 KS</span>
             </div>
           </div>
 
