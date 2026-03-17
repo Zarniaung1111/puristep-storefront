@@ -37,6 +37,7 @@ import {
   Gamepad2,
   Info,
   Target,
+  BookOpen,
 } from "lucide-react";
 import {
   SiNetflix,
@@ -62,7 +63,7 @@ const orderFormSchema = z.object({
 
 type OrderFormValues = z.infer<typeof orderFormSchema>;
 
-type CategoryId = "all" | "ai" | "editing" | "music" | "telegram" | "vpn" | "gaming";
+type CategoryId = "all" | "ai" | "editing" | "music" | "telegram" | "vpn" | "gaming" | "education";
 
 interface Category {
   id: CategoryId;
@@ -177,6 +178,20 @@ const categories: Category[] = [
     description: "In-game currency and top-ups",
     startingFrom: "3,500 KS",
     productCount: 1,
+  },
+  {
+    id: "education",
+    label: "Education",
+    icon: <BookOpen className="w-4 h-4" />,
+    bigIcon: <BookOpen className="w-8 h-8" />,
+    color: "from-sky-500 to-blue-600",
+    neon: "text-sky-400",
+    glow: "shadow-sky-500/30",
+    glowBg: "bg-sky-500/10",
+    borderHover: "hover:border-sky-500/40",
+    description: "Online learning & language tools",
+    startingFrom: "5,000 KS",
+    productCount: 3,
   },
 ];
 
@@ -973,6 +988,131 @@ const gamingApps: AIApp[] = [
   },
 ];
 
+const educationApps: AIApp[] = [
+  {
+    id: "coursera-plus",
+    name: "Coursera Plus",
+    tagline: "Unlimited Learning",
+    icon: <BookOpen className="w-6 h-6 text-blue-400" />,
+    iconBg: "from-blue-500 to-indigo-600",
+    accentBorder: "border-blue-500/25 hover:border-blue-400/50",
+    accentGlow: "shadow-blue-500/10",
+    neon: "text-blue-400",
+    startingFrom: "From 15,000 KS",
+    plans: [
+      {
+        id: "coursera-monthly",
+        name: "Monthly",
+        price: "15,000 KS",
+        period: "Monthly",
+        features: [
+          "Access to 7,000+ courses",
+          "Earn unlimited certificates",
+          "Professional certs from Google/IBM",
+          "Learn at your own pace",
+        ],
+      },
+      {
+        id: "coursera-annual",
+        name: "Annual",
+        price: "120,000 KS",
+        period: "Yearly",
+        features: [
+          "Access to 7,000+ courses",
+          "Earn unlimited certificates",
+          "Professional certs from Google/IBM",
+          "Learn at your own pace",
+          "Best value for long-term learners",
+        ],
+        badge: "Best Value",
+        badgeStyle: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
+      },
+    ],
+  },
+  {
+    id: "elsa-speak",
+    name: "ELSA Speak Pro",
+    tagline: "AI English Coach",
+    icon: <MessageCircle className="w-6 h-6 text-teal-400" />,
+    iconBg: "from-teal-500 to-cyan-600",
+    accentBorder: "border-teal-500/25 hover:border-teal-400/50",
+    accentGlow: "shadow-teal-500/10",
+    neon: "text-teal-400",
+    startingFrom: "From 8,000 KS",
+    plans: [
+      {
+        id: "elsa-monthly",
+        name: "Monthly",
+        price: "8,000 KS",
+        period: "Monthly",
+        features: [
+          "Advanced AI pronunciation analysis",
+          "Unlimited bite-sized lessons",
+          "Customized learning plans",
+          "Ad-free experience",
+        ],
+        badge: "Best Seller",
+        badgeStyle: "bg-amber-500/20 text-amber-300 border-amber-500/40",
+      },
+      {
+        id: "elsa-quarterly",
+        name: "3 Months",
+        price: "22,000 KS",
+        period: "3 Months",
+        features: [
+          "Advanced AI pronunciation analysis",
+          "Unlimited bite-sized lessons",
+          "Customized learning plans",
+          "Ad-free experience",
+          "Save vs monthly plan",
+        ],
+        badge: "Best Value",
+        badgeStyle: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
+      },
+    ],
+  },
+  {
+    id: "duolingo-super",
+    name: "Duolingo Super",
+    tagline: "Learn Languages Fast",
+    icon: <Zap className="w-6 h-6 text-lime-400" />,
+    iconBg: "from-lime-500 to-green-600",
+    accentBorder: "border-lime-500/25 hover:border-lime-400/50",
+    accentGlow: "shadow-lime-500/10",
+    neon: "text-lime-400",
+    startingFrom: "From 5,000 KS",
+    plans: [
+      {
+        id: "duolingo-monthly",
+        name: "Monthly",
+        price: "5,000 KS",
+        period: "Monthly",
+        features: [
+          "Unlimited Hearts (no waiting)",
+          "Ad-free learning",
+          "Personalized practice hub",
+          "Unlimited Legendary attempts",
+        ],
+      },
+      {
+        id: "duolingo-annual",
+        name: "Annual",
+        price: "45,000 KS",
+        period: "Yearly",
+        features: [
+          "Unlimited Hearts (no waiting)",
+          "Ad-free learning",
+          "Personalized practice hub",
+          "Unlimited Legendary attempts",
+          "Best price per month",
+        ],
+        badge: "Best Value",
+        badgeStyle: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
+      },
+    ],
+  },
+];
+
 function generateOrderId(): string {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let id = "PS-";
@@ -1215,6 +1355,7 @@ export default function Home() {
   const filteredTelegramApps = telegramApps.filter(matchesApp);
   const filteredVpnApps = vpnApps.filter(matchesApp);
   const filteredGamingApps = gamingApps.filter(matchesApp);
+  const filteredEducationApps = educationApps.filter(matchesApp);
 
   const filteredProducts = (activeCategory === "all"
     ? products
@@ -1225,8 +1366,8 @@ export default function Home() {
     ? categories.slice(1).map(cat => ({
         cat,
         items: products.filter(p => p.categoryId === cat.id).filter(matchesProduct),
-        filteredApps: cat.id === "ai" ? filteredAIApps : cat.id === "editing" ? filteredEditingApps : cat.id === "music" ? filteredMusicApps : cat.id === "telegram" ? filteredTelegramApps : cat.id === "vpn" ? filteredVpnApps : cat.id === "gaming" ? filteredGamingApps : [],
-      })).filter(g => g.items.length > 0 || g.filteredApps.length > 0 || (!q && ["ai", "editing", "music", "telegram", "vpn", "gaming"].includes(g.cat.id)))
+        filteredApps: cat.id === "ai" ? filteredAIApps : cat.id === "editing" ? filteredEditingApps : cat.id === "music" ? filteredMusicApps : cat.id === "telegram" ? filteredTelegramApps : cat.id === "vpn" ? filteredVpnApps : cat.id === "gaming" ? filteredGamingApps : cat.id === "education" ? filteredEducationApps : [],
+      })).filter(g => g.items.length > 0 || g.filteredApps.length > 0 || (!q && ["ai", "editing", "music", "telegram", "vpn", "gaming", "education"].includes(g.cat.id)))
     : null;
 
   const handleCategoryClick = (catId: CategoryId) => {
@@ -1574,7 +1715,7 @@ export default function Home() {
           )}
 
           {/* Single category filtered view — matte product cards */}
-          {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && activeCategory !== "editing" && activeCategory !== "telegram" && activeCategory !== "vpn" && activeCategory !== "gaming" && (
+          {activeCategory !== "all" && activeCategory !== "ai" && activeCategory !== "music" && activeCategory !== "editing" && activeCategory !== "telegram" && activeCategory !== "vpn" && activeCategory !== "gaming" && activeCategory !== "education" && (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
               {filteredProducts.map(product => (
                 <MatteProductCard key={product.id} product={product} onBuyNow={handleBuyNow} />
@@ -1645,6 +1786,14 @@ export default function Home() {
             <MatteAppGrid
               apps={filteredGamingApps}
               onSelect={app => openProductModal(app, "gaming")}
+            />
+          )}
+
+          {/* Education — matte card grid */}
+          {activeCategory === "education" && (
+            <MatteAppGrid
+              apps={filteredEducationApps}
+              onSelect={app => openProductModal(app, "education")}
             />
           )}
         </div>
