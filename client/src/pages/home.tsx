@@ -35,6 +35,7 @@ import {
   Clapperboard,
   Plus,
   Gamepad2,
+  Info,
 } from "lucide-react";
 import {
   SiNetflix,
@@ -2377,6 +2378,9 @@ function ProductModal({
 }) {
   const [spotifyTab, setSpotifyTab] = useState<"individual" | "family">("individual");
   const [mlbbTab, setMlbbTab] = useState<"standard" | "double">("standard");
+  const [selectedPlanDetails, setSelectedPlanDetails] = useState<AIPlan | null>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const openDetailsModal = (plan: AIPlan) => { setSelectedPlanDetails(plan); setIsDetailsModalOpen(true); };
 
   useEffect(() => {
     if (open) {
@@ -2435,6 +2439,7 @@ function ProductModal({
       : "grid-cols-1 sm:grid-cols-2";
 
   return (
+    <>
     <div
       className={`fixed inset-0 z-[60] flex items-end sm:items-center justify-center transition-all duration-300
         ${open ? "backdrop-blur-sm bg-black/70 pointer-events-auto" : "bg-transparent pointer-events-none"}`}
@@ -2640,14 +2645,25 @@ function ProductModal({
                     ))}
                   </ul>
 
-                  {/* CTA */}
-                  <Button
-                    onClick={() => onBuyNow(app, plan)}
-                    className={`w-full bg-gradient-to-r ${app.iconBg} hover:opacity-90 active:scale-95 text-white border-0 font-semibold h-8 text-xs transition-all duration-150 ease-out`}
-                    data-testid={`button-buy-plan-${plan.id}`}
-                  >
-                    {plan.buttonLabel ?? "Buy Now"}
-                  </Button>
+                  {/* CTA row */}
+                  <div className="flex gap-2 w-full mt-auto">
+                    <Button
+                      onClick={() => onBuyNow(app, plan)}
+                      className={`flex-1 bg-gradient-to-r ${app.iconBg} hover:opacity-90 active:scale-95 text-white border-0 font-semibold h-8 text-xs transition-all duration-150 ease-out`}
+                      data-testid={`button-buy-plan-${plan.id}`}
+                    >
+                      {plan.buttonLabel ?? "Buy Now"}
+                    </Button>
+                    <button
+                      type="button"
+                      onClick={() => openDetailsModal(plan)}
+                      className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/10 hover:bg-white/[0.12] hover:border-white/20 active:scale-95 transition-all duration-150 flex items-center justify-center flex-shrink-0"
+                      data-testid={`button-details-plan-${plan.id}`}
+                      aria-label="Plan details"
+                    >
+                      <Info className="w-3.5 h-3.5 text-white/50" />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -2655,5 +2671,62 @@ function ProductModal({
         </div>
       </div>
     </div>
+
+    {/* ── Plan Details Modal ── */}
+    {isDetailsModalOpen && selectedPlanDetails && (
+      <div
+        className="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+        onClick={() => setIsDetailsModalOpen(false)}
+        data-testid="details-modal-backdrop"
+      >
+        <div
+          className="bg-[#121212] border border-white/10 rounded-2xl p-6 w-full max-w-md relative animate-fade-in"
+          onClick={e => e.stopPropagation()}
+        >
+          {/* Close button */}
+          <button
+            type="button"
+            onClick={() => setIsDetailsModalOpen(false)}
+            className="absolute top-4 right-4 w-7 h-7 rounded-full bg-white/[0.07] hover:bg-white/[0.14] flex items-center justify-center transition-colors"
+            data-testid="button-close-details"
+          >
+            <X className="w-3.5 h-3.5 text-white/60" />
+          </button>
+
+          {/* Plan name */}
+          <h3 className="text-base font-bold text-white pr-8 leading-tight">{selectedPlanDetails.name}</h3>
+          <p className="text-white/35 text-xs mt-0.5">{selectedPlanDetails.period} plan · {selectedPlanDetails.price}</p>
+
+          {/* Badge */}
+          {selectedPlanDetails.badge && (
+            <span className={`inline-block mt-2 text-[10px] font-semibold px-2 py-0.5 rounded-full border ${selectedPlanDetails.badgeStyle}`}>
+              {selectedPlanDetails.badge}
+            </span>
+          )}
+
+          {/* Features */}
+          <div className="mt-4 space-y-2">
+            <p className="text-white/30 text-[10px] uppercase tracking-widest font-semibold mb-2">What's included</p>
+            {selectedPlanDetails.features.map((f, i) => (
+              <div key={i} className="flex items-start gap-2.5 text-sm text-white/70">
+                <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0 mt-0.5" />
+                <span>{f}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Got it */}
+          <button
+            type="button"
+            onClick={() => setIsDetailsModalOpen(false)}
+            className="mt-6 w-full py-2.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/10 text-white/70 hover:text-white text-sm font-medium transition-all duration-150 active:scale-[0.98]"
+            data-testid="button-got-it"
+          >
+            Got it
+          </button>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
