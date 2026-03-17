@@ -36,6 +36,7 @@ import {
   Plus,
   Gamepad2,
   Info,
+  Target,
 } from "lucide-react";
 import {
   SiNetflix,
@@ -218,6 +219,7 @@ interface AIApp {
   neon: string;
   startingFrom: string;
   plans: AIPlan[];
+  comingSoon?: boolean;
 }
 
 const aiApps: AIApp[] = [
@@ -955,6 +957,19 @@ const gamingApps: AIApp[] = [
     neon: "text-yellow-400",
     startingFrom: "From 3,500 KS",
     plans: [],
+  },
+  {
+    id: "pubg-mobile",
+    name: "PUBG Mobile",
+    tagline: "UC Top-up",
+    icon: <Target className="w-6 h-6 text-orange-400" />,
+    iconBg: "from-orange-500 to-amber-700",
+    accentBorder: "border-orange-500/25",
+    accentGlow: "shadow-orange-500/10",
+    neon: "text-orange-400",
+    startingFrom: "Coming Soon",
+    plans: [],
+    comingSoon: true,
   },
 ];
 
@@ -2221,27 +2236,56 @@ function MatteAppGrid({
       {apps.map(app => (
         <button
           key={app.id}
-          onClick={() => onSelect(app)}
-          className="bg-[#121212] rounded-2xl border border-white/5 p-4 flex flex-col min-h-[160px] cursor-pointer transition-transform duration-150 ease-out active:scale-95 hover:border-white/[0.12] hover:bg-[#181818] text-left w-full relative"
+          onClick={() => !app.comingSoon && onSelect(app)}
+          disabled={app.comingSoon}
+          className={`bg-[#121212] rounded-2xl border border-white/5 p-4 flex flex-col min-h-[160px] text-left w-full transition-transform duration-150 ease-out relative
+            ${app.comingSoon
+              ? "opacity-75 cursor-not-allowed"
+              : "cursor-pointer active:scale-95 hover:border-white/[0.12] hover:bg-[#181818]"
+            }`}
           data-testid={`card-${app.id}`}
         >
+          {/* Coming Soon badge */}
+          {app.comingSoon && (
+            <span className="bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider absolute top-3 right-3">
+              Soon
+            </span>
+          )}
+
           {/* Icon top-left */}
-          <div className="w-11 h-11 rounded-xl bg-[#0a0a0a] border border-white/10 flex items-center justify-center flex-shrink-0 mb-3">
+          <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 mb-3 ${app.comingSoon ? "bg-white/[0.04] border border-white/[0.06]" : "bg-[#0a0a0a] border border-white/10"}`}>
             {app.icon}
           </div>
 
           {/* Name */}
-          <p className="text-sm font-semibold text-white leading-tight">{app.name}</p>
+          <p className={`text-sm font-semibold leading-tight ${app.comingSoon ? "text-white/50" : "text-white"}`}>{app.name}</p>
+          {app.comingSoon && (
+            <p className="text-[10px] text-white/25 mt-0.5 leading-tight">{app.tagline}</p>
+          )}
 
           {/* Pricing bottom */}
           <div className="mt-auto pt-3 flex items-end justify-between w-full">
-            <div>
-              <p className="text-[10px] text-white/30 uppercase tracking-wider leading-none mb-0.5">Starting from</p>
-              <p className="text-xs font-bold text-white leading-tight">{app.startingFrom}</p>
-            </div>
-            <div className="w-6 h-6 rounded-lg bg-white/[0.06] flex items-center justify-center flex-shrink-0">
-              <Plus className="w-3.5 h-3.5 text-white/50" />
-            </div>
+            {app.comingSoon ? (
+              <div className="w-full">
+                <button
+                  disabled
+                  className="w-full bg-white/[0.04] text-white/25 cursor-not-allowed py-1.5 rounded-lg text-[10px] font-semibold border border-white/[0.06] flex items-center justify-center gap-1.5"
+                >
+                  <Clock className="w-3 h-3" />
+                  Currently Unavailable
+                </button>
+              </div>
+            ) : (
+              <>
+                <div>
+                  <p className="text-[10px] text-white/30 uppercase tracking-wider leading-none mb-0.5">Starting from</p>
+                  <p className="text-xs font-bold text-white leading-tight">{app.startingFrom}</p>
+                </div>
+                <div className="w-6 h-6 rounded-lg bg-white/[0.06] flex items-center justify-center flex-shrink-0">
+                  <Plus className="w-3.5 h-3.5 text-white/50" />
+                </div>
+              </>
+            )}
           </div>
         </button>
       ))}
