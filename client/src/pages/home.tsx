@@ -528,11 +528,7 @@ const aiApps: AIApp[] = [
     id: "leonardo",
     name: "Leonardo AI",
     tagline: "Fine-tuned AI image generation",
-    icon: (
-      <div className="w-6 h-6 rounded-md bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
-        <span className="text-white text-[9px] font-black tracking-tighter">LN</span>
-      </div>
-    ),
+    icon: <img src="/leonardo-logo.png" alt="Leonardo AI Logo" className="w-10 h-10 rounded-xl object-cover" />,
     iconBg: "from-yellow-500 to-orange-600",
     accentBorder: "border-yellow-500/25 hover:border-yellow-400/50",
     accentGlow: "shadow-yellow-500/10",
