@@ -1049,7 +1049,7 @@ const educationApps: AIApp[] = [
     id: "coursera-plus",
     name: "Coursera Plus",
     tagline: "Unlimited Learning",
-    icon: <BookOpen className="w-6 h-6 text-blue-400" />,
+    icon: <img src="/coursera-logo.png" alt="Coursera Logo" className="w-10 h-10 rounded-xl object-cover" />,
     iconBg: "from-blue-500 to-indigo-600",
     accentBorder: "border-blue-500/25 hover:border-blue-400/50",
     accentGlow: "shadow-blue-500/10",
