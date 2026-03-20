@@ -1131,7 +1131,7 @@ const educationApps: AIApp[] = [
     id: "duolingo-super",
     name: "Duolingo Super",
     tagline: "Learn Languages Fast",
-    icon: <img src="/duolingo-logo.png" alt="Duolingo Logo" className="w-10 h-10 rounded-xl object-cover" />,
+    icon: <img src="/duolingo-dark.png" alt="Duolingo Logo" className="w-10 h-10 rounded-xl object-cover" />,
     iconBg: "from-lime-500 to-green-600",
     accentBorder: "border-lime-500/25 hover:border-lime-400/50",
     accentGlow: "shadow-lime-500/10",
