@@ -223,6 +223,7 @@ interface AIPlan {
   buttonLabel?: string;
   customInstructions?: {
     intro?: string;
+    introHighlight?: string;
     whatYouGet?: string[];
     howToUse?: string[];
     howToUseText?: string;
@@ -313,6 +314,16 @@ const aiApps: AIApp[] = [
         ],
         badge: "Best Value",
         badgeStyle: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
+        customInstructions: {
+          intro: "$200 Chatgpt plus official subscription.",
+          introHighlight: "Can renew after subscription ends",
+          whatYouGet: [
+            "Chatgpt Mail & password ပို့ပေးမှာဖြစ်ပါတယ်",
+            "မိမိ ကိုယ်ပိုင် account ဖြင့်ယူလိုပါက Mail & password \u200cပို့ပေးရပါမယ်",
+          ],
+          howToUseText: "Log in & use !!",
+          warranty: "Fully guarantee for whole duration",
+        },
       },
     ],
   },
@@ -3029,8 +3040,15 @@ function ProductModal({
           {selectedPlanDetails.customInstructions ? (
             <div className="mt-4 text-sm leading-relaxed space-y-4">
               {/* Intro */}
-              {selectedPlanDetails.customInstructions.intro && (
-                <p className="text-white/70 whitespace-pre-line">{selectedPlanDetails.customInstructions.intro}</p>
+              {(selectedPlanDetails.customInstructions.intro || selectedPlanDetails.customInstructions.introHighlight) && (
+                <div>
+                  {selectedPlanDetails.customInstructions.intro && (
+                    <p className="text-white/70">{selectedPlanDetails.customInstructions.intro}</p>
+                  )}
+                  {selectedPlanDetails.customInstructions.introHighlight && (
+                    <p className="text-green-400 font-medium">{selectedPlanDetails.customInstructions.introHighlight}</p>
+                  )}
+                </div>
               )}
 
               {/* What you will get — bullet list */}
