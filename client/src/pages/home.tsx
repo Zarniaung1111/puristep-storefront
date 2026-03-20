@@ -380,6 +380,16 @@ const aiApps: AIApp[] = [
         ],
         badge: "Best Price",
         badgeStyle: "bg-indigo-500/20 text-indigo-300 border-indigo-500/40",
+        customInstructions: {
+          intro: "1 Year Gemini Pro official subscription.",
+          introHighlight: "Can renew after subscription ends",
+          whatYouGetLabel: "What you get :",
+          whatYouGet: [
+            "Plan ဝယ်ယူပြီး ရရှိသော account ဖြင့် log in ဝင်၍ တန်းသုံးနိုင်သည်",
+            "မိမိ personal mail ဖြင့် ယူလိုပါက mail & password ပို့ပေးရပါမယ်",
+          ],
+          warranty: "Fully guarantee for whole duration",
+        },
       },
     ],
   },
