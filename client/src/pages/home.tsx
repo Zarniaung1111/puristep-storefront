@@ -455,11 +455,7 @@ const aiApps: AIApp[] = [
     id: "kling",
     name: "Kling AI",
     tagline: "Professional AI video generation",
-    icon: (
-      <div className="w-6 h-6 rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center">
-        <span className="text-white text-[9px] font-black tracking-tighter">KL</span>
-      </div>
-    ),
+    icon: <img src="/kling-logo.png" alt="Kling AI Logo" className="w-10 h-10 rounded-xl object-cover" />,
     iconBg: "from-violet-600 to-fuchsia-700",
     accentBorder: "border-violet-500/25 hover:border-violet-400/50",
     accentGlow: "shadow-violet-500/10",
