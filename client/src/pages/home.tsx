@@ -225,6 +225,7 @@ interface AIPlan {
     intro?: string;
     introHighlight?: string;
     whatYouGet?: string[];
+    whatYouGetLabel?: string;
     howToUse?: string[];
     howToUseText?: string;
     warranty?: string;
@@ -342,7 +343,7 @@ const aiApps: AIApp[] = [
       {
         id: "gemini-3month",
         name: "3 Months",
-        price: "25,000 KS",
+        price: "30,000 KS",
         period: "3 Months",
         features: [
           "Gemini 3.1 Pro Thinking model",
@@ -354,11 +355,21 @@ const aiApps: AIApp[] = [
         badge: "Best Value",
         badgeStyle: "bg-blue-500/20 text-blue-300 border-blue-500/40",
         highlight: true,
+        customInstructions: {
+          intro: "60$ Gemini pro 3 months subscription.",
+          introHighlight: "Must use another account after subscription ends",
+          whatYouGetLabel: "What you get :",
+          whatYouGet: [
+            "Plan ဝယ်ယူပြီး ရရှိသော account ဖြင့် log in ဝင်၍ တန်းသုံးနိုင်သည်",
+            "မိမိ personal mail ဖြင့် ယူလိုပါက mail & password ပို့ပေးရပါမယ်",
+          ],
+          warranty: "Fully guarantee for whole duration",
+        },
       },
       {
         id: "gemini-annual",
         name: "Annual",
-        price: "45,000 KS",
+        price: "55,000 KS",
         period: "Yearly",
         features: [
           "Gemini 3.1 Pro Thinking model",
@@ -3054,7 +3065,7 @@ function ProductModal({
               {/* What you will get — bullet list */}
               {selectedPlanDetails.customInstructions.whatYouGet && (
                 <div>
-                  <h4 className="text-white font-semibold mb-2">What you will get?</h4>
+                  <h4 className="text-white font-semibold mb-2">{selectedPlanDetails.customInstructions.whatYouGetLabel ?? "What you will get?"}</h4>
                   <ul className="space-y-2 list-disc pl-4 marker:text-green-500">
                     {selectedPlanDetails.customInstructions.whatYouGet.map((item, i) => (
                       <li key={i} className="text-white/70">{item}</li>
