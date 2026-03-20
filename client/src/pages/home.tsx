@@ -221,6 +221,10 @@ interface AIPlan {
   badgeStyle?: string;
   highlight?: boolean;
   buttonLabel?: string;
+  customInstructions?: {
+    intro: string;
+    howToUse: string[];
+  };
 }
 
 interface AIApp {
@@ -265,6 +269,13 @@ const aiApps: AIApp[] = [
         badge: "Best Seller",
         badgeStyle: "bg-amber-500/20 text-amber-300 border-amber-500/40",
         highlight: true,
+        customInstructions: {
+          intro: "Chatgpt business team invite plan သည် ကိုယ့် personal mail ကို invite လုပ်ပေးမှာဖြစ်ပါတယ်",
+          howToUse: [
+            "Mail inbox တွင် chatgpt invite mail ကိုနှိပ်၍ join workspace ကိုနှိပ်ပါ",
+            "ကိုယ့် acc ကို log in ဝင်ပြီးတာနဲ့ business plus subscription ကိုရပါပြီ",
+          ],
+        },
       },
       {
         id: "chatgpt-individual",
@@ -2524,13 +2535,10 @@ function MatteAppGrid({
           <div className="mt-auto pt-3 flex items-end justify-between w-full">
             {app.comingSoon ? (
               <div className="w-full">
-                <button
-                  disabled
-                  className="w-full bg-white/[0.04] text-white/25 cursor-not-allowed py-1.5 rounded-lg text-[10px] font-semibold border border-white/[0.06] flex items-center justify-center gap-1.5"
-                >
+                <div className="w-full bg-white/[0.04] text-white/25 cursor-not-allowed py-1.5 rounded-lg text-[10px] font-semibold border border-white/[0.06] flex items-center justify-center gap-1.5">
                   <Clock className="w-3 h-3" />
                   Currently Unavailable
-                </button>
+                </div>
               </div>
             ) : (
               <>
@@ -3005,16 +3013,28 @@ function ProductModal({
             </span>
           )}
 
-          {/* Features */}
-          <div className="mt-4 space-y-2">
-            <p className="text-white/30 text-[10px] uppercase tracking-widest font-semibold mb-2">What's included</p>
-            {selectedPlanDetails.features.map((f, i) => (
-              <div key={i} className="flex items-start gap-2.5 text-sm text-white/70">
-                <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0 mt-0.5" />
-                <span>{f}</span>
-              </div>
-            ))}
-          </div>
+          {/* Body — custom instructions OR standard features list */}
+          {selectedPlanDetails.customInstructions ? (
+            <div className="mt-4 text-sm leading-relaxed">
+              <p className="text-white/70 mb-4">{selectedPlanDetails.customInstructions.intro}</p>
+              <h4 className="text-white font-semibold mb-2 mt-4">How to use :</h4>
+              <ul className="space-y-2 list-disc pl-4 marker:text-green-500">
+                {selectedPlanDetails.customInstructions.howToUse.map((step, i) => (
+                  <li key={i} className="text-white/70">{step}</li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <div className="mt-4 space-y-2">
+              <p className="text-white/30 text-[10px] uppercase tracking-widest font-semibold mb-2">What's included</p>
+              {selectedPlanDetails.features.map((f, i) => (
+                <div key={i} className="flex items-start gap-2.5 text-sm text-white/70">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0 mt-0.5" />
+                  <span>{f}</span>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Got it */}
           <button
