@@ -222,8 +222,11 @@ interface AIPlan {
   highlight?: boolean;
   buttonLabel?: string;
   customInstructions?: {
-    intro: string;
-    howToUse: string[];
+    intro?: string;
+    whatYouGet?: string[];
+    howToUse?: string[];
+    howToUseText?: string;
+    warranty?: string;
   };
 }
 
@@ -288,6 +291,15 @@ const aiApps: AIApp[] = [
           "1,000 Sora video credits / month",
           "DALL-E 3 image generation",
         ],
+        customInstructions: {
+          intro: "20$ Chatgpt plus official subscription.\nCan renew after subscription ends",
+          whatYouGet: [
+            "Chatgpt Mail & password ပိုပေးမှာဖြစ်ပါတယ်",
+            "မိမိ ကိုယ်ပိုင် account ဖြင့်ယူလိုပါက Mail & password \u200cpိုပေးရပါမယ်",
+          ],
+          howToUseText: "Log in & use !!",
+          warranty: "Fully guarantee for whole duration",
+        },
       },
       {
         id: "chatgpt-annual",
@@ -3015,14 +3027,51 @@ function ProductModal({
 
           {/* Body — custom instructions OR standard features list */}
           {selectedPlanDetails.customInstructions ? (
-            <div className="mt-4 text-sm leading-relaxed">
-              <p className="text-white/70 mb-4">{selectedPlanDetails.customInstructions.intro}</p>
-              <h4 className="text-white font-semibold mb-2 mt-4">How to use :</h4>
-              <ul className="space-y-2 list-disc pl-4 marker:text-green-500">
-                {selectedPlanDetails.customInstructions.howToUse.map((step, i) => (
-                  <li key={i} className="text-white/70">{step}</li>
-                ))}
-              </ul>
+            <div className="mt-4 text-sm leading-relaxed space-y-4">
+              {/* Intro */}
+              {selectedPlanDetails.customInstructions.intro && (
+                <p className="text-white/70 whitespace-pre-line">{selectedPlanDetails.customInstructions.intro}</p>
+              )}
+
+              {/* What you will get — bullet list */}
+              {selectedPlanDetails.customInstructions.whatYouGet && (
+                <div>
+                  <h4 className="text-white font-semibold mb-2">What you will get?</h4>
+                  <ul className="space-y-2 list-disc pl-4 marker:text-green-500">
+                    {selectedPlanDetails.customInstructions.whatYouGet.map((item, i) => (
+                      <li key={i} className="text-white/70">{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* How to use — bullet list (Business Team style) */}
+              {selectedPlanDetails.customInstructions.howToUse && (
+                <div>
+                  <h4 className="text-white font-semibold mb-2">How to use :</h4>
+                  <ul className="space-y-2 list-disc pl-4 marker:text-green-500">
+                    {selectedPlanDetails.customInstructions.howToUse.map((step, i) => (
+                      <li key={i} className="text-white/70">{step}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* How to use — plain text (Individual style) */}
+              {selectedPlanDetails.customInstructions.howToUseText && (
+                <div>
+                  <h4 className="text-white font-semibold mb-2">How to use :</h4>
+                  <p className="text-white/70">{selectedPlanDetails.customInstructions.howToUseText}</p>
+                </div>
+              )}
+
+              {/* Warranty */}
+              {selectedPlanDetails.customInstructions.warranty && (
+                <div>
+                  <h4 className="text-white font-semibold mb-2">Warranty:</h4>
+                  <p className="text-green-400 font-medium">{selectedPlanDetails.customInstructions.warranty}</p>
+                </div>
+              )}
             </div>
           ) : (
             <div className="mt-4 space-y-2">
