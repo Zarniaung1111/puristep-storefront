@@ -397,7 +397,7 @@ const aiApps: AIApp[] = [
     id: "claude",
     name: "Claude Pro",
     tagline: "Anthropic's thoughtful AI assistant",
-    icon: <SiAnthropic className="w-6 h-6 text-white" />,
+    icon: <img src="/claude-logo.jpg" alt="Claude AI Logo" className="w-10 h-10 rounded-xl object-cover" />,
     iconBg: "from-[#D97757] to-[#be5c38]",
     iconGlow: "0 0 18px rgba(217,119,87,0.45)",
     accentBorder: "border-orange-500/25 hover:border-orange-400/50",
