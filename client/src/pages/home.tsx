@@ -846,7 +846,7 @@ const vpnApps: AIApp[] = [
     id: "expressvpn",
     name: "Express VPN Premium",
     tagline: "High-speed, unblock any app",
-    icon: <Lock className="w-6 h-6 text-red-300" />,
+    icon: <img src="/expressvpn-logo.jpg" alt="ExpressVPN Logo" className="w-10 h-10 rounded-xl object-cover" />,
     iconBg: "from-red-600 to-orange-700",
     accentBorder: "border-red-500/25 hover:border-red-400/50",
     accentGlow: "shadow-red-500/10",
