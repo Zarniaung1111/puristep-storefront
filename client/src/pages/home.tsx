@@ -484,11 +484,7 @@ const aiApps: AIApp[] = [
     id: "perplexity",
     name: "Perplexity Pro",
     tagline: "AI-powered search & research assistant",
-    icon: (
-      <div className="w-6 h-6 rounded-md bg-gradient-to-br from-cyan-400 to-teal-600 flex items-center justify-center">
-        <span className="text-white text-[9px] font-black tracking-tighter">PX</span>
-      </div>
-    ),
+    icon: <img src="/perplexity-logo.png" alt="Perplexity AI Logo" className="w-10 h-10 rounded-xl object-cover" />,
     iconBg: "from-cyan-500 to-teal-600",
     accentBorder: "border-cyan-500/25 hover:border-cyan-400/50",
     accentGlow: "shadow-cyan-500/15",
