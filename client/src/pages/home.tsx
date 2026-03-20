@@ -1089,7 +1089,7 @@ const educationApps: AIApp[] = [
     id: "elsa-speak",
     name: "ELSA Speak Pro",
     tagline: "AI English Coach",
-    icon: <MessageCircle className="w-6 h-6 text-teal-400" />,
+    icon: <img src="/elsa-logo.png" alt="ELSA Speak Logo" className="w-10 h-10 rounded-xl object-cover" />,
     iconBg: "from-teal-500 to-cyan-600",
     accentBorder: "border-teal-500/25 hover:border-teal-400/50",
     accentGlow: "shadow-teal-500/10",
