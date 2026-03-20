@@ -666,7 +666,7 @@ const editingApps: AIApp[] = [
     id: "capcut",
     name: "CapCut",
     tagline: "Professional video editing & creation",
-    icon: <Clapperboard className="w-6 h-6 text-white" />,
+    icon: <img src="/capcut-logo.webp" alt="CapCut Logo" className="w-10 h-10 rounded-xl object-cover" />,
     iconBg: "from-black to-[#111111]",
     iconGlow: "0 0 14px rgba(255,255,255,0.10)",
     accentBorder: "border-amber-500/25 hover:border-amber-400/50",
