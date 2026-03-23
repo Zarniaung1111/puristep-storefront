@@ -1683,7 +1683,7 @@ export default function Home() {
 
           {/* Gaming Coins */}
           <div
-            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-amber-500/40 hover:shadow-[0_0_60px_-15px_rgba(245,158,11,0.5),inset_0_0_80px_-40px_rgba(245,158,11,0.15)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             data-testid="category-card-gaming"
             onClick={() => handleCategoryClick("gaming")}
             style={{ '--glow-color': 'rgba(245,158,11,0.5)' } as React.CSSProperties}
@@ -1695,12 +1695,12 @@ export default function Home() {
             {/* Inner edge highlight */}
             <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-yellow-500 via-yellow-600 to-amber-700 shadow-xl shadow-amber-500/40 border border-amber-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(245,158,11,0.6)] group-hover:border-amber-300/50">
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-yellow-500 via-yellow-600 to-amber-700 shadow-xl shadow-amber-500/40 border border-amber-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
               <Gamepad2 className="w-7 h-7 text-white drop-shadow-md" />
             </div>
             <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-amber-100">Gaming</p>
             <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Diamonds & top-ups</p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-amber-500/20 group-hover:border-amber-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(245,158,11,0.4)]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-amber-500/20 group-hover:border-amber-400/50">
               <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
               <span className="text-amber-300 font-bold text-sm tracking-tight">3,500 KS</span>
             </div>
@@ -1708,7 +1708,7 @@ export default function Home() {
 
           {/* Education — last card spans full width */}
           <div
-            className="relative h-60 col-span-2 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.01] hover:border-sky-500/40 hover:shadow-[0_0_60px_-15px_rgba(14,165,233,0.5),inset_0_0_80px_-40px_rgba(14,165,233,0.15)]"
+            className="relative h-60 col-span-2 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             data-testid="category-card-education"
             onClick={() => handleCategoryClick("education")}
             style={{ '--glow-color': 'rgba(14,165,233,0.5)' } as React.CSSProperties}
@@ -1721,12 +1721,12 @@ export default function Home() {
             {/* Inner edge highlight */}
             <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-sky-500 via-sky-600 to-blue-700 shadow-xl shadow-sky-500/40 border border-sky-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(14,165,233,0.6)] group-hover:border-sky-300/50">
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-sky-500 via-sky-600 to-blue-700 shadow-xl shadow-sky-500/40 border border-sky-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
               <BookOpen className="w-7 h-7 text-white drop-shadow-md" />
             </div>
             <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-sky-100">Education</p>
             <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Courses & language learning</p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-sky-500/20 group-hover:border-sky-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(14,165,233,0.4)]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-sky-500/20 group-hover:border-sky-400/50">
               <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
               <span className="text-sky-300 font-bold text-sm tracking-tight">85,000 KS</span>
             </div>
