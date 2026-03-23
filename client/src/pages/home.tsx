@@ -1556,7 +1556,7 @@ export default function Home() {
 
           {/* AI Tools */}
           <div
-            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-purple-500/40 hover:shadow-[0_0_60px_-15px_rgba(168,85,247,0.5),inset_0_0_80px_-40px_rgba(168,85,247,0.15)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             onClick={() => handleCategoryClick("ai")}
             data-testid="category-card-ai"
             style={{ '--glow-color': 'rgba(168,85,247,0.5)' } as React.CSSProperties}
@@ -1569,13 +1569,13 @@ export default function Home() {
             <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
             {/* Icon box */}
-            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-purple-500 via-purple-600 to-violet-700 shadow-xl shadow-purple-500/40 border border-purple-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(168,85,247,0.6)] group-hover:border-purple-300/50">
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-purple-500 via-purple-600 to-violet-700 shadow-xl shadow-purple-500/40 border border-purple-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
               <Brain className="w-7 h-7 text-white drop-shadow-md" />
             </div>
             <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-purple-100">AI Tools</p>
             <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Creative & productivity tools</p>
             {/* Price pill */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-purple-500/20 group-hover:border-purple-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.4)]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-purple-500/20 group-hover:border-purple-400/50">
               <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
               <span className="text-purple-300 font-bold text-sm tracking-tight">19,000 KS</span>
             </div>
@@ -1583,7 +1583,7 @@ export default function Home() {
 
           {/* Editing Software */}
           <div
-            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-orange-500/40 hover:shadow-[0_0_60px_-15px_rgba(249,115,22,0.5),inset_0_0_80px_-40px_rgba(249,115,22,0.15)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             onClick={() => handleCategoryClick("editing")}
             data-testid="category-card-editing"
             style={{ '--glow-color': 'rgba(249,115,22,0.5)' } as React.CSSProperties}
@@ -1595,12 +1595,12 @@ export default function Home() {
             {/* Inner edge highlight */}
             <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-orange-500 via-orange-600 to-amber-700 shadow-xl shadow-orange-500/40 border border-orange-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(249,115,22,0.6)] group-hover:border-orange-300/50">
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-orange-500 via-orange-600 to-amber-700 shadow-xl shadow-orange-500/40 border border-orange-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
               <Clapperboard className="w-7 h-7 text-white drop-shadow-md" />
             </div>
             <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-orange-100">Editing Software</p>
             <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Professional video editing</p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-orange-500/20 group-hover:border-orange-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-orange-500/20 group-hover:border-orange-400/50">
               <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
               <span className="text-orange-300 font-bold text-sm tracking-tight">19,000 KS</span>
             </div>
@@ -1608,7 +1608,7 @@ export default function Home() {
 
           {/* Music & Streaming */}
           <div
-            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-pink-500/40 hover:shadow-[0_0_60px_-15px_rgba(236,72,153,0.5),inset_0_0_80px_-40px_rgba(236,72,153,0.15)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             onClick={() => handleCategoryClick("music")}
             data-testid="category-card-music"
             style={{ '--glow-color': 'rgba(236,72,153,0.5)' } as React.CSSProperties}
@@ -1620,12 +1620,12 @@ export default function Home() {
             {/* Inner edge highlight */}
             <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-pink-500 via-pink-600 to-rose-700 shadow-xl shadow-pink-500/40 border border-pink-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(236,72,153,0.6)] group-hover:border-pink-300/50">
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-pink-500 via-pink-600 to-rose-700 shadow-xl shadow-pink-500/40 border border-pink-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
               <Music2 className="w-7 h-7 text-white drop-shadow-md" />
             </div>
             <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-pink-100">Music & Streaming</p>
             <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Streaming & podcasts</p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/10 border border-pink-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-pink-500/20 group-hover:border-pink-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(236,72,153,0.4)]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/10 border border-pink-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-pink-500/20 group-hover:border-pink-400/50">
               <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
               <span className="text-pink-300 font-bold text-sm tracking-tight">8,000 KS</span>
             </div>
@@ -1633,7 +1633,7 @@ export default function Home() {
 
           {/* Telegram */}
           <div
-            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/40 hover:shadow-[0_0_60px_-15px_rgba(6,182,212,0.5),inset_0_0_80px_-40px_rgba(6,182,212,0.15)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             onClick={() => handleCategoryClick("telegram")}
             data-testid="category-card-telegram"
             style={{ '--glow-color': 'rgba(6,182,212,0.5)' } as React.CSSProperties}
@@ -1645,12 +1645,12 @@ export default function Home() {
             {/* Inner edge highlight */}
             <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-700 shadow-xl shadow-cyan-500/40 border border-cyan-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(6,182,212,0.6)] group-hover:border-cyan-300/50">
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-700 shadow-xl shadow-cyan-500/40 border border-cyan-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
               <Send className="w-7 h-7 text-white drop-shadow-md" />
             </div>
             <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-cyan-100">Telegram</p>
             <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Premium messaging</p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-cyan-500/20 group-hover:border-cyan-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(6,182,212,0.4)]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-cyan-500/20 group-hover:border-cyan-400/50">
               <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
               <span className="text-cyan-300 font-bold text-sm tracking-tight">24,000 KS</span>
             </div>
@@ -1658,7 +1658,7 @@ export default function Home() {
 
           {/* VPN */}
           <div
-            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-emerald-500/40 hover:shadow-[0_0_60px_-15px_rgba(16,185,129,0.5),inset_0_0_80px_-40px_rgba(16,185,129,0.15)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             onClick={() => handleCategoryClick("vpn")}
             data-testid="category-card-vpn"
             style={{ '--glow-color': 'rgba(16,185,129,0.5)' } as React.CSSProperties}
@@ -1670,12 +1670,12 @@ export default function Home() {
             {/* Inner edge highlight */}
             <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-teal-500 via-teal-600 to-emerald-700 shadow-xl shadow-emerald-500/40 border border-emerald-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(16,185,129,0.6)] group-hover:border-emerald-300/50">
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-teal-500 via-teal-600 to-emerald-700 shadow-xl shadow-emerald-500/40 border border-emerald-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
               <Shield className="w-7 h-7 text-white drop-shadow-md" />
             </div>
             <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-emerald-100">VPN</p>
             <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Privacy & security</p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-emerald-500/20 group-hover:border-emerald-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(16,185,129,0.4)]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-emerald-500/20 group-hover:border-emerald-400/50">
               <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
               <span className="text-emerald-300 font-bold text-sm tracking-tight">4,000 KS</span>
             </div>
