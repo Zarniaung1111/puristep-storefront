@@ -1427,10 +1427,9 @@ export default function Home() {
         {/* Primary aurora orbs */}
         <div className="aurora-orb w-[600px] h-[600px] bg-violet-600/20 -top-[15%] -left-[10%]" style={{ animationDelay: '0s' }} />
         <div className="aurora-orb w-[500px] h-[500px] bg-cyan-500/15 top-[20%] right-[5%]" style={{ animationDelay: '-5s' }} />
-        <div className="aurora-orb w-[400px] h-[400px] bg-fuchsia-600/12 bottom-[10%] left-[20%]" style={{ animationDelay: '-10s' }} />
+        <div className="aurora-orb w-[400px] h-[400px] bg-fuchsia-600/10 bottom-[10%] left-[20%]" style={{ animationDelay: '-10s' }} />
         <div className="aurora-orb w-[450px] h-[450px] bg-blue-600/10 top-[50%] -right-[5%]" style={{ animationDelay: '-15s' }} />
-        {/* Noise texture overlay for premium feel */}
-        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
+{/* Noise texture removed for compatibility */}
       </div>
 
       {/* Navbar */}
@@ -1438,7 +1437,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/40 border border-white/10">
-              <Sparkles className="w-4.5 h-4.5 text-white drop-shadow-sm" />
+              <Sparkles className="w-5 h-5 text-white drop-shadow-sm" />
             </div>
             <span className="font-bold text-lg tracking-tight">
               Puri<span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">Step</span>
@@ -2263,7 +2262,7 @@ export default function Home() {
 
               {/* Burmese instruction */}
               <p className="text-amber-400/80 text-xs leading-relaxed mb-6">
-                ကျေးဇူးပြု၍ မိမိ order id ကို Admin ထံသို့ပို့ပေးပြီး Subscription ကို ရယူနိုင်ပါပြီ
+                ကျေးဇူးပြ���၍ မိမိ order id ကို Admin ထံသို့ပို့ပေးပြီး Subscription ကို ရယူနိုင်ပါပြီ
               </p>
 
               {/* Chat options (revealed after clicking Get your order) */}
