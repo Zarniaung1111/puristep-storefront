@@ -460,12 +460,12 @@ const aiApps: AIApp[] = [
     accentBorder: "border-violet-500/25 hover:border-violet-400/50",
     accentGlow: "shadow-violet-500/10",
     neon: "text-violet-400",
-    startingFrom: "From 42,000 KS",
+    startingFrom: "From 32,000 KS",
     plans: [
       {
         id: "kling-standard",
         name: "Kling AI Standard",
-        price: "42,000 KS",
+        price: "32,000 KS",
         period: "Monthly",
         features: [
           "1000 fast-generation credits per month",
@@ -652,7 +652,7 @@ const musicApps: AIApp[] = [
 const editingApps: AIApp[] = [
   {
     id: "capcut",
-    name: "CapCut",
+    name: "CapCut Pro",
     tagline: "Professional video editing & creation",
     icon: <img src="/capcut-logo.webp" alt="CapCut Logo" className="w-10 h-10 rounded-xl object-cover" />,
     iconBg: "from-black to-[#111111]",
@@ -679,10 +679,10 @@ const editingApps: AIApp[] = [
       {
         id: "capcut-pro-6month",
         name: "Pro 6 Months",
-        price: "42,000 KS",
+        price: "55,000 KS",
         period: "6 Months",
         features: [
-          "Save 72,000 MMK compared to monthly",
+          "Save 59,000 MMK compared to monthly",
           "All Pro Monthly perks",
           "Uninterrupted editing",
           "Priority rendering speed",
@@ -693,10 +693,10 @@ const editingApps: AIApp[] = [
       {
         id: "capcut-pro-annual",
         name: "Pro Annual",
-        price: "71,000 KS",
+        price: "91,000 KS",
         period: "1 Year",
         features: [
-          "Massive savings (pay for 4 months, get 12)",
+          "Massive savings (pay for ~5 months, get 12)",
           "Everything in 6-Month plan",
           "Seamless workflow for heavy projects",
           "Always up-to-date AI features",
@@ -933,7 +933,7 @@ const products: Product[] = [
     categoryId: "ai",
     serviceName: "Kling AI",
     planName: "Standard",
-    price: "42,000 KS",
+    price: "32,000 KS",
     duration: "1 Month",
     features: [
       "1000 fast-generation credits per month",
@@ -1042,34 +1042,20 @@ const educationApps: AIApp[] = [
     accentBorder: "border-blue-500/25 hover:border-blue-400/50",
     accentGlow: "shadow-blue-500/10",
     neon: "text-blue-400",
-    startingFrom: "From 15,000 KS",
+    startingFrom: "From 85,000 KS",
     plans: [
       {
-        id: "coursera-monthly",
-        name: "Monthly",
-        price: "15,000 KS",
-        period: "Monthly",
-        features: [
-          "Access to 7,000+ courses",
-          "Earn unlimited certificates",
-          "Professional certs from Google/IBM",
-          "Learn at your own pace",
-        ],
-      },
-      {
         id: "coursera-annual",
-        name: "Annual",
-        price: "120,000 KS",
-        period: "Yearly",
+        name: "1 Year",
+        price: "85,000 KS",
+        period: "1 Year",
         features: [
-          "Access to 7,000+ courses",
-          "Earn unlimited certificates",
-          "Professional certs from Google/IBM",
-          "Learn at your own pace",
-          "Best value for long-term learners",
+          "Unlimited access to 7,000+ courses",
+          "Earn unlimited professional certificates",
+          "Professional certs from Google, IBM & Meta",
+          "Learn at your own pace, any device",
+          "Full year of uninterrupted learning",
         ],
-        badge: "Best Value",
-        badgeStyle: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
       },
     ],
   },
@@ -1124,13 +1110,13 @@ const educationApps: AIApp[] = [
     accentBorder: "border-lime-500/25 hover:border-lime-400/50",
     accentGlow: "shadow-lime-500/10",
     neon: "text-lime-400",
-    startingFrom: "From 5,000 KS",
+    startingFrom: "From 40,000 KS",
     plans: [
       {
-        id: "duolingo-monthly",
-        name: "Monthly",
-        price: "5,000 KS",
-        period: "Monthly",
+        id: "duolingo-6month",
+        name: "6 Months",
+        price: "40,000 KS",
+        period: "6 Months",
         features: [
           "Unlimited Hearts (no waiting)",
           "Ad-free learning",
@@ -1141,8 +1127,8 @@ const educationApps: AIApp[] = [
       {
         id: "duolingo-annual",
         name: "Annual",
-        price: "45,000 KS",
-        period: "Yearly",
+        price: "75,000 KS",
+        period: "1 Year",
         features: [
           "Unlimited Hearts (no waiting)",
           "Ad-free learning",
@@ -1272,7 +1258,7 @@ export default function Home() {
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
   const [productModalApp, setProductModalApp] = useState<AIApp | null>(null);
-  const [productModalCategoryId, setProductModalCategoryId] = useState<string>("ai");
+  const [productModalCategoryId, setProductModalCategoryId] = useState<CategoryId>("ai");
   const [productModalOpen, setProductModalOpen] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
   const [mlbbUserId, setMlbbUserId] = useState("");
@@ -1340,7 +1326,7 @@ export default function Home() {
     setMlbbServerId("");
   };
 
-  const openProductModal = (app: AIApp, categoryId: string) => {
+  const openProductModal = (app: AIApp, categoryId: CategoryId) => {
     setProductModalApp(app);
     setProductModalCategoryId(categoryId);
     setProductModalOpen(true);
@@ -1433,10 +1419,16 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#05050f] text-white pt-16 w-full max-w-[100vw] overflow-x-hidden">
+    <div className="min-h-screen bg-[#09090E] text-white pt-16 w-full max-w-[100vw] overflow-x-hidden">
+
+      {/* Aurora / Mesh Gradient Background */}
+      <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-purple-600/10 blur-[120px]"></div>
+        <div className="absolute top-[60%] -right-[10%] w-[50%] h-[50%] rounded-full bg-blue-600/10 blur-[120px]"></div>
+      </div>
 
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#05050f]/85 backdrop-blur-xl border-b border-white/[0.06]" style={{ boxShadow: "0 1px 0 0 rgba(139,92,246,0.08), 0 4px 24px 0 rgba(0,0,0,0.4)" }}>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#09090E]/85 backdrop-blur-xl border-b border-white/[0.06]" style={{ boxShadow: "0 1px 0 0 rgba(139,92,246,0.08), 0 4px 24px 0 rgba(0,0,0,0.4)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
@@ -1547,124 +1539,151 @@ export default function Home() {
         <p className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Browse by Category</p>
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">What are you looking for?</h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 w-full">
+        <div 
+          className="grid grid-cols-2 gap-5 max-w-3xl mx-auto w-full"
+          style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
+        >
 
           {/* AI Tools */}
           <div
-            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors"
+            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(168,85,247,0.25)]"
             onClick={() => handleCategoryClick("ai")}
             data-testid="category-card-ai"
           >
-            <div className="w-12 h-12 rounded-2xl bg-purple-600 flex items-center justify-center mb-4">
-              <Brain className="w-6 h-6 text-white" />
+            {/* Ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-transparent to-violet-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-56 h-56 bg-purple-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            
+            {/* Icon box */}
+            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-600 shadow-lg shadow-purple-500/30 border border-purple-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
+              <Brain className="w-6 h-6 text-white drop-shadow-sm" />
             </div>
-            <p className="text-sm font-bold text-white mb-1">AI Tools</p>
-            <p className="text-xs text-gray-500 mb-auto pb-4">AI-powered creative & productivity tools</p>
-            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
-              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Starting From</span>
-              <span className="text-xs font-bold text-purple-400 mt-0.5">6,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">AI Tools</p>
+            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Creative & productivity tools</p>
+            {/* Price pill */}
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 z-10">
+              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
+              <span className="text-purple-400 font-bold text-xs tracking-tight">19,000 KS</span>
             </div>
           </div>
 
           {/* Editing Software */}
           <div
-            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors"
+            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(249,115,22,0.25)]"
             onClick={() => handleCategoryClick("editing")}
             data-testid="category-card-editing"
           >
-            <div className="w-12 h-12 rounded-2xl bg-orange-500 flex items-center justify-center mb-4">
-              <Clapperboard className="w-6 h-6 text-white" />
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-600/10 via-transparent to-amber-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-56 h-56 bg-orange-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            
+            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-lg shadow-orange-500/30 border border-orange-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
+              <Clapperboard className="w-6 h-6 text-white drop-shadow-sm" />
             </div>
-            <p className="text-sm font-bold text-white mb-1">Editing Software</p>
-            <p className="text-xs text-gray-500 mb-auto pb-4">Professional video editing & creation</p>
-            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
-              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Starting From</span>
-              <span className="text-xs font-bold text-orange-400 mt-0.5">19,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Editing Software</p>
+            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Professional video editing</p>
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 z-10">
+              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
+              <span className="text-orange-400 font-bold text-xs tracking-tight">19,000 KS</span>
             </div>
           </div>
 
           {/* Music & Streaming */}
           <div
-            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors"
+            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(236,72,153,0.25)]"
             onClick={() => handleCategoryClick("music")}
             data-testid="category-card-music"
           >
-            <div className="w-12 h-12 rounded-2xl bg-pink-600 flex items-center justify-center mb-4">
-              <Music2 className="w-6 h-6 text-white" />
+            <div className="absolute inset-0 bg-gradient-to-br from-pink-600/10 via-transparent to-rose-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-56 h-56 bg-pink-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            
+            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 shadow-lg shadow-pink-500/30 border border-pink-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
+              <Music2 className="w-6 h-6 text-white drop-shadow-sm" />
             </div>
-            <p className="text-sm font-bold text-white mb-1">Music & Streaming</p>
-            <p className="text-xs text-gray-500 mb-auto pb-4">Streaming music, video & entertainment</p>
-            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
-              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Starting From</span>
-              <span className="text-xs font-bold text-pink-400 mt-0.5">2,500 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Music & Streaming</p>
+            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Streaming & podcasts</p>
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/20 z-10">
+              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
+              <span className="text-pink-400 font-bold text-xs tracking-tight">8,000 KS</span>
             </div>
           </div>
 
           {/* Telegram */}
           <div
-            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors"
+            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(59,130,246,0.25)]"
             onClick={() => handleCategoryClick("telegram")}
             data-testid="category-card-telegram"
           >
-            <div className="w-12 h-12 rounded-2xl bg-blue-500 flex items-center justify-center mb-4">
-              <Send className="w-6 h-6 text-white" />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-cyan-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-56 h-56 bg-blue-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            
+            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 shadow-lg shadow-blue-500/30 border border-blue-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
+              <Send className="w-6 h-6 text-white drop-shadow-sm" />
             </div>
-            <p className="text-sm font-bold text-white mb-1">Telegram</p>
-            <p className="text-xs text-gray-500 mb-auto pb-4">Telegram Premium subscriptions</p>
-            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
-              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Pricing</span>
-              <span className="text-xs font-bold text-blue-400 mt-0.5">Coming Soon</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Telegram</p>
+            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Premium messaging</p>
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 z-10">
+              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
+              <span className="text-blue-400 font-bold text-xs tracking-tight">24,000 KS</span>
             </div>
           </div>
 
           {/* VPN */}
           <div
-            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] transition-colors"
+            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(20,184,166,0.25)]"
             onClick={() => handleCategoryClick("vpn")}
             data-testid="category-card-vpn"
           >
-            <div className="w-12 h-12 rounded-2xl bg-teal-500 flex items-center justify-center mb-4">
-              <Shield className="w-6 h-6 text-white" />
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-600/10 via-transparent to-emerald-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-56 h-56 bg-teal-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            
+            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-600 shadow-lg shadow-teal-500/30 border border-teal-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
+              <Shield className="w-6 h-6 text-white drop-shadow-sm" />
             </div>
-            <p className="text-sm font-bold text-white mb-1">VPN</p>
-            <p className="text-xs text-gray-500 mb-auto pb-4">Secure browsing & online privacy</p>
-            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
-              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Pricing</span>
-              <span className="text-xs font-bold text-teal-400 mt-0.5">Coming Soon</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">VPN</p>
+            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Privacy & security</p>
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 z-10">
+              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
+              <span className="text-teal-400 font-bold text-xs tracking-tight">4,000 KS</span>
             </div>
           </div>
 
           {/* Gaming Coins */}
           <div
-            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] hover:border-yellow-500/30 transition-colors"
+            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(234,179,8,0.25)]"
             data-testid="category-card-gaming"
             onClick={() => handleCategoryClick("gaming")}
           >
-            <div className="w-12 h-12 rounded-2xl bg-yellow-500 flex items-center justify-center mb-4">
-              <Gamepad2 className="w-6 h-6 text-white" />
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-600/10 via-transparent to-amber-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-56 h-56 bg-yellow-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            
+            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-600 shadow-lg shadow-yellow-500/30 border border-yellow-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
+              <Gamepad2 className="w-6 h-6 text-white drop-shadow-sm" />
             </div>
-            <p className="text-sm font-bold text-white mb-1">Gaming Coins</p>
-            <p className="text-xs text-gray-500 mb-auto pb-4">In-game currency and top-ups</p>
-            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
-              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Starting From</span>
-              <span className="text-xs font-bold text-yellow-400 mt-0.5">3,500 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Gaming</p>
+            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Diamonds & top-ups</p>
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 z-10">
+              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
+              <span className="text-yellow-400 font-bold text-xs tracking-tight">3,500 KS</span>
             </div>
           </div>
 
-          {/* Education */}
+          {/* Education — last card spans full width */}
           <div
-            className="bg-[#121212] border border-white/5 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white/[0.04] hover:border-sky-500/30 transition-colors"
+            className="relative h-56 last:col-span-2 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(14,165,233,0.25)]"
             data-testid="category-card-education"
             onClick={() => handleCategoryClick("education")}
           >
-            <div className="w-12 h-12 rounded-2xl bg-sky-500 flex items-center justify-center mb-4">
-              <BookOpen className="w-6 h-6 text-white" />
+            <div className="absolute inset-0 bg-gradient-to-br from-sky-600/10 via-transparent to-blue-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-56 h-56 bg-sky-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            
+            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 shadow-lg shadow-sky-500/30 border border-sky-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
+              <BookOpen className="w-6 h-6 text-white drop-shadow-sm" />
             </div>
-            <p className="text-sm font-bold text-white mb-1">Education</p>
-            <p className="text-xs text-gray-500 mb-auto pb-4">Language learning and online courses</p>
-            <div className="w-full bg-white/5 rounded-xl py-2 flex flex-col items-center mt-auto">
-              <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Starting From</span>
-              <span className="text-xs font-bold text-sky-400 mt-0.5">5,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Education</p>
+            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Courses & language learning</p>
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 z-10">
+              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
+              <span className="text-sky-400 font-bold text-xs tracking-tight">85,000 KS</span>
             </div>
           </div>
 

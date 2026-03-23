@@ -81,8 +81,10 @@ app.use((req, res, next) => {
   if (process.env.NODE_ENV === "production") {
     serveStatic(app);
   } else {
+    console.log("Starting Vite setup...");
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
+    console.log("Vite setup complete!");
   }
 
   // ALWAYS serve the app on the port specified in the environment variable PORT
@@ -94,7 +96,6 @@ app.use((req, res, next) => {
     {
       port,
       host: "0.0.0.0",
-      reusePort: true,
     },
     () => {
       log(`serving on port ${port}`);
