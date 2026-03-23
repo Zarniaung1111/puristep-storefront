@@ -1419,23 +1419,29 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090E] text-white pt-16 w-full max-w-[100vw] overflow-x-hidden">
+    <div className="min-h-screen bg-[#030306] text-white pt-16 w-full max-w-[100vw] overflow-x-hidden">
 
-      {/* Aurora / Mesh Gradient Background */}
+      {/* Ultra-Premium Aurora Mesh Gradient Background */}
+      <div className="aurora-bg" />
       <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-        <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-purple-600/10 blur-[120px]"></div>
-        <div className="absolute top-[60%] -right-[10%] w-[50%] h-[50%] rounded-full bg-blue-600/10 blur-[120px]"></div>
+        {/* Primary aurora orbs */}
+        <div className="aurora-orb w-[600px] h-[600px] bg-violet-600/20 -top-[15%] -left-[10%]" style={{ animationDelay: '0s' }} />
+        <div className="aurora-orb w-[500px] h-[500px] bg-cyan-500/15 top-[20%] right-[5%]" style={{ animationDelay: '-5s' }} />
+        <div className="aurora-orb w-[400px] h-[400px] bg-fuchsia-600/12 bottom-[10%] left-[20%]" style={{ animationDelay: '-10s' }} />
+        <div className="aurora-orb w-[450px] h-[450px] bg-blue-600/10 top-[50%] -right-[5%]" style={{ animationDelay: '-15s' }} />
+        {/* Noise texture overlay for premium feel */}
+        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
       </div>
 
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#09090E]/85 backdrop-blur-xl border-b border-white/[0.06]" style={{ boxShadow: "0 1px 0 0 rgba(139,92,246,0.08), 0 4px 24px 0 rgba(0,0,0,0.4)" }}>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#030306]/80 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/[0.06]" style={{ boxShadow: "0 1px 0 0 rgba(139,92,246,0.12), 0 4px 32px 0 rgba(0,0,0,0.6), inset 0 -1px 0 0 rgba(255,255,255,0.03)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
-              <Sparkles className="w-4 h-4 text-white" />
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/40 border border-white/10">
+              <Sparkles className="w-4.5 h-4.5 text-white drop-shadow-sm" />
             </div>
-            <span className="font-bold text-base tracking-tight">
-              Puri<span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Step</span>
+            <span className="font-bold text-lg tracking-tight">
+              Puri<span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">Step</span>
             </span>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
@@ -1445,12 +1451,13 @@ export default function Home() {
       </nav>
 
       {/* ── Premium Hero Section ── */}
-      <section className="relative overflow-hidden flex flex-col items-center text-center pt-4 pb-6 px-4 w-full bg-gradient-to-b from-purple-900/20 via-[#0B0C10] to-[#0B0C10]">
+      <section className="relative overflow-hidden flex flex-col items-center text-center pt-4 pb-6 px-4 w-full bg-gradient-to-b from-violet-950/30 via-[#030306] to-[#030306]">
 
         {/* Background nebula orbs */}
         <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none -z-10">
-          <div className="absolute w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-purple-600/30 rounded-full blur-[100px] md:blur-[120px] top-[-10%] opacity-70" />
-          <div className="absolute w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-cyan-600/20 rounded-full blur-[90px] md:blur-[100px] top-[10%] left-[20%] opacity-60" />
+          <div className="absolute w-[350px] md:w-[700px] h-[350px] md:h-[700px] bg-violet-600/25 rounded-full blur-[100px] md:blur-[150px] top-[-15%] opacity-60" />
+          <div className="absolute w-[280px] md:w-[500px] h-[280px] md:h-[500px] bg-cyan-600/15 rounded-full blur-[90px] md:blur-[120px] top-[5%] left-[15%] opacity-50" />
+          <div className="absolute w-[200px] md:w-[350px] h-[200px] md:h-[350px] bg-fuchsia-600/10 rounded-full blur-[80px] md:blur-[100px] top-[20%] right-[10%] opacity-40" />
         </div>
 
         {/* ① 3D Orbit Carousel */}
@@ -1502,10 +1509,10 @@ export default function Home() {
       </section>
 
       {/* ── Recent Purchases Marquee ── */}
-      <div className="w-full overflow-hidden border-y border-white/[0.05] bg-[#07070e]/80 py-2.5 flex items-stretch">
+      <div className="w-full overflow-hidden border-y border-white/[0.06] bg-[#030306]/90 backdrop-blur-xl py-3 flex items-stretch" style={{ boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.02), inset 0 -1px 0 0 rgba(255,255,255,0.02)" }}>
         {/* Label */}
-        <div className="flex-shrink-0 flex items-center px-4 border-r border-white/[0.07] mr-4">
-          <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/20 whitespace-nowrap">Recent Purchases</span>
+        <div className="flex-shrink-0 flex items-center px-5 border-r border-white/[0.08] mr-5">
+          <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-violet-400/50 whitespace-nowrap">Recent Purchases</span>
         </div>
         {/* Scrolling strip */}
         <div className="flex-1 overflow-hidden relative">
@@ -1535,155 +1542,193 @@ export default function Home() {
       </div>
 
       {/* ── Browse by Category ── */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center">
-        <p className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Browse by Category</p>
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">What are you looking for?</h2>
+      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col items-center">
+        {/* Section ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-violet-600/5 rounded-full blur-[100px] pointer-events-none" />
+        
+        <p className="text-[10px] md:text-xs font-semibold text-violet-400/60 uppercase tracking-[0.25em] mb-3">Browse by Category</p>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-10 bg-gradient-to-r from-white via-white to-white/70 bg-clip-text">What are you looking for?</h2>
 
         <div 
-          className="grid grid-cols-2 gap-5 max-w-3xl mx-auto w-full"
+          className="grid grid-cols-2 gap-5 md:gap-6 max-w-4xl mx-auto w-full relative z-10"
           style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
         >
 
           {/* AI Tools */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(168,85,247,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-purple-500/40 hover:shadow-[0_0_60px_-15px_rgba(168,85,247,0.5),inset_0_0_80px_-40px_rgba(168,85,247,0.15)]"
             onClick={() => handleCategoryClick("ai")}
             data-testid="category-card-ai"
+            style={{ '--glow-color': 'rgba(168,85,247,0.5)' } as React.CSSProperties}
           >
-            {/* Ambient glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-transparent to-violet-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-purple-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-600/15 via-transparent to-violet-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
             {/* Icon box */}
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-600 shadow-lg shadow-purple-500/30 border border-purple-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Brain className="w-6 h-6 text-white drop-shadow-sm" />
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-purple-500 via-purple-600 to-violet-700 shadow-xl shadow-purple-500/40 border border-purple-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(168,85,247,0.6)] group-hover:border-purple-300/50">
+              <Brain className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">AI Tools</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Creative & productivity tools</p>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-purple-100">AI Tools</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Creative & productivity tools</p>
             {/* Price pill */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-purple-400 font-bold text-xs tracking-tight">19,000 KS</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-purple-500/20 group-hover:border-purple-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.4)]">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-purple-300 font-bold text-sm tracking-tight">19,000 KS</span>
             </div>
           </div>
 
           {/* Editing Software */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(249,115,22,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-orange-500/40 hover:shadow-[0_0_60px_-15px_rgba(249,115,22,0.5),inset_0_0_80px_-40px_rgba(249,115,22,0.15)]"
             onClick={() => handleCategoryClick("editing")}
             data-testid="category-card-editing"
+            style={{ '--glow-color': 'rgba(249,115,22,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-600/10 via-transparent to-amber-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-orange-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-600/15 via-transparent to-amber-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-orange-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-orange-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-lg shadow-orange-500/30 border border-orange-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Clapperboard className="w-6 h-6 text-white drop-shadow-sm" />
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-orange-500 via-orange-600 to-amber-700 shadow-xl shadow-orange-500/40 border border-orange-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(249,115,22,0.6)] group-hover:border-orange-300/50">
+              <Clapperboard className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Editing Software</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Professional video editing</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-orange-400 font-bold text-xs tracking-tight">19,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-orange-100">Editing Software</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Professional video editing</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-orange-500/20 group-hover:border-orange-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-orange-300 font-bold text-sm tracking-tight">19,000 KS</span>
             </div>
           </div>
 
           {/* Music & Streaming */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(236,72,153,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-pink-500/40 hover:shadow-[0_0_60px_-15px_rgba(236,72,153,0.5),inset_0_0_80px_-40px_rgba(236,72,153,0.15)]"
             onClick={() => handleCategoryClick("music")}
             data-testid="category-card-music"
+            style={{ '--glow-color': 'rgba(236,72,153,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-pink-600/10 via-transparent to-rose-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-pink-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-pink-600/15 via-transparent to-rose-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-pink-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-pink-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 shadow-lg shadow-pink-500/30 border border-pink-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Music2 className="w-6 h-6 text-white drop-shadow-sm" />
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-pink-500 via-pink-600 to-rose-700 shadow-xl shadow-pink-500/40 border border-pink-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(236,72,153,0.6)] group-hover:border-pink-300/50">
+              <Music2 className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Music & Streaming</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Streaming & podcasts</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-pink-400 font-bold text-xs tracking-tight">8,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-pink-100">Music & Streaming</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Streaming & podcasts</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/10 border border-pink-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-pink-500/20 group-hover:border-pink-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(236,72,153,0.4)]">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-pink-300 font-bold text-sm tracking-tight">8,000 KS</span>
             </div>
           </div>
 
           {/* Telegram */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(59,130,246,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/40 hover:shadow-[0_0_60px_-15px_rgba(6,182,212,0.5),inset_0_0_80px_-40px_rgba(6,182,212,0.15)]"
             onClick={() => handleCategoryClick("telegram")}
             data-testid="category-card-telegram"
+            style={{ '--glow-color': 'rgba(6,182,212,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-cyan-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-blue-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-transparent to-cyan-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-cyan-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 shadow-lg shadow-blue-500/30 border border-blue-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Send className="w-6 h-6 text-white drop-shadow-sm" />
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-700 shadow-xl shadow-cyan-500/40 border border-cyan-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(6,182,212,0.6)] group-hover:border-cyan-300/50">
+              <Send className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Telegram</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Premium messaging</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-blue-400 font-bold text-xs tracking-tight">24,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-cyan-100">Telegram</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Premium messaging</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-cyan-500/20 group-hover:border-cyan-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(6,182,212,0.4)]">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-cyan-300 font-bold text-sm tracking-tight">24,000 KS</span>
             </div>
           </div>
 
           {/* VPN */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(20,184,166,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-emerald-500/40 hover:shadow-[0_0_60px_-15px_rgba(16,185,129,0.5),inset_0_0_80px_-40px_rgba(16,185,129,0.15)]"
             onClick={() => handleCategoryClick("vpn")}
             data-testid="category-card-vpn"
+            style={{ '--glow-color': 'rgba(16,185,129,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-teal-600/10 via-transparent to-emerald-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-teal-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-600/15 via-transparent to-emerald-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-emerald-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-600 shadow-lg shadow-teal-500/30 border border-teal-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Shield className="w-6 h-6 text-white drop-shadow-sm" />
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-teal-500 via-teal-600 to-emerald-700 shadow-xl shadow-emerald-500/40 border border-emerald-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(16,185,129,0.6)] group-hover:border-emerald-300/50">
+              <Shield className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">VPN</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Privacy & security</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-teal-400 font-bold text-xs tracking-tight">4,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-emerald-100">VPN</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Privacy & security</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-emerald-500/20 group-hover:border-emerald-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(16,185,129,0.4)]">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-emerald-300 font-bold text-sm tracking-tight">4,000 KS</span>
             </div>
           </div>
 
           {/* Gaming Coins */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(234,179,8,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-amber-500/40 hover:shadow-[0_0_60px_-15px_rgba(245,158,11,0.5),inset_0_0_80px_-40px_rgba(245,158,11,0.15)]"
             data-testid="category-card-gaming"
             onClick={() => handleCategoryClick("gaming")}
+            style={{ '--glow-color': 'rgba(245,158,11,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-yellow-600/10 via-transparent to-amber-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-yellow-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-600/15 via-transparent to-amber-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-amber-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-amber-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-600 shadow-lg shadow-yellow-500/30 border border-yellow-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Gamepad2 className="w-6 h-6 text-white drop-shadow-sm" />
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-yellow-500 via-yellow-600 to-amber-700 shadow-xl shadow-amber-500/40 border border-amber-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(245,158,11,0.6)] group-hover:border-amber-300/50">
+              <Gamepad2 className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Gaming</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Diamonds & top-ups</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-yellow-400 font-bold text-xs tracking-tight">3,500 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-amber-100">Gaming</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Diamonds & top-ups</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-amber-500/20 group-hover:border-amber-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(245,158,11,0.4)]">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-amber-300 font-bold text-sm tracking-tight">3,500 KS</span>
             </div>
           </div>
 
           {/* Education — last card spans full width */}
           <div
-            className="relative h-56 last:col-span-2 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(14,165,233,0.25)]"
+            className="relative h-60 col-span-2 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.01] hover:border-sky-500/40 hover:shadow-[0_0_60px_-15px_rgba(14,165,233,0.5),inset_0_0_80px_-40px_rgba(14,165,233,0.15)]"
             data-testid="category-card-education"
             onClick={() => handleCategoryClick("education")}
+            style={{ '--glow-color': 'rgba(14,165,233,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-sky-600/10 via-transparent to-blue-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-sky-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-sky-600/15 via-transparent to-blue-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-sky-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-sky-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 shadow-lg shadow-sky-500/30 border border-sky-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <BookOpen className="w-6 h-6 text-white drop-shadow-sm" />
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-sky-500 via-sky-600 to-blue-700 shadow-xl shadow-sky-500/40 border border-sky-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_40px_-5px_rgba(14,165,233,0.6)] group-hover:border-sky-300/50">
+              <BookOpen className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Education</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Courses & language learning</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-sky-400 font-bold text-xs tracking-tight">85,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-sky-100">Education</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Courses & language learning</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-sky-500/20 group-hover:border-sky-400/50 group-hover:shadow-[0_0_20px_-5px_rgba(14,165,233,0.4)]">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-sky-300 font-bold text-sm tracking-tight">85,000 KS</span>
             </div>
           </div>
 
@@ -1691,12 +1736,12 @@ export default function Home() {
       </section>
 
       {/* Category Filter Bar */}
-      <section className="sticky top-16 z-40 bg-[#080810]/90 backdrop-blur-xl border-b border-white/5 py-3 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto space-y-3">
+      <section className="sticky top-16 z-40 bg-[#030306]/85 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/[0.06] py-4 px-4 sm:px-6" style={{ boxShadow: "0 4px 24px -4px rgba(0,0,0,0.5), inset 0 -1px 0 0 rgba(255,255,255,0.02)" }}>
+        <div className="max-w-7xl mx-auto space-y-4">
 
           {/* Search Bar */}
           <div
-            className="flex items-center gap-3 w-full max-w-2xl mx-auto bg-white/5 backdrop-blur-md border border-white/10 rounded-full py-3 px-5 transition-all duration-200 focus-within:border-white/30 focus-within:ring-1 focus-within:ring-white/10 focus-within:shadow-[0_0_18px_0_rgba(139,92,246,0.15)]"
+            className="flex items-center gap-3 w-full max-w-2xl mx-auto glass-card-premium rounded-2xl py-3.5 px-5 transition-all duration-300 focus-within:border-violet-500/40 focus-within:shadow-[0_0_30px_-5px_rgba(139,92,246,0.3),inset_0_0_20px_-10px_rgba(139,92,246,0.1)]"
             data-testid="search-bar-container"
           >
             <Search className="w-4 h-4 text-white/30 flex-shrink-0" />
@@ -1742,7 +1787,7 @@ export default function Home() {
       </section>
 
       {/* Products Section */}
-      <section ref={productsRef} className="py-6 pb-12 px-4 sm:px-6 lg:px-8 scroll-mt-48">
+      <section ref={productsRef} className="relative py-10 pb-16 px-4 sm:px-6 lg:px-8 scroll-mt-48">
         <div className="max-w-7xl mx-auto">
 
           {/* Trending Packs header — shown in All view only */}
@@ -1893,14 +1938,17 @@ export default function Home() {
       </section>
 
       {/* Payment Details */}
-      <section id="payment-section" className="py-16 px-4 sm:px-6 bg-white/[0.02] border-y border-white/[0.06]">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl font-bold mb-2">Payment Details</h2>
-          <p className="text-white/40 text-sm mb-8">Transfer to one of these accounts, then submit your order</p>
+      <section id="payment-section" className="relative py-20 px-4 sm:px-6 border-y border-white/[0.06] overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(3,3,6,0.8) 0%, rgba(5,5,10,0.9) 50%, rgba(3,3,6,0.8) 100%)" }}>
+        {/* Ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-violet-600/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <p className="text-[10px] font-semibold text-violet-400/50 uppercase tracking-[0.25em] mb-2">Secure Transactions</p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">Payment Details</h2>
+          <p className="text-white/40 text-sm mb-10">Transfer to one of these accounts, then submit your order</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
             {/* KBZPay */}
-            <div className="bg-red-950/20 border border-red-800/30 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-kbzpay">
+            <div className="glass-card-premium rounded-3xl p-6 text-left transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:border-red-500/30 hover:shadow-[0_0_40px_-10px_rgba(239,68,68,0.3)]" data-testid="payment-kbzpay">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center">
                   <span className="text-white text-xs font-bold">K</span>
@@ -1928,7 +1976,7 @@ export default function Home() {
             </div>
 
             {/* WavePay */}
-            <div className="bg-blue-950/20 border border-blue-800/30 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-wavepay">
+            <div className="glass-card-premium rounded-3xl p-6 text-left transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:border-blue-500/30 hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.3)]" data-testid="payment-wavepay">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
                   <span className="text-white text-xs font-bold">W</span>
@@ -1956,7 +2004,7 @@ export default function Home() {
             </div>
 
             {/* UABPay */}
-            <div className="bg-teal-950/20 border border-teal-500/30 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-uabpay">
+            <div className="glass-card-premium rounded-3xl p-6 text-left transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:border-teal-500/30 hover:shadow-[0_0_40px_-10px_rgba(20,184,166,0.3)]" data-testid="payment-uabpay">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-teal-600 flex items-center justify-center">
                   <span className="text-white text-xs font-bold">U</span>
@@ -1984,7 +2032,7 @@ export default function Home() {
             </div>
 
             {/* Binance */}
-            <div className="bg-[#FCD535]/5 border border-[#FCD535]/25 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-binance">
+            <div className="glass-card-premium rounded-3xl p-6 text-left transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:border-amber-500/30 hover:shadow-[0_0_40px_-10px_rgba(252,213,53,0.3)]" data-testid="payment-binance">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-[#FCD535] flex items-center justify-center">
                   <SiBinance className="w-4 h-4 text-[#1E1E2E]" />
