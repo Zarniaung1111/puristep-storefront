@@ -3,73 +3,12 @@ import { createServer, type Server } from "http";
 import multer from "multer";
 import { storage } from "./storage";
 import { z } from "zod";
+import { sendOrderNotification } from "./lib/telegram";
 
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 6 * 1024 * 1024 },
 });
-
-async function sendTelegramNotification(
-  body: Record<string, string>,
-  file?: Express.Multer.File
-) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-
-  if (!token || !chatId) {
-    console.warn("Telegram env vars not set — skipping notification");
-    return;
-  }
-
-  const lines = [
-    `🚨 <b>NEW ORDER: ${body.orderId || "N/A"}</b>`,
-    "",
-    `📦 <b>Product:</b> ${[body.productName, body.planName].filter(Boolean).join(" ")}`,
-    `💰 <b>Price:</b> ${body.price || "—"}`,
-    `📱 <b>Contact:</b> ${body.contactPlatform || "—"} → @${body.contactUsername || "—"}`,
-    `💳 <b>Payment:</b> ${body.paymentMethod || "—"}`,
-  ];
-
-  if (body.mlbbUserId) {
-    lines.push(`🎮 <b>MLBB User ID:</b> ${body.mlbbUserId}`);
-    lines.push(`🌐 <b>MLBB Server ID:</b> ${body.mlbbServerId || "—"}`);
-  }
-
-  const caption = lines.join("\n");
-
-  if (file) {
-    const blob = new Blob([file.buffer], { type: file.mimetype || "image/jpeg" });
-    const form = new FormData();
-    form.append("chat_id", chatId);
-    form.append("photo", blob, file.originalname || "payment_screenshot.jpg");
-    form.append("caption", caption);
-    form.append("parse_mode", "HTML");
-
-    const response = await fetch(
-      `https://api.telegram.org/bot${token}/sendPhoto`,
-      { method: "POST", body: form }
-    );
-
-    if (!response.ok) {
-      const err = await response.text();
-      throw new Error(`Telegram sendPhoto failed: ${err}`);
-    }
-  } else {
-    const response = await fetch(
-      `https://api.telegram.org/bot${token}/sendMessage`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: chatId, text: caption, parse_mode: "HTML" }),
-      }
-    );
-
-    if (!response.ok) {
-      const err = await response.text();
-      throw new Error(`Telegram sendMessage failed: ${err}`);
-    }
-  }
-}
 
 const checkoutBodySchema = z.object({
   orderId: z.string().optional(),
@@ -78,6 +17,7 @@ const checkoutBodySchema = z.object({
   price: z.string().min(1),
   contactPlatform: z.string().min(1),
   contactUsername: z.string().min(1),
+  clientEmail: z.string().email().optional(),
   paymentMethod: z.string().min(1),
   mlbbUserId: z.string().optional(),
   mlbbServerId: z.string().optional(),
@@ -92,6 +32,13 @@ export async function registerRoutes(
     try {
       const parsed = checkoutBodySchema.parse(req.body);
 
+      // Convert uploaded screenshot to base64 data URI if present
+      let screenshotData: string | null = null;
+      if (req.file) {
+        const base64 = req.file.buffer.toString("base64");
+        screenshotData = `data:${req.file.mimetype};base64,${base64}`;
+      }
+
       const order = await storage.createOrder({
         orderId: parsed.orderId ?? null,
         productName: parsed.productName,
@@ -100,11 +47,19 @@ export async function registerRoutes(
         contactPlatform: parsed.contactPlatform,
         contactUsername: parsed.contactUsername,
         paymentMethod: parsed.paymentMethod,
-        paymentScreenshot: null,
+        paymentScreenshot: screenshotData,
       });
 
       try {
-        await sendTelegramNotification(req.body as Record<string, string>, req.file);
+        await sendOrderNotification({
+          orderId: parsed.orderId ?? undefined,
+          packName: `${parsed.productName} ${parsed.planName}`,
+          email: parsed.clientEmail ?? "—",
+          username: parsed.contactUsername,
+          price: parsed.price,
+          paymentMethod: parsed.paymentMethod,
+          paymentScreenshot: screenshotData,
+        });
       } catch (telegramErr) {
         console.error("Telegram notification failed (order still saved):", telegramErr);
       }
@@ -122,6 +77,19 @@ export async function registerRoutes(
   app.post("/api/orders", async (req, res) => {
     try {
       const order = await storage.createOrder(req.body);
+
+      try {
+        await sendOrderNotification({
+          packName: `${req.body.productName ?? ""} ${req.body.planName ?? ""}`.trim(),
+          email: req.body.clientEmail ?? "—",
+          username: req.body.contactUsername ?? "—",
+          price: req.body.price ?? "—",
+          paymentMethod: req.body.paymentMethod ?? "—",
+        });
+      } catch (telegramErr) {
+        console.error("Telegram notification failed (order still saved):", telegramErr);
+      }
+
       res.json(order);
     } catch (err) {
       console.error("Error creating order:", err);

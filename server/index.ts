@@ -1,3 +1,5 @@
+import 'dotenv/config';
+console.log("🔍 CHECKING TOKEN:", process.env.TELEGRAM_BOT_TOKEN);
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";

@@ -58,6 +58,7 @@ import {
 const orderFormSchema = z.object({
   contactPlatform: z.string().min(1, "Please select a contact platform"),
   contactUsername: z.string().min(1, "Username is required").min(3, "At least 3 characters"),
+  clientEmail: z.string().min(1, "Valid email address is required").email("Valid email address is required"),
   paymentMethod: z.string().min(1, "Please select a payment method"),
   paymentScreenshot: z.string().optional(),
 });
@@ -637,14 +638,14 @@ const musicApps: AIApp[] = [
     neon: "text-green-400",
     startingFrom: "Individual & Family",
     plans: [
-      { id: "spotify-individual-1m",  name: "Individual Monthly",   price: "14,000 KS", period: "monthly",   features: [] },
-      { id: "spotify-individual-2m",  name: "Individual 2 Months",  price: "26,000 KS", period: "2 months",  features: [] },
-      { id: "spotify-individual-3m",  name: "Individual 3 Months",  price: "34,000 KS", period: "3 months",  features: [] },
-      { id: "spotify-family-1m",      name: "Family Monthly",       price: "8,000 KS",  period: "monthly",   features: [] },
-      { id: "spotify-family-2m",      name: "Family 2 Months",      price: "14,000 KS", period: "2 months",  features: [] },
-      { id: "spotify-family-3m",      name: "Family 3 Months",      price: "22,000 KS", period: "3 months",  features: [] },
-      { id: "spotify-family-6m",      name: "Family 6 Months",      price: "47,000 KS", period: "6 months",  features: [] },
-      { id: "spotify-family-12m",     name: "Family 12 Months",     price: "74,000 KS", period: "12 months", features: [] },
+      { id: "spotify-individual-1m", name: "Individual Monthly", price: "14,000 KS", period: "monthly", features: [] },
+      { id: "spotify-individual-2m", name: "Individual 2 Months", price: "26,000 KS", period: "2 months", features: [] },
+      { id: "spotify-individual-3m", name: "Individual 3 Months", price: "34,000 KS", period: "3 months", features: [] },
+      { id: "spotify-family-1m", name: "Family Monthly", price: "8,000 KS", period: "monthly", features: [] },
+      { id: "spotify-family-2m", name: "Family 2 Months", price: "14,000 KS", period: "2 months", features: [] },
+      { id: "spotify-family-3m", name: "Family 3 Months", price: "22,000 KS", period: "3 months", features: [] },
+      { id: "spotify-family-6m", name: "Family 6 Months", price: "47,000 KS", period: "6 months", features: [] },
+      { id: "spotify-family-12m", name: "Family 12 Months", price: "74,000 KS", period: "12 months", features: [] },
     ],
   },
 ];
@@ -1162,32 +1163,32 @@ function generateOrderId(): string {
 }
 
 const PAYMENT_INFO: Record<string, { label: string; value: string; name: string; color: string }> = {
-  KBZPay:  { label: "Phone", value: "09892246556", name: "AungNaingOo", color: "border-purple-500/50 text-purple-400" },
-  UABPay:  { label: "Phone", value: "09442988204", name: "AungNaingOo", color: "border-teal-500/50 text-teal-400"    },
-  WavePay: { label: "Phone", value: "09442988204", name: "AungNaingOo", color: "border-blue-500/50 text-blue-400"    },
-  AYAPay:  { label: "Phone", value: "09442988204", name: "AungNaingOo", color: "border-teal-500/50 text-teal-400"    },
-  Binance: { label: "UID",   value: "979804957",   name: "PuriStep",    color: "border-amber-500/50 text-amber-400"  },
+  KBZPay: { label: "Phone", value: "09892246556", name: "AungNaingOo", color: "border-purple-500/50 text-purple-400" },
+  UABPay: { label: "Phone", value: "09442988204", name: "AungNaingOo", color: "border-teal-500/50 text-teal-400" },
+  WavePay: { label: "Phone", value: "09442988204", name: "AungNaingOo", color: "border-blue-500/50 text-blue-400" },
+  AYAPay: { label: "Phone", value: "09442988204", name: "AungNaingOo", color: "border-teal-500/50 text-teal-400" },
+  Binance: { label: "UID", value: "979804957", name: "PuriStep", color: "border-amber-500/50 text-amber-400" },
 };
 
 const CAROUSEL_CARDS = [
-  { icon: <SiNetflix className="w-5 h-5 text-red-500" />,         bg: "bg-red-600/15",    title: "Netflix",      sub: "Streaming",        price: "22,000 KS", accent: "text-red-400"    },
-  { icon: <SiOpenai className="w-5 h-5 text-violet-400" />,       bg: "bg-violet-600/15", title: "ChatGPT Plus", sub: "AI Assistant",     price: "19,000 KS", accent: "text-violet-400" },
-  { icon: <SiSpotify className="w-5 h-5 text-green-500" />,       bg: "bg-green-600/15",  title: "Spotify",      sub: "Music & Podcasts", price: "8,000 KS",  accent: "text-green-400"  },
-  { icon: <SiCanva className="w-5 h-5 text-cyan-400" />,          bg: "bg-cyan-600/15",   title: "Canva Pro",    sub: "Design Tool",      price: "12,000 KS", accent: "text-cyan-400"   },
-  { icon: <SiYoutube className="w-5 h-5 text-red-400" />,         bg: "bg-red-500/15",    title: "YouTube",      sub: "Premium",          price: "9,000 KS",  accent: "text-red-300"    },
-  { icon: <SiTelegram className="w-5 h-5 text-blue-400" />,       bg: "bg-blue-600/15",   title: "Telegram",     sub: "Premium",          price: "7,000 KS",  accent: "text-blue-400"   },
-  { icon: <SiGooglegemini className="w-5 h-5 text-purple-400" />, bg: "bg-purple-600/15", title: "Gemini",       sub: "AI Assistant",     price: "15,000 KS", accent: "text-purple-400" },
-  { icon: <SiNordvpn className="w-5 h-5 text-blue-300" />,        bg: "bg-blue-500/15",   title: "NordVPN",      sub: "VPN Security",     price: "14,000 KS", accent: "text-blue-300"   },
+  { icon: <SiNetflix className="w-5 h-5 text-red-500" />, bg: "bg-red-600/15", title: "Netflix", sub: "Streaming", price: "22,000 KS", accent: "text-red-400" },
+  { icon: <SiOpenai className="w-5 h-5 text-violet-400" />, bg: "bg-violet-600/15", title: "ChatGPT Plus", sub: "AI Assistant", price: "19,000 KS", accent: "text-violet-400" },
+  { icon: <SiSpotify className="w-5 h-5 text-green-500" />, bg: "bg-green-600/15", title: "Spotify", sub: "Music & Podcasts", price: "8,000 KS", accent: "text-green-400" },
+  { icon: <SiCanva className="w-5 h-5 text-cyan-400" />, bg: "bg-cyan-600/15", title: "Canva Pro", sub: "Design Tool", price: "12,000 KS", accent: "text-cyan-400" },
+  { icon: <SiYoutube className="w-5 h-5 text-red-400" />, bg: "bg-red-500/15", title: "YouTube", sub: "Premium", price: "9,000 KS", accent: "text-red-300" },
+  { icon: <SiTelegram className="w-5 h-5 text-blue-400" />, bg: "bg-blue-600/15", title: "Telegram", sub: "Premium", price: "7,000 KS", accent: "text-blue-400" },
+  { icon: <SiGooglegemini className="w-5 h-5 text-purple-400" />, bg: "bg-purple-600/15", title: "Gemini", sub: "AI Assistant", price: "15,000 KS", accent: "text-purple-400" },
+  { icon: <SiNordvpn className="w-5 h-5 text-blue-300" />, bg: "bg-blue-500/15", title: "NordVPN", sub: "VPN Security", price: "14,000 KS", accent: "text-blue-300" },
 ];
 
 const CAROUSEL_SLOTS = [
-  { x: 0,    scale: 1.10, opacity: 1.00, zIndex: 20 }, // 0  center
-  { x: 155,  scale: 0.90, opacity: 0.55, zIndex: 10 }, // 1  right-1
-  { x: 295,  scale: 0.75, opacity: 0.20, zIndex: 5  }, // 2  right-2
-  { x: 430,  scale: 0.65, opacity: 0.00, zIndex: 0  }, // 3  right-3 (edge, hidden)
-  { x: 560,  scale: 0.60, opacity: 0.00, zIndex: 0  }, // 4  off-screen right
-  { x: -560, scale: 0.60, opacity: 0.00, zIndex: 0  }, // 5  off-screen left
-  { x: -295, scale: 0.75, opacity: 0.20, zIndex: 5  }, // 6  left-2
+  { x: 0, scale: 1.10, opacity: 1.00, zIndex: 20 }, // 0  center
+  { x: 155, scale: 0.90, opacity: 0.55, zIndex: 10 }, // 1  right-1
+  { x: 295, scale: 0.75, opacity: 0.20, zIndex: 5 }, // 2  right-2
+  { x: 430, scale: 0.65, opacity: 0.00, zIndex: 0 }, // 3  right-3 (edge, hidden)
+  { x: 560, scale: 0.60, opacity: 0.00, zIndex: 0 }, // 4  off-screen right
+  { x: -560, scale: 0.60, opacity: 0.00, zIndex: 0 }, // 5  off-screen left
+  { x: -295, scale: 0.75, opacity: 0.20, zIndex: 5 }, // 6  left-2
   { x: -155, scale: 0.90, opacity: 0.55, zIndex: 10 }, // 7  left-1
 ];
 
@@ -1272,6 +1273,7 @@ export default function Home() {
   const [fabOpen, setFabOpen] = useState(false);
   const [orderIdCopied, setOrderIdCopied] = useState(false);
   const [showChatOptions, setShowChatOptions] = useState(false);
+
   useEffect(() => {
     const onScroll = () => setFabVisible(window.scrollY > 300);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -1283,6 +1285,7 @@ export default function Home() {
     defaultValues: {
       contactPlatform: "",
       contactUsername: "",
+      clientEmail: "",
       paymentMethod: "",
       paymentScreenshot: "",
     },
@@ -1297,6 +1300,7 @@ export default function Home() {
       fd.append("price", selectedProduct?.price ?? "");
       fd.append("contactPlatform", data.contactPlatform);
       fd.append("contactUsername", data.contactUsername);
+      fd.append("clientEmail", data.clientEmail);
       fd.append("paymentMethod", data.paymentMethod);
       if (selectedProduct?.serviceName === "Mobile Legends") {
         fd.append("mlbbUserId", mlbbUserId);
@@ -1407,10 +1411,10 @@ export default function Home() {
 
   const groupedByCategory = activeCategory === "all"
     ? categories.slice(1).map(cat => ({
-        cat,
-        items: products.filter(p => p.categoryId === cat.id).filter(matchesProduct),
-        filteredApps: cat.id === "ai" ? filteredAIApps : cat.id === "editing" ? filteredEditingApps : cat.id === "music" ? filteredMusicApps : cat.id === "telegram" ? filteredTelegramApps : cat.id === "vpn" ? filteredVpnApps : cat.id === "gaming" ? filteredGamingApps : cat.id === "education" ? filteredEducationApps : [],
-      })).filter(g => g.items.length > 0 || g.filteredApps.length > 0 || (!q && ["ai", "editing", "music", "telegram", "vpn", "gaming", "education"].includes(g.cat.id)))
+      cat,
+      items: products.filter(p => p.categoryId === cat.id).filter(matchesProduct),
+      filteredApps: cat.id === "ai" ? filteredAIApps : cat.id === "editing" ? filteredEditingApps : cat.id === "music" ? filteredMusicApps : cat.id === "telegram" ? filteredTelegramApps : cat.id === "vpn" ? filteredVpnApps : cat.id === "gaming" ? filteredGamingApps : cat.id === "education" ? filteredEducationApps : [],
+    })).filter(g => g.items.length > 0 || g.filteredApps.length > 0 || (!q && ["ai", "editing", "music", "telegram", "vpn", "gaming", "education"].includes(g.cat.id)))
     : null;
 
   const handleCategoryClick = (catId: CategoryId) => {
@@ -1419,23 +1423,28 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090E] text-white pt-16 w-full max-w-[100vw] overflow-x-hidden">
+    <div className="min-h-screen bg-[#030306] text-white pt-16 w-full max-w-[100vw] overflow-x-hidden">
 
-      {/* Aurora / Mesh Gradient Background */}
+      {/* Ultra-Premium Aurora Mesh Gradient Background */}
+      <div className="aurora-bg" />
       <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-        <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-purple-600/10 blur-[120px]"></div>
-        <div className="absolute top-[60%] -right-[10%] w-[50%] h-[50%] rounded-full bg-blue-600/10 blur-[120px]"></div>
+        {/* Primary aurora orbs */}
+        <div className="aurora-orb w-[600px] h-[600px] bg-violet-600/20 -top-[15%] -left-[10%]" style={{ animationDelay: '0s' }} />
+        <div className="aurora-orb w-[500px] h-[500px] bg-cyan-500/15 top-[20%] right-[5%]" style={{ animationDelay: '-5s' }} />
+        <div className="aurora-orb w-[400px] h-[400px] bg-fuchsia-600/10 bottom-[10%] left-[20%]" style={{ animationDelay: '-10s' }} />
+        <div className="aurora-orb w-[450px] h-[450px] bg-blue-600/10 top-[50%] -right-[5%]" style={{ animationDelay: '-15s' }} />
+        {/* Noise texture removed for compatibility */}
       </div>
 
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#09090E]/85 backdrop-blur-xl border-b border-white/[0.06]" style={{ boxShadow: "0 1px 0 0 rgba(139,92,246,0.08), 0 4px 24px 0 rgba(0,0,0,0.4)" }}>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#030306]/80 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/[0.06]" style={{ boxShadow: "0 1px 0 0 rgba(139,92,246,0.12), 0 4px 32px 0 rgba(0,0,0,0.6), inset 0 -1px 0 0 rgba(255,255,255,0.03)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
-              <Sparkles className="w-4 h-4 text-white" />
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/40 border border-white/10">
+              <Sparkles className="w-5 h-5 text-white drop-shadow-sm" />
             </div>
-            <span className="font-bold text-base tracking-tight">
-              Puri<span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Step</span>
+            <span className="font-bold text-lg tracking-tight">
+              Puri<span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">Step</span>
             </span>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
@@ -1445,12 +1454,13 @@ export default function Home() {
       </nav>
 
       {/* ── Premium Hero Section ── */}
-      <section className="relative overflow-hidden flex flex-col items-center text-center pt-4 pb-6 px-4 w-full bg-gradient-to-b from-purple-900/20 via-[#0B0C10] to-[#0B0C10]">
+      <section className="relative overflow-hidden flex flex-col items-center text-center pt-4 pb-6 px-4 w-full bg-gradient-to-b from-violet-950/30 via-[#030306] to-[#030306]">
 
         {/* Background nebula orbs */}
         <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none -z-10">
-          <div className="absolute w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-purple-600/30 rounded-full blur-[100px] md:blur-[120px] top-[-10%] opacity-70" />
-          <div className="absolute w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-cyan-600/20 rounded-full blur-[90px] md:blur-[100px] top-[10%] left-[20%] opacity-60" />
+          <div className="absolute w-[350px] md:w-[700px] h-[350px] md:h-[700px] bg-violet-600/25 rounded-full blur-[100px] md:blur-[150px] top-[-15%] opacity-60" />
+          <div className="absolute w-[280px] md:w-[500px] h-[280px] md:h-[500px] bg-cyan-600/15 rounded-full blur-[90px] md:blur-[120px] top-[5%] left-[15%] opacity-50" />
+          <div className="absolute w-[200px] md:w-[350px] h-[200px] md:h-[350px] bg-fuchsia-600/10 rounded-full blur-[80px] md:blur-[100px] top-[20%] right-[10%] opacity-40" />
         </div>
 
         {/* ① 3D Orbit Carousel */}
@@ -1502,27 +1512,27 @@ export default function Home() {
       </section>
 
       {/* ── Recent Purchases Marquee ── */}
-      <div className="w-full overflow-hidden border-y border-white/[0.05] bg-[#07070e]/80 py-2.5 flex items-stretch">
+      <div className="w-full overflow-hidden border-y border-white/[0.06] bg-[#030306]/90 backdrop-blur-xl py-3 flex items-stretch" style={{ boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.02), inset 0 -1px 0 0 rgba(255,255,255,0.02)" }}>
         {/* Label */}
-        <div className="flex-shrink-0 flex items-center px-4 border-r border-white/[0.07] mr-4">
-          <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/20 whitespace-nowrap">Recent Purchases</span>
+        <div className="flex-shrink-0 flex items-center px-5 border-r border-white/[0.08] mr-5">
+          <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-violet-400/50 whitespace-nowrap">Recent Purchases</span>
         </div>
         {/* Scrolling strip */}
         <div className="flex-1 overflow-hidden relative">
           <div className="animate-marquee flex items-center whitespace-nowrap w-max">
             {[
-              { action: "Thida upgraded to",       product: "ChatGPT Plus"                  },
-              { action: "Min Thu Aung bought",      product: "Canva Pro 1 Year"               },
-              { action: "Kyaw Zin topped up",       product: "Mobile Legends 706 Diamonds"    },
-              { action: "Hsu Htet Shin purchased",  product: "Netflix Premium 1 Month"        },
-              { action: "Hein Htet bought",         product: "Spotify Premium"                },
-              { action: "Zaw secured",              product: "NordVPN 1 Year"                 },
-              { action: "Thida upgraded to",        product: "ChatGPT Plus"                   },
-              { action: "Min Thu Aung bought",      product: "Canva Pro 1 Year"               },
-              { action: "Kyaw Zin topped up",       product: "Mobile Legends 706 Diamonds"    },
-              { action: "Hsu Htet Shin purchased",  product: "Netflix Premium 1 Month"        },
-              { action: "Hein Htet bought",         product: "Spotify Premium"                },
-              { action: "Zaw secured",              product: "NordVPN 1 Year"                 },
+              { action: "Thida upgraded to", product: "ChatGPT Plus" },
+              { action: "Min Thu Aung bought", product: "Canva Pro 1 Year" },
+              { action: "Kyaw Zin topped up", product: "Mobile Legends 706 Diamonds" },
+              { action: "Hsu Htet Shin purchased", product: "Netflix Premium 1 Month" },
+              { action: "Hein Htet bought", product: "Spotify Premium" },
+              { action: "Zaw secured", product: "NordVPN 1 Year" },
+              { action: "Thida upgraded to", product: "ChatGPT Plus" },
+              { action: "Min Thu Aung bought", product: "Canva Pro 1 Year" },
+              { action: "Kyaw Zin topped up", product: "Mobile Legends 706 Diamonds" },
+              { action: "Hsu Htet Shin purchased", product: "Netflix Premium 1 Month" },
+              { action: "Hein Htet bought", product: "Spotify Premium" },
+              { action: "Zaw secured", product: "NordVPN 1 Year" },
             ].map((item, i) => (
               <span key={i} className="inline-flex items-center mr-10">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse mr-2 flex-shrink-0" />
@@ -1535,168 +1545,336 @@ export default function Home() {
       </div>
 
       {/* ── Browse by Category ── */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center">
-        <p className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Browse by Category</p>
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">What are you looking for?</h2>
+      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col items-center">
+        {/* Section ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-violet-600/5 rounded-full blur-[100px] pointer-events-none" />
 
-        <div 
-          className="grid grid-cols-2 gap-5 max-w-3xl mx-auto w-full"
+        <p className="text-[10px] md:text-xs font-semibold text-violet-400/60 uppercase tracking-[0.25em] mb-3">Browse by Category</p>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-10 bg-gradient-to-r from-white via-white to-white/70 bg-clip-text">What are you looking for?</h2>
+
+        <div
+          className="grid grid-cols-2 gap-5 md:gap-6 max-w-4xl mx-auto w-full relative z-10"
           style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
         >
 
           {/* AI Tools */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(168,85,247,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             onClick={() => handleCategoryClick("ai")}
             data-testid="category-card-ai"
+            style={{ '--glow-color': 'rgba(168,85,247,0.5)' } as React.CSSProperties}
           >
-            {/* Ambient glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-transparent to-violet-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-purple-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-600/15 via-transparent to-violet-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
             {/* Icon box */}
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-600 shadow-lg shadow-purple-500/30 border border-purple-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Brain className="w-6 h-6 text-white drop-shadow-sm" />
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-purple-500 via-purple-600 to-violet-700 shadow-xl shadow-purple-500/40 border border-purple-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
+              <Brain className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">AI Tools</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Creative & productivity tools</p>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-purple-100">AI Tools</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Creative & productivity tools</p>
             {/* Price pill */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-purple-400 font-bold text-xs tracking-tight">19,000 KS</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-purple-500/20 group-hover:border-purple-400/50">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-purple-300 font-bold text-sm tracking-tight">19,000 KS</span>
             </div>
           </div>
 
           {/* Editing Software */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(249,115,22,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             onClick={() => handleCategoryClick("editing")}
             data-testid="category-card-editing"
+            style={{ '--glow-color': 'rgba(249,115,22,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-600/10 via-transparent to-amber-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-orange-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-lg shadow-orange-500/30 border border-orange-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Clapperboard className="w-6 h-6 text-white drop-shadow-sm" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-600/15 via-transparent to-amber-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-orange-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-orange-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-orange-500 via-orange-600 to-amber-700 shadow-xl shadow-orange-500/40 border border-orange-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
+              <Clapperboard className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Editing Software</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Professional video editing</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-orange-400 font-bold text-xs tracking-tight">19,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-orange-100">Editing Software</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Professional video editing</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-orange-500/20 group-hover:border-orange-400/50">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-orange-300 font-bold text-sm tracking-tight">19,000 KS</span>
             </div>
           </div>
 
           {/* Music & Streaming */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(236,72,153,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             onClick={() => handleCategoryClick("music")}
             data-testid="category-card-music"
+            style={{ '--glow-color': 'rgba(236,72,153,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-pink-600/10 via-transparent to-rose-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-pink-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 shadow-lg shadow-pink-500/30 border border-pink-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Music2 className="w-6 h-6 text-white drop-shadow-sm" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-pink-600/15 via-transparent to-rose-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-pink-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-pink-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-pink-500 via-pink-600 to-rose-700 shadow-xl shadow-pink-500/40 border border-pink-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
+              <Music2 className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Music & Streaming</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Streaming & podcasts</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-pink-400 font-bold text-xs tracking-tight">8,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-pink-100">Music & Streaming</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Streaming & podcasts</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/10 border border-pink-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-pink-500/20 group-hover:border-pink-400/50">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-pink-300 font-bold text-sm tracking-tight">8,000 KS</span>
             </div>
           </div>
 
           {/* Telegram */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(59,130,246,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             onClick={() => handleCategoryClick("telegram")}
             data-testid="category-card-telegram"
+            style={{ '--glow-color': 'rgba(6,182,212,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-cyan-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-blue-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 shadow-lg shadow-blue-500/30 border border-blue-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Send className="w-6 h-6 text-white drop-shadow-sm" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-transparent to-cyan-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-cyan-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-700 shadow-xl shadow-cyan-500/40 border border-cyan-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
+              <Send className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Telegram</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Premium messaging</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-blue-400 font-bold text-xs tracking-tight">24,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-cyan-100">Telegram</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Premium messaging</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-cyan-500/20 group-hover:border-cyan-400/50">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-cyan-300 font-bold text-sm tracking-tight">24,000 KS</span>
             </div>
           </div>
 
           {/* VPN */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(20,184,166,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             onClick={() => handleCategoryClick("vpn")}
             data-testid="category-card-vpn"
+            style={{ '--glow-color': 'rgba(16,185,129,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-teal-600/10 via-transparent to-emerald-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-teal-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-600 shadow-lg shadow-teal-500/30 border border-teal-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Shield className="w-6 h-6 text-white drop-shadow-sm" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-600/15 via-transparent to-emerald-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-emerald-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-teal-500 via-teal-600 to-emerald-700 shadow-xl shadow-emerald-500/40 border border-emerald-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
+              <Shield className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">VPN</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Privacy & security</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-teal-400 font-bold text-xs tracking-tight">4,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-emerald-100">VPN</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Privacy & security</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-emerald-500/20 group-hover:border-emerald-400/50">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-emerald-300 font-bold text-sm tracking-tight">4,000 KS</span>
             </div>
           </div>
 
           {/* Gaming Coins */}
           <div
-            className="relative h-56 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(234,179,8,0.25)]"
+            className="relative h-60 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             data-testid="category-card-gaming"
             onClick={() => handleCategoryClick("gaming")}
+            style={{ '--glow-color': 'rgba(245,158,11,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-yellow-600/10 via-transparent to-amber-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-yellow-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-600 shadow-lg shadow-yellow-500/30 border border-yellow-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <Gamepad2 className="w-6 h-6 text-white drop-shadow-sm" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-600/15 via-transparent to-amber-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-amber-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-amber-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-yellow-500 via-yellow-600 to-amber-700 shadow-xl shadow-amber-500/40 border border-amber-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
+              <Gamepad2 className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Gaming</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Diamonds & top-ups</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-yellow-400 font-bold text-xs tracking-tight">3,500 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-amber-100">Gaming</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Diamonds & top-ups</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-amber-500/20 group-hover:border-amber-400/50">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-amber-300 font-bold text-sm tracking-tight">3,500 KS</span>
             </div>
           </div>
 
           {/* Education — last card spans full width */}
           <div
-            className="relative h-56 last:col-span-2 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_8px_40px_-12px_rgba(14,165,233,0.25)]"
+            className="relative h-60 col-span-2 glass-card-premium rounded-3xl flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-2"
             data-testid="category-card-education"
             onClick={() => handleCategoryClick("education")}
+            style={{ '--glow-color': 'rgba(14,165,233,0.5)' } as React.CSSProperties}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-sky-600/10 via-transparent to-blue-600/5 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-56 h-56 bg-sky-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            
-            <div className="relative w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 shadow-lg shadow-sky-500/30 border border-sky-400/30 flex items-center justify-center z-10 transition-transform duration-300 group-hover:scale-110">
-              <BookOpen className="w-6 h-6 text-white drop-shadow-sm" />
+            {/* Multi-layer ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-sky-600/15 via-transparent to-blue-600/10 opacity-50 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-sky-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-sky-500/25 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            {/* Inner edge highlight */}
+            <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/[0.08] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+            <div className="relative w-16 h-16 mb-5 rounded-2xl bg-gradient-to-br from-sky-500 via-sky-600 to-blue-700 shadow-xl shadow-sky-500/40 border border-sky-400/40 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
+              <BookOpen className="w-7 h-7 text-white drop-shadow-md" />
             </div>
-            <p className="text-lg font-bold text-white tracking-tight mb-0.5 z-10">Education</p>
-            <p className="text-[11px] font-medium text-gray-500 mb-4 z-10">Courses & language learning</p>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 z-10">
-              <span className="text-[9px] uppercase font-bold text-gray-500 tracking-widest">From</span>
-              <span className="text-sky-400 font-bold text-xs tracking-tight">85,000 KS</span>
+            <p className="text-lg font-bold text-white tracking-tight mb-1 z-10 transition-all duration-300 group-hover:text-sky-100">Education</p>
+            <p className="text-[11px] font-medium text-white/40 mb-5 z-10 transition-all duration-300 group-hover:text-white/60">Courses & language learning</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/30 backdrop-blur-sm z-10 transition-all duration-300 group-hover:bg-sky-500/20 group-hover:border-sky-400/50">
+              <span className="text-[9px] uppercase font-semibold text-white/40 tracking-widest">From</span>
+              <span className="text-sky-300 font-bold text-sm tracking-tight">85,000 KS</span>
             </div>
           </div>
 
         </div>
       </section>
 
+      {/* ── 🔥 Trending Packs ── */}
+      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex flex-col items-center">
+        {/* Section ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-orange-600/5 rounded-full blur-[100px] pointer-events-none" />
+
+        <p className="text-[10px] md:text-xs font-semibold text-orange-400/60 uppercase tracking-[0.25em] mb-3">Trending Now</p>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-10 bg-gradient-to-r from-white via-white to-white/70 bg-clip-text">
+          🔥 Trending Packs
+        </h2>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 w-full relative z-10">
+
+          {/* 1. ChatGPT Plus Business Team Invite */}
+          <button
+            onClick={() => openProductModal(aiApps.find(a => a.id === 'chatgpt')!, 'ai')}
+            className="bg-[#121212] rounded-2xl border border-white/5 p-4 flex flex-col min-h-[180px] text-left w-full transition-all duration-300 ease-out relative cursor-pointer active:scale-95 hover:border-emerald-500/30 hover:bg-[#181818] hover:shadow-[0_0_30px_-8px_rgba(16,163,127,0.25)] group"
+            data-testid="trending-chatgpt"
+          >
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-emerald-600/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#10A37F] to-[#0a8a6b] flex items-center justify-center flex-shrink-0 mb-3 shadow-lg shadow-emerald-500/20 border border-emerald-400/20" style={{ boxShadow: '0 0 18px rgba(16,163,127,0.25)' }}>
+              <SiOpenai className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-sm font-semibold text-white leading-tight z-10">ChatGPT Plus</p>
+            <p className="text-[10px] text-white/35 mt-0.5 leading-tight z-10">Business Team Invite</p>
+            <div className="mt-auto pt-3 flex items-end justify-between w-full z-10">
+              <div>
+                <p className="text-[10px] text-white/30 uppercase tracking-wider leading-none mb-0.5">Price</p>
+                <p className="text-xs font-bold text-emerald-400 leading-tight">19,000 KS</p>
+              </div>
+              <div className="w-6 h-6 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-500/20 transition-colors">
+                <Plus className="w-3.5 h-3.5 text-emerald-400/70" />
+              </div>
+            </div>
+          </button>
+
+          {/* 2. Gemini Pro 1 Year */}
+          <button
+            onClick={() => openProductModal(aiApps.find(a => a.id === 'gemini')!, 'ai')}
+            className="bg-[#121212] rounded-2xl border border-white/5 p-4 flex flex-col min-h-[180px] text-left w-full transition-all duration-300 ease-out relative cursor-pointer active:scale-95 hover:border-blue-500/30 hover:bg-[#181818] hover:shadow-[0_0_30px_-8px_rgba(139,92,246,0.25)] group"
+            data-testid="trending-gemini"
+          >
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-600/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0 mb-3 shadow-lg shadow-blue-500/20 border border-blue-400/20" style={{ boxShadow: '0 0 18px rgba(139,92,246,0.25)' }}>
+              <SiGooglegemini className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-sm font-semibold text-white leading-tight z-10">Gemini Pro</p>
+            <p className="text-[10px] text-white/35 mt-0.5 leading-tight z-10">1 Year Card</p>
+            <div className="mt-auto pt-3 flex items-end justify-between w-full z-10">
+              <div>
+                <p className="text-[10px] text-white/30 uppercase tracking-wider leading-none mb-0.5">Price</p>
+                <p className="text-xs font-bold text-blue-400 leading-tight">55,000 KS</p>
+              </div>
+              <div className="w-6 h-6 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/20 transition-colors">
+                <Plus className="w-3.5 h-3.5 text-blue-400/70" />
+              </div>
+            </div>
+          </button>
+
+          {/* 3. Claude Pro 6 Months */}
+          <button
+            onClick={() => openProductModal(aiApps.find(a => a.id === 'claude')!, 'ai')}
+            className="bg-[#121212] rounded-2xl border border-white/5 p-4 flex flex-col min-h-[180px] text-left w-full transition-all duration-300 ease-out relative cursor-pointer active:scale-95 hover:border-orange-500/30 hover:bg-[#181818] hover:shadow-[0_0_30px_-8px_rgba(217,119,87,0.25)] group"
+            data-testid="trending-claude"
+          >
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-orange-600/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#D97757] to-[#be5c38] flex items-center justify-center flex-shrink-0 mb-3 shadow-lg shadow-orange-500/20 border border-orange-400/20 overflow-hidden" style={{ boxShadow: '0 0 18px rgba(217,119,87,0.25)' }}>
+              <img src="/claude-logo.jpg" alt="Claude AI Logo" className="w-10 h-10 rounded-xl object-cover" />
+            </div>
+            <p className="text-sm font-semibold text-white leading-tight z-10">Claude Pro</p>
+            <p className="text-[10px] text-white/35 mt-0.5 leading-tight z-10">6 Months Card</p>
+            <div className="mt-auto pt-3 flex items-end justify-between w-full z-10">
+              <div>
+                <p className="text-[10px] text-white/30 uppercase tracking-wider leading-none mb-0.5">Price</p>
+                <p className="text-xs font-bold text-orange-400 leading-tight">340,000 KS</p>
+              </div>
+              <div className="w-6 h-6 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500/20 transition-colors">
+                <Plus className="w-3.5 h-3.5 text-orange-400/70" />
+              </div>
+            </div>
+          </button>
+
+          {/* 4. CapCut Pro 6 Months */}
+          <button
+            onClick={() => openProductModal(editingApps.find(a => a.id === 'capcut')!, 'editing')}
+            className="bg-[#121212] rounded-2xl border border-white/5 p-4 flex flex-col min-h-[180px] text-left w-full transition-all duration-300 ease-out relative cursor-pointer active:scale-95 hover:border-amber-500/30 hover:bg-[#181818] hover:shadow-[0_0_30px_-8px_rgba(245,158,11,0.25)] group"
+            data-testid="trending-capcut"
+          >
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-amber-600/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-black to-[#111111] flex items-center justify-center flex-shrink-0 mb-3 shadow-lg shadow-amber-500/15 border border-white/10 overflow-hidden" style={{ boxShadow: '0 0 14px rgba(255,255,255,0.10)' }}>
+              <img src="/capcut-logo.webp" alt="CapCut Logo" className="w-10 h-10 rounded-xl object-cover" />
+            </div>
+            <p className="text-sm font-semibold text-white leading-tight z-10">CapCut Pro</p>
+            <p className="text-[10px] text-white/35 mt-0.5 leading-tight z-10">6 Months Card</p>
+            <div className="mt-auto pt-3 flex items-end justify-between w-full z-10">
+              <div>
+                <p className="text-[10px] text-white/30 uppercase tracking-wider leading-none mb-0.5">Price</p>
+                <p className="text-xs font-bold text-amber-400 leading-tight">55,000 KS</p>
+              </div>
+              <div className="w-6 h-6 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-500/20 transition-colors">
+                <Plus className="w-3.5 h-3.5 text-amber-400/70" />
+              </div>
+            </div>
+          </button>
+
+          {/* 5. Netflix Monthly */}
+          <button
+            onClick={() => openProductModal(musicApps.find(a => a.id === 'netflix')!, 'music')}
+            className="bg-[#121212] rounded-2xl border border-white/5 p-4 flex flex-col min-h-[180px] text-left w-full transition-all duration-300 ease-out relative cursor-pointer active:scale-95 hover:border-red-500/30 hover:bg-[#181818] hover:shadow-[0_0_30px_-8px_rgba(239,68,68,0.25)] group"
+            data-testid="trending-netflix"
+          >
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-red-600/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 mb-3">
+              <SiNetflix className="w-7 h-7 text-[#E50914]" />
+            </div>
+            <p className="text-sm font-semibold text-white leading-tight z-10">Netflix</p>
+            <p className="text-[10px] text-white/35 mt-0.5 leading-tight z-10">Monthly Card</p>
+            <div className="mt-auto pt-3 flex items-end justify-between w-full z-10">
+              <div>
+                <p className="text-[10px] text-white/30 uppercase tracking-wider leading-none mb-0.5">Price</p>
+                <p className="text-xs font-bold text-red-400 leading-tight">22,000 KS</p>
+              </div>
+              <div className="w-6 h-6 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-red-500/20 transition-colors">
+                <Plus className="w-3.5 h-3.5 text-red-400/70" />
+              </div>
+            </div>
+          </button>
+
+        </div>
+      </section>
+
       {/* Category Filter Bar */}
-      <section className="sticky top-16 z-40 bg-[#080810]/90 backdrop-blur-xl border-b border-white/5 py-3 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto space-y-3">
+      <section className="sticky top-16 z-40 bg-[#030306]/85 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/[0.06] py-4 px-4 sm:px-6" style={{ boxShadow: "0 4px 24px -4px rgba(0,0,0,0.5), inset 0 -1px 0 0 rgba(255,255,255,0.02)" }}>
+        <div className="max-w-7xl mx-auto space-y-4">
 
           {/* Search Bar */}
           <div
-            className="flex items-center gap-3 w-full max-w-2xl mx-auto bg-white/5 backdrop-blur-md border border-white/10 rounded-full py-3 px-5 transition-all duration-200 focus-within:border-white/30 focus-within:ring-1 focus-within:ring-white/10 focus-within:shadow-[0_0_18px_0_rgba(139,92,246,0.15)]"
+            className="flex items-center gap-3 w-full max-w-2xl mx-auto glass-card-premium rounded-2xl py-3.5 px-5 transition-all duration-300 focus-within:border-violet-500/40 focus-within:shadow-[0_0_30px_-5px_rgba(139,92,246,0.3),inset_0_0_20px_-10px_rgba(139,92,246,0.1)]"
             data-testid="search-bar-container"
           >
             <Search className="w-4 h-4 text-white/30 flex-shrink-0" />
@@ -1725,11 +1903,10 @@ export default function Home() {
                 key={cat.id}
                 onClick={() => handleCategoryClick(cat.id)}
                 data-testid={`category-btn-${cat.id}`}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-150 ease-out flex-shrink-0 border active:scale-95 ${
-                  activeCategory === cat.id
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-150 ease-out flex-shrink-0 border active:scale-95 ${activeCategory === cat.id
                     ? `bg-gradient-to-r ${cat.color} text-white border-transparent shadow-lg ${cat.glow}`
                     : "bg-white/[0.04] text-white/50 border-white/8 hover:bg-white/[0.08] hover:text-white/80"
-                }`}
+                  }`}
               >
                 <span className={activeCategory === cat.id ? "text-white" : cat.neon}>
                   {cat.icon}
@@ -1742,15 +1919,10 @@ export default function Home() {
       </section>
 
       {/* Products Section */}
-      <section ref={productsRef} className="py-6 pb-12 px-4 sm:px-6 lg:px-8 scroll-mt-48">
+      <section ref={productsRef} className="relative py-10 pb-16 px-4 sm:px-6 lg:px-8 scroll-mt-48">
         <div className="max-w-7xl mx-auto">
 
-          {/* Trending Packs header — shown in All view only */}
-          {activeCategory === "all" && !q && (
-            <div className="mb-6">
-              <h2 className="text-2xl font-extrabold text-white tracking-tight">🔥 Trending Packs</h2>
-            </div>
-          )}
+
 
           {/* Active category header */}
           {activeCategory !== "all" && (
@@ -1893,14 +2065,17 @@ export default function Home() {
       </section>
 
       {/* Payment Details */}
-      <section id="payment-section" className="py-16 px-4 sm:px-6 bg-white/[0.02] border-y border-white/[0.06]">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl font-bold mb-2">Payment Details</h2>
-          <p className="text-white/40 text-sm mb-8">Transfer to one of these accounts, then submit your order</p>
+      <section id="payment-section" className="relative py-20 px-4 sm:px-6 border-y border-white/[0.06] overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(3,3,6,0.8) 0%, rgba(5,5,10,0.9) 50%, rgba(3,3,6,0.8) 100%)" }}>
+        {/* Ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-violet-600/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <p className="text-[10px] font-semibold text-violet-400/50 uppercase tracking-[0.25em] mb-2">Secure Transactions</p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">Payment Details</h2>
+          <p className="text-white/40 text-sm mb-10">Transfer to one of these accounts, then submit your order</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
             {/* KBZPay */}
-            <div className="bg-red-950/20 border border-red-800/30 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-kbzpay">
+            <div className="glass-card-premium rounded-3xl p-6 text-left transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:border-red-500/30 hover:shadow-[0_0_40px_-10px_rgba(239,68,68,0.3)]" data-testid="payment-kbzpay">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center">
                   <span className="text-white text-xs font-bold">K</span>
@@ -1928,7 +2103,7 @@ export default function Home() {
             </div>
 
             {/* WavePay */}
-            <div className="bg-blue-950/20 border border-blue-800/30 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-wavepay">
+            <div className="glass-card-premium rounded-3xl p-6 text-left transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:border-blue-500/30 hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.3)]" data-testid="payment-wavepay">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
                   <span className="text-white text-xs font-bold">W</span>
@@ -1956,7 +2131,7 @@ export default function Home() {
             </div>
 
             {/* UABPay */}
-            <div className="bg-teal-950/20 border border-teal-500/30 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-uabpay">
+            <div className="glass-card-premium rounded-3xl p-6 text-left transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:border-teal-500/30 hover:shadow-[0_0_40px_-10px_rgba(20,184,166,0.3)]" data-testid="payment-uabpay">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-teal-600 flex items-center justify-center">
                   <span className="text-white text-xs font-bold">U</span>
@@ -1984,7 +2159,7 @@ export default function Home() {
             </div>
 
             {/* Binance */}
-            <div className="bg-[#FCD535]/5 border border-[#FCD535]/25 rounded-2xl p-6 text-left hover:scale-[1.02] transition-all duration-300 hover:shadow-lg" data-testid="payment-binance">
+            <div className="glass-card-premium rounded-3xl p-6 text-left transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:border-amber-500/30 hover:shadow-[0_0_40px_-10px_rgba(252,213,53,0.3)]" data-testid="payment-binance">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-[#FCD535] flex items-center justify-center">
                   <SiBinance className="w-4 h-4 text-[#1E1E2E]" />
@@ -2030,9 +2205,9 @@ export default function Home() {
             <div className="absolute left-[35px] top-10 bottom-10 w-[2px] bg-gradient-to-b from-teal-500/40 via-violet-500/40 to-fuchsia-500/40 -z-0 pointer-events-none" />
 
             {[
-              { step: "01", icon: <Play className="w-5 h-5" />,       title: "မိမိနှစ်သက်ရာ Plan ကိုရွေးပါ",       desc: "မိမိဝယ်ယူလိုသော Subscription ကိုရွေးချယ်ပြီး Buy Now ကိုနှိပ်ပါ။",                                                     color: "bg-teal-950/60 border-teal-500/25 text-teal-400"     },
-              { step: "02", icon: <Zap className="w-5 h-5" />,        title: "ငွေပေးချေပါ",                          desc: "KBZPay (သို့) WavePay ဖြင့် ငွေပေးချေပြီး screenshot မှတ်ယူထားပါ။",                                                   color: "bg-violet-950/60 border-violet-500/25 text-violet-400" },
-              { step: "03", icon: <CheckCircle2 className="w-5 h-5" />, title: "ပြေစာပို့ပြီး အကောင့်ရယူပါ",      desc: "Telegram/Messenger အကောင့်နှင့် ငွေလွှဲပြေစာ screenshot ကို payment form တွင် ပေးပို့ပါ။", color: "bg-fuchsia-950/60 border-fuchsia-500/25 text-fuchsia-400" },
+              { step: "01", icon: <Play className="w-5 h-5" />, title: "မိမိနှစ်သက်ရာ Plan ကိုရွေးပါ", desc: "မိမိဝယ်ယူလိုသော Subscription ကိုရွေးချယ်ပြီး Buy Now ကိုနှိပ်ပါ။", color: "bg-teal-950/60 border-teal-500/25 text-teal-400" },
+              { step: "02", icon: <Zap className="w-5 h-5" />, title: "ငွေပေးချေပါ", desc: "KBZPay (သို့) WavePay ဖြင့် ငွေပေးချေပြီး screenshot မှတ်ယူထားပါ။", color: "bg-violet-950/60 border-violet-500/25 text-violet-400" },
+              { step: "03", icon: <CheckCircle2 className="w-5 h-5" />, title: "ပြေစာပို့ပြီး အကောင့်ရယူပါ", desc: "Telegram/Messenger အကောင့်နှင့် ငွေလွှဲပြေစာ screenshot ကို payment form တွင် ပေးပို့ပါ။", color: "bg-fuchsia-950/60 border-fuchsia-500/25 text-fuchsia-400" },
             ].map((s, i) => (
               <div
                 key={i}
@@ -2125,15 +2300,13 @@ export default function Home() {
 
       {/* ── Contact Admin FAB ── */}
       <div
-        className={`fixed bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end gap-3 transition-all duration-300 ${
-          fabVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end gap-3 transition-all duration-300 ${fabVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
       >
         {/* Popup options */}
         <div
-          className={`flex flex-col gap-3 mb-1 origin-bottom transition-all duration-200 ${
-            fabOpen ? "scale-100 opacity-100" : "scale-75 opacity-0 pointer-events-none"
-          }`}
+          className={`flex flex-col gap-3 mb-1 origin-bottom transition-all duration-200 ${fabOpen ? "scale-100 opacity-100" : "scale-75 opacity-0 pointer-events-none"
+            }`}
         >
           <a
             href="https://t.me/PuriStep"
@@ -2160,10 +2333,11 @@ export default function Home() {
         {/* Toggle button */}
         <button
           onClick={() => setFabOpen(o => !o)}
-          className="w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 shadow-[0_10px_40px_rgba(168,85,247,0.4)] hover:scale-105 active:scale-95 transition-transform flex items-center justify-center text-white"
+          className="relative w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 shadow-[0_10px_40px_rgba(168,85,247,0.4)] hover:scale-105 active:scale-95 transition-transform flex items-center justify-center text-white"
           data-testid="fab-toggle"
           aria-label="Contact admin"
         >
+          <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-[#030306] animate-pulse" />
           <MessageCircle className="w-6 h-6" />
         </button>
       </div>
@@ -2215,38 +2389,40 @@ export default function Home() {
 
               {/* Burmese instruction */}
               <p className="text-amber-400/80 text-xs leading-relaxed mb-6">
-                ကျေးဇူးပြု၍ မိမိ order id ကို Admin ထံသို့ပို့ပေးပြီး Subscription ကို ရယူနိုင်ပါပြီ
+                ကျေးဇူးပြ���၍ မိမိ order id ကို Admin ထံသို့ပို့ပေးပြီး Subscription ကို ရယူနိုင်ပါပြီ
               </p>
 
-              {/* Chat options (revealed after clicking Get your order) */}
+              {/* Contact buttons — revealed after clicking Get your order */}
               <div
-                className={`flex flex-col gap-3 mb-3 origin-bottom transition-all duration-200 ${
-                  showChatOptions ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none h-0 mb-0 overflow-hidden"
-                }`}
+                className={`grid grid-cols-2 gap-3 mb-3 origin-bottom transition-all duration-300 ${showChatOptions ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none h-0 mb-0 overflow-hidden"}`}
               >
                 <a
-                  href={`https://t.me/PuriStep?text=${encodeURIComponent("Hello Admin, I have submitted my order. My Order ID is: " + orderId)}`}
+                  href={`https://t.me/ZarNiAung404?text=${encodeURIComponent("I bought " + (selectedProduct?.serviceName ?? "") + " here is my " + orderId + ". Can you check?")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 bg-[#2AABEE] hover:bg-[#2298D6] text-white px-4 py-3 rounded-2xl shadow-lg transition-colors font-bold text-sm active:scale-95"
+                  className="group relative flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl font-bold text-sm text-white overflow-hidden transition-all duration-200 active:scale-95 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_-6px_rgba(42,171,238,0.45)]"
+                  style={{ background: "linear-gradient(135deg, #2AABEE 0%, #1B93CC 100%)" }}
                   data-testid="button-success-telegram"
                 >
-                  <SiTelegram className="w-5 h-5" />
-                  Telegram
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                  <SiTelegram className="w-5 h-5 flex-shrink-0 relative z-10" />
+                  <span className="relative z-10">Telegram</span>
                 </a>
                 <a
-                  href="https://m.me/PuriStep"
+                  href="https://m.me/puristep"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 bg-[#0084FF] hover:bg-[#0073E6] text-white px-4 py-3 rounded-2xl shadow-lg transition-colors font-bold text-sm active:scale-95"
+                  className="group relative flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl font-bold text-sm text-white overflow-hidden transition-all duration-200 active:scale-95 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_-6px_rgba(168,85,247,0.45)]"
+                  style={{ background: "linear-gradient(135deg, #A855F7 0%, #7C3AED 50%, #6D28D9 100%)" }}
                   data-testid="button-success-messenger"
                 >
-                  <SiMessenger className="w-5 h-5" />
-                  Messenger
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                  <SiMessenger className="w-5 h-5 flex-shrink-0 relative z-10" />
+                  <span className="relative z-10">Messenger</span>
                 </a>
               </div>
 
-              {/* Primary CTA */}
+              {/* Primary CTA — reveals the contact buttons */}
               {!showChatOptions && (
                 <Button
                   className="bg-gradient-to-r from-violet-600 to-cyan-500 hover:opacity-90 w-full active:scale-95 transition-all duration-150 ease-out font-bold"
@@ -2313,6 +2489,26 @@ export default function Home() {
                               placeholder="@username or profile name"
                               className="bg-white/5 border-white/10 text-white placeholder:text-white/20 focus-visible:ring-violet-500"
                               data-testid="input-contact-username"
+                            />
+                          </FormControl>
+                          <FormMessage className="text-red-400 text-xs" />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="clientEmail"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white/60 text-xs uppercase tracking-wide">Email Address</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              type="email"
+                              placeholder="your@email.com"
+                              className="bg-white/5 border-white/10 text-white placeholder:text-white/20 focus-visible:ring-violet-500"
+                              data-testid="input-client-email"
                             />
                           </FormControl>
                           <FormMessage className="text-red-400 text-xs" />
@@ -2768,37 +2964,37 @@ function ProductModal({
   const isMLBB = app?.id === "mobile-legends";
 
   const mlbbStandardPackages = [
-    { id: "ml-86",   amount: "86",                   label: "Diamonds",     price: "5,000 KS",   isPass: false },
-    { id: "ml-172",  amount: "172",                  label: "Diamonds",     price: "10,000 KS",  isPass: false },
-    { id: "ml-257",  amount: "257",                  label: "Diamonds",     price: "14,500 KS",  isPass: false },
-    { id: "ml-706",  amount: "706",                  label: "Diamonds",     price: "36,500 KS",  isPass: false },
-    { id: "ml-2195", amount: "2,195",                label: "Diamonds",     price: "103,000 KS", isPass: false },
-    { id: "ml-3688", amount: "3,688",                label: "Diamonds",     price: "162,000 KS", isPass: false },
-    { id: "ml-5532", amount: "5,532",                label: "Diamonds",     price: "258,000 KS", isPass: false },
-    { id: "ml-9288", amount: "9,288",                label: "Diamonds",     price: "430,000 KS", isPass: false },
-    { id: "ml-wdp",  amount: "Weekly",               label: "Diamond Pass", price: "6,500 KS",   isPass: true  },
-    { id: "ml-twi",  amount: "Twilight",             label: "Pass",         price: "30,000 KS",  isPass: true  },
+    { id: "ml-86", amount: "86", label: "Diamonds", price: "5,000 KS", isPass: false },
+    { id: "ml-172", amount: "172", label: "Diamonds", price: "10,000 KS", isPass: false },
+    { id: "ml-257", amount: "257", label: "Diamonds", price: "14,500 KS", isPass: false },
+    { id: "ml-706", amount: "706", label: "Diamonds", price: "36,500 KS", isPass: false },
+    { id: "ml-2195", amount: "2,195", label: "Diamonds", price: "103,000 KS", isPass: false },
+    { id: "ml-3688", amount: "3,688", label: "Diamonds", price: "162,000 KS", isPass: false },
+    { id: "ml-5532", amount: "5,532", label: "Diamonds", price: "258,000 KS", isPass: false },
+    { id: "ml-9288", amount: "9,288", label: "Diamonds", price: "430,000 KS", isPass: false },
+    { id: "ml-wdp", amount: "Weekly", label: "Diamond Pass", price: "6,500 KS", isPass: true },
+    { id: "ml-twi", amount: "Twilight", label: "Pass", price: "30,000 KS", isPass: true },
   ];
 
   const mlbbDoublePackages = [
-    { id: "ml2x-100",  amount: "50+50",   label: "Bonus (100 total)",  price: "3,500 KS"  },
-    { id: "ml2x-300",  amount: "150+150", label: "Bonus (300 total)",  price: "9,500 KS"  },
-    { id: "ml2x-500",  amount: "250+250", label: "Bonus (500 total)",  price: "16,000 KS" },
+    { id: "ml2x-100", amount: "50+50", label: "Bonus (100 total)", price: "3,500 KS" },
+    { id: "ml2x-300", amount: "150+150", label: "Bonus (300 total)", price: "9,500 KS" },
+    { id: "ml2x-500", amount: "250+250", label: "Bonus (500 total)", price: "16,000 KS" },
     { id: "ml2x-1000", amount: "500+500", label: "Bonus (1,000 total)", price: "32,000 KS" },
   ];
 
   const spotifyIndividualPlans: AIPlan[] = [
-    { id: "spotify-individual-1m", name: "Monthly",  price: "14,000 KS", period: "monthly",  features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Listen with friends in real-time"] },
-    { id: "spotify-individual-2m", name: "2 Months", price: "26,000 KS", period: "2 months", features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Listen with friends in real-time"] },
-    { id: "spotify-individual-3m", name: "3 Months", price: "34,000 KS", period: "3 months", features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Listen with friends in real-time"], badge: "Best Value", badgeStyle: "bg-green-500/20 text-green-300 border-green-500/40", highlight: true },
+    { id: "spotify-individual-1m", name: "Monthly", price: "14,000 KS", period: "monthly", features: ["Ad-free music listening", "Download to listen offline", "Play songs in any order", "High audio quality (320kbps)", "Listen with friends in real-time"] },
+    { id: "spotify-individual-2m", name: "2 Months", price: "26,000 KS", period: "2 months", features: ["Ad-free music listening", "Download to listen offline", "Play songs in any order", "High audio quality (320kbps)", "Listen with friends in real-time"] },
+    { id: "spotify-individual-3m", name: "3 Months", price: "34,000 KS", period: "3 months", features: ["Ad-free music listening", "Download to listen offline", "Play songs in any order", "High audio quality (320kbps)", "Listen with friends in real-time"], badge: "Best Value", badgeStyle: "bg-green-500/20 text-green-300 border-green-500/40", highlight: true },
   ];
 
   const spotifyFamilyPlans: AIPlan[] = [
-    { id: "spotify-family-1m",  name: "Monthly",   price: "8,000 KS",  period: "monthly",   features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Private account in a premium plan"] },
-    { id: "spotify-family-2m",  name: "2 Months",  price: "14,000 KS", period: "2 months",  features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Private account in a premium plan"] },
-    { id: "spotify-family-3m",  name: "3 Months",  price: "22,000 KS", period: "3 months",  features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Private account in a premium plan"] },
-    { id: "spotify-family-6m",  name: "6 Months",  price: "47,000 KS", period: "6 months",  features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Private account in a premium plan"] },
-    { id: "spotify-family-12m", name: "12 Months", price: "74,000 KS", period: "12 months", features: ["Ad-free music listening","Download to listen offline","Play songs in any order","High audio quality (320kbps)","Private account in a premium plan"], badge: "Best Value", badgeStyle: "bg-green-500/20 text-green-300 border-green-500/40", highlight: true },
+    { id: "spotify-family-1m", name: "Monthly", price: "8,000 KS", period: "monthly", features: ["Ad-free music listening", "Download to listen offline", "Play songs in any order", "High audio quality (320kbps)", "Private account in a premium plan"] },
+    { id: "spotify-family-2m", name: "2 Months", price: "14,000 KS", period: "2 months", features: ["Ad-free music listening", "Download to listen offline", "Play songs in any order", "High audio quality (320kbps)", "Private account in a premium plan"] },
+    { id: "spotify-family-3m", name: "3 Months", price: "22,000 KS", period: "3 months", features: ["Ad-free music listening", "Download to listen offline", "Play songs in any order", "High audio quality (320kbps)", "Private account in a premium plan"] },
+    { id: "spotify-family-6m", name: "6 Months", price: "47,000 KS", period: "6 months", features: ["Ad-free music listening", "Download to listen offline", "Play songs in any order", "High audio quality (320kbps)", "Private account in a premium plan"] },
+    { id: "spotify-family-12m", name: "12 Months", price: "74,000 KS", period: "12 months", features: ["Ad-free music listening", "Download to listen offline", "Play songs in any order", "High audio quality (320kbps)", "Private account in a premium plan"], badge: "Best Value", badgeStyle: "bg-green-500/20 text-green-300 border-green-500/40", highlight: true },
   ];
 
   const plans: AIPlan[] = isSpotify
@@ -2813,349 +3009,349 @@ function ProductModal({
 
   return (
     <>
-    <div
-      className={`fixed inset-0 z-[60] flex items-end sm:items-center justify-center transition-all duration-300
-        ${open ? "backdrop-blur-sm bg-black/70 pointer-events-auto" : "bg-transparent pointer-events-none"}`}
-      onClick={onClose}
-      data-testid="product-modal-backdrop"
-    >
       <div
-        className={`w-full sm:max-w-2xl sm:mx-4 bg-[#0e0e1a] border border-white/10 rounded-t-3xl sm:rounded-2xl max-h-[88vh] overflow-y-auto transition-all duration-300 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full
-          ${open ? "translate-y-0 sm:scale-100 sm:opacity-100" : "translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"}`}
-        onClick={e => e.stopPropagation()}
-        data-testid="product-modal"
+        className={`fixed inset-0 z-[60] flex items-end sm:items-center justify-center transition-all duration-300
+        ${open ? "backdrop-blur-sm bg-black/70 pointer-events-auto" : "bg-transparent pointer-events-none"}`}
+        onClick={onClose}
+        data-testid="product-modal-backdrop"
       >
-        {/* Drag handle — mobile only */}
-        <div className="flex justify-center pt-3 pb-1 sm:hidden">
-          <div className="w-10 h-1 rounded-full bg-white/20" />
-        </div>
+        <div
+          className={`w-full sm:max-w-2xl sm:mx-4 bg-[#0e0e1a] border border-white/10 rounded-t-3xl sm:rounded-2xl max-h-[88vh] overflow-y-auto transition-all duration-300 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full
+          ${open ? "translate-y-0 sm:scale-100 sm:opacity-100" : "translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"}`}
+          onClick={e => e.stopPropagation()}
+          data-testid="product-modal"
+        >
+          {/* Drag handle — mobile only */}
+          <div className="flex justify-center pt-3 pb-1 sm:hidden">
+            <div className="w-10 h-1 rounded-full bg-white/20" />
+          </div>
 
-        {/* Sticky header */}
-        <div className="sticky top-0 z-10 bg-[#0e0e1a]/95 backdrop-blur-sm border-b border-white/[0.07] px-5 py-4 flex items-center justify-between">
-          {app && (
-            <div className="flex items-center gap-3">
-              <div
-                className={`w-9 h-9 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center`}
-                style={{ boxShadow: app.iconGlow ?? "0 2px 8px rgba(0,0,0,0.3)" }}
-              >
-                {app.icon}
-              </div>
-              <div>
-                <h2 className="font-bold text-white text-base leading-tight">{app.name}</h2>
-                <p className="text-white/40 text-xs">{app.tagline}</p>
-              </div>
-            </div>
-          )}
-          <button
-            onClick={onClose}
-            className="w-8 h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.12] flex items-center justify-center transition-all duration-150 ease-out active:scale-95 ml-auto flex-shrink-0"
-            data-testid="button-product-modal-close"
-          >
-            <X className="w-4 h-4 text-white/60" />
-          </button>
-        </div>
-
-        {/* Body */}
-        <div className="p-5 pr-2 space-y-5">
-
-          {/* Spotify Individual / Family toggle */}
-          {isSpotify && (
-            <div className="flex bg-white/[0.04] rounded-xl p-1 border border-white/[0.07]">
-              {(["individual", "family"] as const).map(t => (
-                <button
-                  key={t}
-                  onClick={() => setSpotifyTab(t)}
-                  className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-150 ease-out active:scale-95
-                    ${spotifyTab === t
-                      ? "bg-green-500/15 text-green-300 border border-green-500/25 shadow-sm"
-                      : "text-white/35 hover:text-white/65"
-                    }`}
-                  data-testid={`tab-spotify-${t}`}
+          {/* Sticky header */}
+          <div className="sticky top-0 z-10 bg-[#0e0e1a]/95 backdrop-blur-sm border-b border-white/[0.07] px-5 py-4 flex items-center justify-between">
+            {app && (
+              <div className="flex items-center gap-3">
+                <div
+                  className={`w-9 h-9 rounded-xl bg-gradient-to-br ${app.iconBg} flex items-center justify-center`}
+                  style={{ boxShadow: app.iconGlow ?? "0 2px 8px rgba(0,0,0,0.3)" }}
                 >
-                  {t === "individual" ? "Individual" : "Family"}
-                </button>
-              ))}
-            </div>
-          )}
+                  {app.icon}
+                </div>
+                <div>
+                  <h2 className="font-bold text-white text-base leading-tight">{app.name}</h2>
+                  <p className="text-white/40 text-xs">{app.tagline}</p>
+                </div>
+              </div>
+            )}
+            <button
+              onClick={onClose}
+              className="w-8 h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.12] flex items-center justify-center transition-all duration-150 ease-out active:scale-95 ml-auto flex-shrink-0"
+              data-testid="button-product-modal-close"
+            >
+              <X className="w-4 h-4 text-white/60" />
+            </button>
+          </div>
 
-          {/* MLBB — Standard / 2x Diamonds tab + square grid */}
-          {isMLBB && app && (
-            <div className="space-y-5">
-              {/* Tab toggle */}
-              <div className="flex p-1 bg-[#1a1a1a] rounded-xl w-full max-w-md mx-auto border border-white/[0.06]">
-                {(["standard", "double"] as const).map(t => (
+          {/* Body */}
+          <div className="p-5 pr-2 space-y-5">
+
+            {/* Spotify Individual / Family toggle */}
+            {isSpotify && (
+              <div className="flex bg-white/[0.04] rounded-xl p-1 border border-white/[0.07]">
+                {(["individual", "family"] as const).map(t => (
                   <button
                     key={t}
-                    onClick={() => setMlbbTab(t)}
-                    className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ease-out active:scale-95
-                      ${mlbbTab === t
-                        ? "bg-[#2a2d36] text-white shadow-md"
-                        : "text-gray-400 hover:text-white"
+                    onClick={() => setSpotifyTab(t)}
+                    className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-150 ease-out active:scale-95
+                    ${spotifyTab === t
+                        ? "bg-green-500/15 text-green-300 border border-green-500/25 shadow-sm"
+                        : "text-white/35 hover:text-white/65"
                       }`}
-                    data-testid={`tab-mlbb-${t}`}
+                    data-testid={`tab-spotify-${t}`}
                   >
-                    {t === "standard" ? "Standard Diamonds" : "2x Diamonds"}
+                    {t === "individual" ? "Individual" : "Family"}
                   </button>
                 ))}
               </div>
+            )}
 
-              {/* Standard Diamonds grid */}
-              {mlbbTab === "standard" && (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-                  {mlbbStandardPackages.map(pkg => (
+            {/* MLBB — Standard / 2x Diamonds tab + square grid */}
+            {isMLBB && app && (
+              <div className="space-y-5">
+                {/* Tab toggle */}
+                <div className="flex p-1 bg-[#1a1a1a] rounded-xl w-full max-w-md mx-auto border border-white/[0.06]">
+                  {(["standard", "double"] as const).map(t => (
                     <button
-                      key={pkg.id}
-                      onClick={() => {
-                        const fakePlan: AIPlan = { id: pkg.id, name: `${pkg.amount} ${pkg.label}`, price: pkg.price, period: "one-time", features: [] };
-                        onBuyNow(app, fakePlan);
-                      }}
-                      className="aspect-square bg-[#121212] border border-white/5 hover:border-cyan-500 hover:bg-white/[0.04] rounded-2xl p-4 flex flex-col items-center justify-center transition-all cursor-pointer text-center relative group"
-                      data-testid={`button-mlbb-pkg-${pkg.id}`}
+                      key={t}
+                      onClick={() => setMlbbTab(t)}
+                      className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ease-out active:scale-95
+                      ${mlbbTab === t
+                          ? "bg-[#2a2d36] text-white shadow-md"
+                          : "text-gray-400 hover:text-white"
+                        }`}
+                      data-testid={`tab-mlbb-${t}`}
                     >
-                      {/* Diamond icon */}
-                      <div className={`mb-1.5 ${pkg.isPass ? "text-purple-400" : "text-cyan-400"} group-hover:scale-110 transition-transform duration-150`}>
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 opacity-60">
-                          <path d="M12 2L2 9l10 13L22 9z" />
-                        </svg>
-                      </div>
-                      {/* Amount */}
-                      <p className="font-bold text-white text-sm leading-tight">{pkg.amount}</p>
-                      <p className="text-white/45 text-[10px] leading-tight mb-2">{pkg.label}</p>
-                      {/* Price */}
-                      <p className={`font-semibold text-xs ${pkg.isPass ? "text-purple-400" : "text-cyan-400"}`}>{pkg.price}</p>
+                      {t === "standard" ? "Standard Diamonds" : "2x Diamonds"}
                     </button>
                   ))}
                 </div>
-              )}
 
-              {/* 2x Diamonds grid */}
-              {mlbbTab === "double" && (
-                <div className="space-y-4">
-                <div className="w-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs md:text-sm rounded-xl p-3 text-center font-medium">
-                  1 / jan / 2025 မှစ၍ ပထမအကြိမ် recharge အတွက်သာ အကျိုးဝင်သည်။
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-                  {mlbbDoublePackages.map(pkg => (
-                    <button
-                      key={pkg.id}
-                      onClick={() => {
-                        const fakePlan: AIPlan = { id: pkg.id, name: `${pkg.amount} ${pkg.label}`, price: pkg.price, period: "one-time", features: [] };
-                        onBuyNow(app, fakePlan);
-                      }}
-                      className="aspect-square bg-[#121212] border border-white/5 hover:border-yellow-400 hover:bg-white/[0.04] rounded-2xl p-4 flex flex-col items-center justify-center transition-all cursor-pointer text-center relative group"
-                      data-testid={`button-mlbb-2x-${pkg.id}`}
-                    >
-                      {/* Double diamond icon */}
-                      <div className="mb-1.5 text-yellow-400 group-hover:scale-110 transition-transform duration-150 relative">
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-50 absolute -left-2 top-0.5">
-                          <path d="M12 2L2 9l10 13L22 9z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 opacity-70 relative">
-                          <path d="M12 2L2 9l10 13L22 9z" />
-                        </svg>
-                      </div>
-                      {/* Amount */}
-                      <p className="font-bold text-white text-sm leading-tight mt-1">{pkg.amount}</p>
-                      <p className="text-white/45 text-[10px] leading-tight mb-2">{pkg.label}</p>
-                      {/* Price */}
-                      <p className="font-semibold text-xs text-yellow-400">{pkg.price}</p>
-                    </button>
-                  ))}
-                </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Plan cards — hidden for MLBB */}
-          {app && !isMLBB && (
-            <div className={`grid gap-3 ${gridCols}`}>
-              {plans.map(plan => (
-                <div
-                  key={plan.id}
-                  className={`relative rounded-xl border flex flex-col gap-3 overflow-hidden p-4 transition-all duration-200 backdrop-blur-sm hover:scale-[1.02]
-                    ${plan.highlight
-                      ? `border-white/[0.18] bg-white/[0.06] hover:border-white/[0.28] hover:shadow-xl ${app.accentGlow}`
-                      : "border-white/[0.06] bg-white/[0.03] hover:border-white/[0.14]"
-                    }`}
-                  data-testid={`card-product-plan-${plan.id}`}
-                >
-                  {plan.highlight && (
-                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-                  )}
-
-                  {/* Plan name + badge */}
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <p className="text-white/35 text-[10px] font-medium uppercase tracking-wide mb-0.5">
-                        {isSpotify ? `Spotify ${spotifyTab === "individual" ? "Individual" : "Family"}` : app.name}
-                      </p>
-                      <h4 className="font-bold text-white text-sm leading-tight">{plan.name}</h4>
-                    </div>
-                    {plan.badge && (
-                      <Badge
-                        className={`text-[10px] px-1.5 py-0.5 shrink-0 border font-semibold ${plan.badgeStyle}`}
-                        data-testid={`badge-plan-${plan.id}`}
+                {/* Standard Diamonds grid */}
+                {mlbbTab === "standard" && (
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                    {mlbbStandardPackages.map(pkg => (
+                      <button
+                        key={pkg.id}
+                        onClick={() => {
+                          const fakePlan: AIPlan = { id: pkg.id, name: `${pkg.amount} ${pkg.label}`, price: pkg.price, period: "one-time", features: [] };
+                          onBuyNow(app, fakePlan);
+                        }}
+                        className="aspect-square bg-[#121212] border border-white/5 hover:border-cyan-500 hover:bg-white/[0.04] rounded-2xl p-4 flex flex-col items-center justify-center transition-all cursor-pointer text-center relative group"
+                        data-testid={`button-mlbb-pkg-${pkg.id}`}
                       >
-                        {plan.badge}
-                      </Badge>
+                        {/* Diamond icon */}
+                        <div className={`mb-1.5 ${pkg.isPass ? "text-purple-400" : "text-cyan-400"} group-hover:scale-110 transition-transform duration-150`}>
+                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 opacity-60">
+                            <path d="M12 2L2 9l10 13L22 9z" />
+                          </svg>
+                        </div>
+                        {/* Amount */}
+                        <p className="font-bold text-white text-sm leading-tight">{pkg.amount}</p>
+                        <p className="text-white/45 text-[10px] leading-tight mb-2">{pkg.label}</p>
+                        {/* Price */}
+                        <p className={`font-semibold text-xs ${pkg.isPass ? "text-purple-400" : "text-cyan-400"}`}>{pkg.price}</p>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* 2x Diamonds grid */}
+                {mlbbTab === "double" && (
+                  <div className="space-y-4">
+                    <div className="w-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs md:text-sm rounded-xl p-3 text-center font-medium">
+                      1 / jan / 2025 မှစ၍ ပထမအကြိမ် recharge အတွက်သာ အကျိုးဝင်သည်။
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                      {mlbbDoublePackages.map(pkg => (
+                        <button
+                          key={pkg.id}
+                          onClick={() => {
+                            const fakePlan: AIPlan = { id: pkg.id, name: `${pkg.amount} ${pkg.label}`, price: pkg.price, period: "one-time", features: [] };
+                            onBuyNow(app, fakePlan);
+                          }}
+                          className="aspect-square bg-[#121212] border border-white/5 hover:border-yellow-400 hover:bg-white/[0.04] rounded-2xl p-4 flex flex-col items-center justify-center transition-all cursor-pointer text-center relative group"
+                          data-testid={`button-mlbb-2x-${pkg.id}`}
+                        >
+                          {/* Double diamond icon */}
+                          <div className="mb-1.5 text-yellow-400 group-hover:scale-110 transition-transform duration-150 relative">
+                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-50 absolute -left-2 top-0.5">
+                              <path d="M12 2L2 9l10 13L22 9z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 opacity-70 relative">
+                              <path d="M12 2L2 9l10 13L22 9z" />
+                            </svg>
+                          </div>
+                          {/* Amount */}
+                          <p className="font-bold text-white text-sm leading-tight mt-1">{pkg.amount}</p>
+                          <p className="text-white/45 text-[10px] leading-tight mb-2">{pkg.label}</p>
+                          {/* Price */}
+                          <p className="font-semibold text-xs text-yellow-400">{pkg.price}</p>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Plan cards — hidden for MLBB */}
+            {app && !isMLBB && (
+              <div className={`grid gap-3 ${gridCols}`}>
+                {plans.map(plan => (
+                  <div
+                    key={plan.id}
+                    className={`relative rounded-xl border flex flex-col gap-3 overflow-hidden p-4 transition-all duration-200 backdrop-blur-sm hover:scale-[1.02]
+                    ${plan.highlight
+                        ? `border-white/[0.18] bg-white/[0.06] hover:border-white/[0.28] hover:shadow-xl ${app.accentGlow}`
+                        : "border-white/[0.06] bg-white/[0.03] hover:border-white/[0.14]"
+                      }`}
+                    data-testid={`card-product-plan-${plan.id}`}
+                  >
+                    {plan.highlight && (
+                      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                    )}
+
+                    {/* Plan name + badge */}
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <p className="text-white/35 text-[10px] font-medium uppercase tracking-wide mb-0.5">
+                          {isSpotify ? `Spotify ${spotifyTab === "individual" ? "Individual" : "Family"}` : app.name}
+                        </p>
+                        <h4 className="font-bold text-white text-sm leading-tight">{plan.name}</h4>
+                      </div>
+                      {plan.badge && (
+                        <Badge
+                          className={`text-[10px] px-1.5 py-0.5 shrink-0 border font-semibold ${plan.badgeStyle}`}
+                          data-testid={`badge-plan-${plan.id}`}
+                        >
+                          {plan.badge}
+                        </Badge>
+                      )}
+                    </div>
+
+                    {/* Price */}
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-xl font-black text-white">{plan.price}</span>
+                      <span className="text-white/30 text-xs">/ {plan.period}</span>
+                    </div>
+
+                    {/* Features */}
+                    <ul className="space-y-1.5 flex-1">
+                      {plan.features.map((f, i) => (
+                        <li key={i} className="flex items-start gap-2 text-xs text-white/55">
+                          <CheckCircle2 className={`w-3 h-3 shrink-0 mt-0.5 ${app.neon}`} />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* CTA row */}
+                    <div className="flex gap-2 w-full mt-auto">
+                      <Button
+                        onClick={() => onBuyNow(app, plan)}
+                        className={`flex-1 bg-gradient-to-r ${app.iconBg} hover:opacity-90 active:scale-95 text-white border-0 font-semibold h-8 text-xs transition-all duration-150 ease-out`}
+                        data-testid={`button-buy-plan-${plan.id}`}
+                      >
+                        {plan.buttonLabel ?? "Buy Now"}
+                      </Button>
+                      <button
+                        type="button"
+                        onClick={() => openDetailsModal(plan)}
+                        className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/10 hover:bg-white/[0.12] hover:border-white/20 active:scale-95 transition-all duration-150 flex items-center justify-center flex-shrink-0"
+                        data-testid={`button-details-plan-${plan.id}`}
+                        aria-label="Plan details"
+                      >
+                        <Info className="w-3.5 h-3.5 text-white/50" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Plan Details Modal ── */}
+      {isDetailsModalOpen && selectedPlanDetails && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          onClick={() => setIsDetailsModalOpen(false)}
+          data-testid="details-modal-backdrop"
+        >
+          <div
+            className="bg-[#121212] border border-white/10 rounded-2xl p-6 w-full max-w-md relative animate-fade-in"
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              type="button"
+              onClick={() => setIsDetailsModalOpen(false)}
+              className="absolute top-4 right-4 w-7 h-7 rounded-full bg-white/[0.07] hover:bg-white/[0.14] flex items-center justify-center transition-colors"
+              data-testid="button-close-details"
+            >
+              <X className="w-3.5 h-3.5 text-white/60" />
+            </button>
+
+            {/* Plan name */}
+            <h3 className="text-base font-bold text-white pr-8 leading-tight">{selectedPlanDetails.name}</h3>
+            <p className="text-white/35 text-xs mt-0.5">{selectedPlanDetails.period} plan · {selectedPlanDetails.price}</p>
+
+            {/* Badge */}
+            {selectedPlanDetails.badge && (
+              <span className={`inline-block mt-2 text-[10px] font-semibold px-2 py-0.5 rounded-full border ${selectedPlanDetails.badgeStyle}`}>
+                {selectedPlanDetails.badge}
+              </span>
+            )}
+
+            {/* Body — custom instructions OR standard features list */}
+            {selectedPlanDetails.customInstructions ? (
+              <div className="mt-4 text-sm leading-relaxed space-y-4">
+                {/* Intro */}
+                {(selectedPlanDetails.customInstructions.intro || selectedPlanDetails.customInstructions.introHighlight) && (
+                  <div>
+                    {selectedPlanDetails.customInstructions.intro && (
+                      <p className="text-white/70">{selectedPlanDetails.customInstructions.intro}</p>
+                    )}
+                    {selectedPlanDetails.customInstructions.introHighlight && (
+                      <p className="text-green-400 font-medium">{selectedPlanDetails.customInstructions.introHighlight}</p>
                     )}
                   </div>
+                )}
 
-                  {/* Price */}
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-xl font-black text-white">{plan.price}</span>
-                    <span className="text-white/30 text-xs">/ {plan.period}</span>
+                {/* What you will get — bullet list */}
+                {selectedPlanDetails.customInstructions.whatYouGet && (
+                  <div>
+                    <h4 className="text-white font-semibold mb-2">{selectedPlanDetails.customInstructions.whatYouGetLabel ?? "What you will get?"}</h4>
+                    <ul className="space-y-2 list-disc pl-4 marker:text-green-500">
+                      {selectedPlanDetails.customInstructions.whatYouGet.map((item, i) => (
+                        <li key={i} className="text-white/70">{item}</li>
+                      ))}
+                    </ul>
                   </div>
+                )}
 
-                  {/* Features */}
-                  <ul className="space-y-1.5 flex-1">
-                    {plan.features.map((f, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs text-white/55">
-                        <CheckCircle2 className={`w-3 h-3 shrink-0 mt-0.5 ${app.neon}`} />
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA row */}
-                  <div className="flex gap-2 w-full mt-auto">
-                    <Button
-                      onClick={() => onBuyNow(app, plan)}
-                      className={`flex-1 bg-gradient-to-r ${app.iconBg} hover:opacity-90 active:scale-95 text-white border-0 font-semibold h-8 text-xs transition-all duration-150 ease-out`}
-                      data-testid={`button-buy-plan-${plan.id}`}
-                    >
-                      {plan.buttonLabel ?? "Buy Now"}
-                    </Button>
-                    <button
-                      type="button"
-                      onClick={() => openDetailsModal(plan)}
-                      className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/10 hover:bg-white/[0.12] hover:border-white/20 active:scale-95 transition-all duration-150 flex items-center justify-center flex-shrink-0"
-                      data-testid={`button-details-plan-${plan.id}`}
-                      aria-label="Plan details"
-                    >
-                      <Info className="w-3.5 h-3.5 text-white/50" />
-                    </button>
+                {/* How to use — bullet list (Business Team style) */}
+                {selectedPlanDetails.customInstructions.howToUse && (
+                  <div>
+                    <h4 className="text-white font-semibold mb-2">How to use :</h4>
+                    <ul className="space-y-2 list-disc pl-4 marker:text-green-500">
+                      {selectedPlanDetails.customInstructions.howToUse.map((step, i) => (
+                        <li key={i} className="text-white/70">{step}</li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                )}
+
+                {/* How to use — plain text (Individual style) */}
+                {selectedPlanDetails.customInstructions.howToUseText && (
+                  <div>
+                    <h4 className="text-white font-semibold mb-2">How to use :</h4>
+                    <p className="text-white/70">{selectedPlanDetails.customInstructions.howToUseText}</p>
+                  </div>
+                )}
+
+                {/* Warranty */}
+                {selectedPlanDetails.customInstructions.warranty && (
+                  <div>
+                    <h4 className="text-white font-semibold mb-2">Warranty:</h4>
+                    <p className="text-green-400 font-medium">{selectedPlanDetails.customInstructions.warranty}</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="mt-4 space-y-2">
+                <p className="text-white/30 text-[10px] uppercase tracking-widest font-semibold mb-2">What's included</p>
+                {selectedPlanDetails.features.map((f, i) => (
+                  <div key={i} className="flex items-start gap-2.5 text-sm text-white/70">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0 mt-0.5" />
+                    <span>{f}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Got it */}
+            <button
+              type="button"
+              onClick={() => setIsDetailsModalOpen(false)}
+              className="mt-6 w-full py-2.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/10 text-white/70 hover:text-white text-sm font-medium transition-all duration-150 active:scale-[0.98]"
+              data-testid="button-got-it"
+            >
+              Got it
+            </button>
+          </div>
         </div>
-      </div>
-    </div>
-
-    {/* ── Plan Details Modal ── */}
-    {isDetailsModalOpen && selectedPlanDetails && (
-      <div
-        className="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-        onClick={() => setIsDetailsModalOpen(false)}
-        data-testid="details-modal-backdrop"
-      >
-        <div
-          className="bg-[#121212] border border-white/10 rounded-2xl p-6 w-full max-w-md relative animate-fade-in"
-          onClick={e => e.stopPropagation()}
-        >
-          {/* Close button */}
-          <button
-            type="button"
-            onClick={() => setIsDetailsModalOpen(false)}
-            className="absolute top-4 right-4 w-7 h-7 rounded-full bg-white/[0.07] hover:bg-white/[0.14] flex items-center justify-center transition-colors"
-            data-testid="button-close-details"
-          >
-            <X className="w-3.5 h-3.5 text-white/60" />
-          </button>
-
-          {/* Plan name */}
-          <h3 className="text-base font-bold text-white pr-8 leading-tight">{selectedPlanDetails.name}</h3>
-          <p className="text-white/35 text-xs mt-0.5">{selectedPlanDetails.period} plan · {selectedPlanDetails.price}</p>
-
-          {/* Badge */}
-          {selectedPlanDetails.badge && (
-            <span className={`inline-block mt-2 text-[10px] font-semibold px-2 py-0.5 rounded-full border ${selectedPlanDetails.badgeStyle}`}>
-              {selectedPlanDetails.badge}
-            </span>
-          )}
-
-          {/* Body — custom instructions OR standard features list */}
-          {selectedPlanDetails.customInstructions ? (
-            <div className="mt-4 text-sm leading-relaxed space-y-4">
-              {/* Intro */}
-              {(selectedPlanDetails.customInstructions.intro || selectedPlanDetails.customInstructions.introHighlight) && (
-                <div>
-                  {selectedPlanDetails.customInstructions.intro && (
-                    <p className="text-white/70">{selectedPlanDetails.customInstructions.intro}</p>
-                  )}
-                  {selectedPlanDetails.customInstructions.introHighlight && (
-                    <p className="text-green-400 font-medium">{selectedPlanDetails.customInstructions.introHighlight}</p>
-                  )}
-                </div>
-              )}
-
-              {/* What you will get — bullet list */}
-              {selectedPlanDetails.customInstructions.whatYouGet && (
-                <div>
-                  <h4 className="text-white font-semibold mb-2">{selectedPlanDetails.customInstructions.whatYouGetLabel ?? "What you will get?"}</h4>
-                  <ul className="space-y-2 list-disc pl-4 marker:text-green-500">
-                    {selectedPlanDetails.customInstructions.whatYouGet.map((item, i) => (
-                      <li key={i} className="text-white/70">{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* How to use — bullet list (Business Team style) */}
-              {selectedPlanDetails.customInstructions.howToUse && (
-                <div>
-                  <h4 className="text-white font-semibold mb-2">How to use :</h4>
-                  <ul className="space-y-2 list-disc pl-4 marker:text-green-500">
-                    {selectedPlanDetails.customInstructions.howToUse.map((step, i) => (
-                      <li key={i} className="text-white/70">{step}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* How to use — plain text (Individual style) */}
-              {selectedPlanDetails.customInstructions.howToUseText && (
-                <div>
-                  <h4 className="text-white font-semibold mb-2">How to use :</h4>
-                  <p className="text-white/70">{selectedPlanDetails.customInstructions.howToUseText}</p>
-                </div>
-              )}
-
-              {/* Warranty */}
-              {selectedPlanDetails.customInstructions.warranty && (
-                <div>
-                  <h4 className="text-white font-semibold mb-2">Warranty:</h4>
-                  <p className="text-green-400 font-medium">{selectedPlanDetails.customInstructions.warranty}</p>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="mt-4 space-y-2">
-              <p className="text-white/30 text-[10px] uppercase tracking-widest font-semibold mb-2">What's included</p>
-              {selectedPlanDetails.features.map((f, i) => (
-                <div key={i} className="flex items-start gap-2.5 text-sm text-white/70">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0 mt-0.5" />
-                  <span>{f}</span>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Got it */}
-          <button
-            type="button"
-            onClick={() => setIsDetailsModalOpen(false)}
-            className="mt-6 w-full py-2.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/10 text-white/70 hover:text-white text-sm font-medium transition-all duration-150 active:scale-[0.98]"
-            data-testid="button-got-it"
-          >
-            Got it
-          </button>
-        </div>
-      </div>
-    )}
+      )}
     </>
   );
 }
