@@ -8,6 +8,13 @@ body {
   overflow-x: hidden;
   max-width: 100vw;
   font-family: "Plus Jakarta Sans", sans-serif !important;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 15% 5%, rgba(26, 9, 45, 0.6) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 20%, rgba(17, 6, 28, 0.4) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 80%, rgba(20, 8, 36, 0.25) 0%, transparent 50%),
+    #000000;
+  background-attachment: fixed;
 }
 
 /* LIGHT MODE */

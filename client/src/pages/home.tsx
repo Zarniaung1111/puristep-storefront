@@ -1207,8 +1207,8 @@ function HeroCarousel({ onCardClick }: { onCardClick?: () => void }) {
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[500px] h-[150px] bg-purple-600/30 blur-[80px] md:blur-[100px] rounded-[100%] pointer-events-none -z-10" />
 
-      {/* Track with edge-fade mask — overflow-hidden clips cards at ±560px slots */}
-      <div className="relative w-full h-full flex items-center justify-center overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+      {/* Track — overflow-hidden clips cards at ±560px slots */}
+      <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
         {CAROUSEL_CARDS.map((card, i) => {
           const slot = (i - active + 8) % 8;
           const s = CAROUSEL_SLOTS[slot];
@@ -1245,7 +1245,7 @@ function HeroCarousel({ onCardClick }: { onCardClick?: () => void }) {
         })}
       </div>
       {/* Bottom fade — dissolves grid into the section below */}
-      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#0B0C10] to-transparent pointer-events-none z-0" />
+      <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#030306] via-[#030306]/80 to-transparent pointer-events-none z-0" />
     </div>
   );
 }
@@ -1279,6 +1279,25 @@ export default function Home() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Lock background scroll when any modal is open
+  useEffect(() => {
+    const anyModalOpen = orderOpen || orderSuccess || helpOpen || productModalOpen;
+    if (anyModalOpen) {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [orderOpen, orderSuccess, helpOpen, productModalOpen]);
 
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
@@ -1423,7 +1442,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030306] text-white pt-16 w-full max-w-[100vw] overflow-x-hidden">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_#1a0b2e_0%,_#000000_70%)] text-white pt-16 w-full max-w-[100vw] overflow-x-hidden">
 
       {/* Ultra-Premium Aurora Mesh Gradient Background */}
       <div className="aurora-bg" />
@@ -1512,7 +1531,7 @@ export default function Home() {
       </section>
 
       {/* ── Recent Purchases Marquee ── */}
-      <div className="w-full overflow-hidden border-y border-white/[0.06] bg-[#030306]/90 backdrop-blur-xl py-3 flex items-stretch" style={{ boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.02), inset 0 -1px 0 0 rgba(255,255,255,0.02)" }}>
+      <div className="w-full overflow-hidden bg-[#030306]/90 backdrop-blur-xl py-3 flex items-stretch">
         {/* Label */}
         <div className="flex-shrink-0 flex items-center px-5 border-r border-white/[0.08] mr-5">
           <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-violet-400/50 whitespace-nowrap">Recent Purchases</span>
@@ -2309,7 +2328,7 @@ export default function Home() {
             }`}
         >
           <a
-            href="https://t.me/PuriStep"
+            href="https://t.me/ZarNiAung404"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 bg-[#2AABEE] hover:bg-[#2298D6] text-white px-4 py-3 rounded-2xl shadow-lg transition-colors"
@@ -2319,7 +2338,7 @@ export default function Home() {
             <span className="font-bold text-sm">Telegram</span>
           </a>
           <a
-            href="https://m.me/PuriStep"
+            href="https://m.me/puristep"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 bg-[#0084FF] hover:bg-[#0073E6] text-white px-4 py-3 rounded-2xl shadow-lg transition-colors"
@@ -2389,7 +2408,7 @@ export default function Home() {
 
               {/* Burmese instruction */}
               <p className="text-amber-400/80 text-xs leading-relaxed mb-6">
-                ကျေးဇူးပြ���၍ မိမိ order id ကို Admin ထံသို့ပို့ပေးပြီး Subscription ကို ရယူနိုင်ပါပြီ
+                ကျေးဇူးပြု၍ မိမိ order id ကို Admin ထံသို့ပို့ပေးပြီး Subscription ကို ရယူနိုင်ပါပြီ
               </p>
 
               {/* Contact buttons — revealed after clicking Get your order */}
@@ -2397,7 +2416,7 @@ export default function Home() {
                 className={`grid grid-cols-2 gap-3 mb-3 origin-bottom transition-all duration-300 ${showChatOptions ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none h-0 mb-0 overflow-hidden"}`}
               >
                 <a
-                  href={`https://t.me/ZarNiAung404?text=${encodeURIComponent("I bought " + (selectedProduct?.serviceName ?? "") + " here is my " + orderId + ". Can you check?")}`}
+                  href={`https://t.me/ZarNiAung404?text=${encodeURIComponent("I bought " + (selectedProduct?.serviceName ?? "") + (selectedProduct?.planName ? " " + selectedProduct.planName + " " : " ") + 'here is my Order ID "' + orderId + '". Can you check?')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl font-bold text-sm text-white overflow-hidden transition-all duration-200 active:scale-95 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_-6px_rgba(42,171,238,0.45)]"

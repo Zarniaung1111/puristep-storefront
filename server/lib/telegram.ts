@@ -23,7 +23,7 @@ interface OrderNotification {
 }
 
 export async function sendOrderNotification(order: OrderNotification): Promise<void> {
-  if (!bot || !adminChatId) {
+  if (!token || !adminChatId) {
     console.warn("Telegram bot or admin chat ID not configured — skipping notification");
     return;
   }
@@ -41,23 +41,44 @@ export async function sendOrderNotification(order: OrderNotification): Promise<v
 
   try {
     if (order.paymentScreenshot) {
-      // Extract the raw base64 data from the data URI (strip "data:image/...;base64,")
+      // Strip the base64 data-URI header (e.g. "data:image/png;base64,")
       const base64Match = order.paymentScreenshot.match(/^data:[^;]+;base64,(.+)$/);
       if (base64Match) {
         const imageBuffer = Buffer.from(base64Match[1], "base64");
-        await bot.sendPhoto(adminChatId, imageBuffer, {
-          caption,
-          parse_mode: "HTML",
+
+        // Use Node's built-in FormData + Blob (no manual Content-Type header)
+        const blob = new Blob([imageBuffer], { type: "image/png" });
+        const form = new FormData();
+        form.append("chat_id", adminChatId);
+        form.append("photo", blob, "receipt.png");
+        form.append("caption", caption);
+        form.append("parse_mode", "HTML");
+
+        // POST to Telegram — do NOT set Content-Type; fetch auto-generates it
+        const url = `https://api.telegram.org/bot${token}/sendPhoto`;
+
+        const res = await fetch(url, {
+          method: "POST",
+          body: form,
         });
+
+        if (!res.ok) {
+          const errBody = await res.text();
+          throw new Error(`Telegram sendPhoto failed (${res.status}): ${errBody}`);
+        }
+
         console.log(`📨 Telegram photo notification sent for order ${order.orderId ?? "N/A"}`);
         return;
       }
     }
 
-    // Fallback: no screenshot — send text only
-    await bot.sendMessage(adminChatId, caption, { parse_mode: "HTML" });
+    // Fallback: no screenshot — send text only via bot SDK
+    if (bot) {
+      await bot.sendMessage(adminChatId, caption, { parse_mode: "HTML" });
+    }
     console.log(`📨 Telegram text notification sent for order ${order.orderId ?? "N/A"}`);
   } catch (err) {
     console.error("Failed to send Telegram notification:", err);
   }
 }
+

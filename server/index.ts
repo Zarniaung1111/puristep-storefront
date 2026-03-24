@@ -51,7 +51,11 @@ app.use((req, res, next) => {
     if (path.startsWith("/api")) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
       if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+        const sanitized =
+          capturedJsonResponse && typeof capturedJsonResponse === "object" && capturedJsonResponse.paymentScreenshot
+            ? { ...capturedJsonResponse, paymentScreenshot: "[IMAGE DATA]" }
+            : capturedJsonResponse;
+        logLine += ` :: ${JSON.stringify(sanitized)}`;
       }
 
       log(logLine);
